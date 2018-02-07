@@ -1,0 +1,23 @@
+{
+  "name": "d3-zika",
+  "version": "1.0.0",
+  "description": "Just a repo to keep progress of getting the line graph to work right.  Different files acting as different branches to be able to incorporate other blocks",
+  "main": "proxy.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mathew Leland",
+  "license": "ISC",
+  "dependencies": {
+    "cors-anywhere": "^0.4.1"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mathewleland/interactive-line-graph.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mathewleland/interactive-line-graph/issues"
+  },
+  "homepage": "https://github.com/mathewleland/interactive-line-graph#readme"
+}
