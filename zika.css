@@ -92,7 +92,7 @@ body {
     }
 
     .context-line {
-        stroke: black;
+        stroke: url(#context-line-gradient);
         stroke-width: 4px;
         shape-rendering: crispEdges;
         fill: none;
