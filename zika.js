@@ -20,7 +20,7 @@ const parsedate = d3.timeParse("%m/%d/%Y %H:%M");
 const formatDate = d3.timeFormat('%b %d, %Y');
 
 function fetchData (city) {
-    d3.json(`http://maps.calsurv.org/zika/risk/${city}`, (error, data) => {
+    d3.json(`https://maps.calsurv.org/zika/risk/${city}`, (error, data) => {
         if (error) console.log(error);
         d3.select('#container').remove();
         drawGraph(data);
@@ -203,7 +203,7 @@ function drawGraph(data) {
                 .append('circle')
                 .attr('cx', (d) => x(d.date))
                 .attr('cy', (d) => y(d.risk))
-                .attr('r', 2)
+                .attr('r', 3)
                 .on('mouseover', tipMouseover)
                 .on('mouseout', tipMouseout)
                 .style('cursor', 'pointer')
@@ -227,6 +227,10 @@ function drawGraph(data) {
         .attr("class", "brush")
         .call(brush)
         .call(brush.move, x.range());
+    
+    const start = new Date( new Date().getFullYear() - 1, 4, 15);
+    const end = new Date( new Date().getFullYear() - 1, 9, 15);
+    d3.select('.brush').call(brush.move, [x(start), x(end)]);
 
     // allows zooming directly over the chart using the mouse scroll, add a zoom rectangle rectangle over the whole chart
     svg.append("rect")
@@ -263,29 +267,29 @@ function drawGraph(data) {
     };
     
     function brushed() {
-    if (d3.event.sourceEvent && d3.event.sourceEvent.type === "zoom") return; // ignore brush-by-zoom
-    var s = d3.event.selection || x2.range();
-    x.domain(s.map(x2.invert, x2));
-    graph.select(".line").attr("d", line);
-    graph.selectAll('circle')
-                .attr('cx', (d) => x(d.date))
-                .attr('cy', (d) => y(d.risk));
-    focus.select(".axis--x").call(xAxis);
-    svg.select(".zoom").call(zoom.transform, d3.zoomIdentity
-        .scale(width / (s[1] - s[0]))
-        .translate(-s[0], 0));
+        if (d3.event.sourceEvent && d3.event.sourceEvent.type === "zoom") return; // ignore brush-by-zoom
+        var s = d3.event.selection || x2.range();
+        x.domain(s.map(x2.invert, x2));
+        graph.select(".line").attr("d", line);
+        graph.selectAll('circle')
+                    .attr('cx', (d) => x(d.date))
+                    .attr('cy', (d) => y(d.risk));
+        focus.select(".axis--x").call(xAxis);
+        svg.select(".zoom").call(zoom.transform, d3.zoomIdentity
+            .scale(width / (s[1] - s[0]))
+            .translate(-s[0], 0));
     }
 
     function zoomed() {
-    if (d3.event.sourceEvent && d3.event.sourceEvent.type === "brush") return; // ignore zoom-by-brush
-    var t = d3.event.transform;
-    x.domain(t.rescaleX(x2).domain());
-    graph.select(".line").attr("d", line);
-    focus.select(".axis--x").call(xAxis);
-    context.select(".brush").call(brush.move, x.range().map(t.invertX, t));
-    graph.selectAll('circle')
-                .attr('cx', (d) => x(d.date))
-                .attr('cy', (d) => y(d.risk));
+        if (d3.event.sourceEvent && d3.event.sourceEvent.type === "brush") return; // ignore zoom-by-brush
+        var t = d3.event.transform;
+        x.domain(t.rescaleX(x2).domain());
+        graph.select(".line").attr("d", line);
+        focus.select(".axis--x").call(xAxis);
+        context.select(".brush").call(brush.move, x.range().map(t.invertX, t));
+        graph.selectAll('circle')
+                    .attr('cx', (d) => x(d.date))
+                    .attr('cy', (d) => y(d.risk));
     }
 }
 
