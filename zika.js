@@ -4,21 +4,23 @@ const svg = d3.select('#chart')
                 .attr('width', 800) 
                 .attr('class', 'card');
 
-const margin = {top: 20, right: 50, bottom: 110, left: 80}, 
-      margin2  = {top: 320, right: 50, bottom: 40, left: 80},
-      height  = +svg.attr('height') - margin.top - margin.bottom,
-      width   = +svg.attr('width') - margin.left - margin.right,
-      height2 = +svg.attr('height') - margin2.top - margin2.bottom;
-      green   = '#4caf50',
-      yellow  = '#fff176',
-      red     = '#f44336',
-      blue    = '#6ec6ff'; 
+const margin    = {top: 20, right: 50, bottom: 110, left: 80}, 
+      margin2   = {top: 320, right: 50, bottom: 40, left: 80},
+      height    = +svg.attr('height') - margin.top - margin.bottom,
+      width     = +svg.attr('width') - margin.left - margin.right,
+      height2   = +svg.attr('height') - margin2.top - margin2.bottom;
+      green     = '#4caf50',
+      yellow    = '#fff176',
+      red       = '#f44336',
+      blue      = '#1565c0',
+      lightblue = '#6ec6ff',
+      lightred   = '#ef9a9a'; 
 
 const parsedate = d3.timeParse("%m/%d/%Y %H:%M");
 const formatDate = d3.timeFormat('%b %d, %Y');
 
 function fetchData (city) {
-    d3.json(`https://cors-anywhere.herokuapp.com/maps.calsurv.org/zika/risk/${city}`, (error, data) => {
+    d3.json(`http://maps.calsurv.org/zika/risk/${city}`, (error, data) => {
         if (error) console.log(error);
         d3.select('#container').remove();
         drawGraph(data);
@@ -38,11 +40,11 @@ function drawGraph(data) {
     // SET AXES, need 2 x's since the top one will change, but no second y axis on the bottom
     var xAxis = d3.axisBottom(x),
         xAxis2 = d3.axisBottom(x2),
-        yAxis = d3.axisLeft(y);
+        yAxis = d3.axisLeft(y).tickValues([0, 0.1, 0.2, 0.5, 1.0, 2.0]);
 
     // INIT BRUSH just on X axis
     var brush = d3.brushX()
-        .extent([[0, 0], [width, height2 + 10]])
+        .extent([[0, 0], [width, height2]])
         .on("brush end", brushed);
 
     // INIT ZOOM
@@ -78,10 +80,10 @@ function drawGraph(data) {
                         .attr('width', +svg.attr('width'));
 
     //append the top clip path to the svg, give it the clip path attribute linked to the clip element above
-     graph = container.append("g")
-        .attr("class", "focus")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-        .attr("clip-path", "url(#clip)");
+    graph = container.append("g")
+                       .attr("class", "graph")
+                       .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+                       .attr("clip-path", "url(#clip)");
 
     // append the top chart
     var focus = container.append("g")
@@ -99,10 +101,11 @@ function drawGraph(data) {
     });
 
     x.domain(d3.extent(data, function(d) { return d.date; }));
-    y.domain([0.01, 2.5]);
+    y.domain([0.1, 2.5]);
     x2.domain(x.domain());
     y2.domain(y.domain());
 
+    //ADD IN GRADIENT FOR MAIN GRAPH
     graph.append("linearGradient")
             .attr("id", "line-gradient")
             .attr("gradientUnits", "userSpaceOnUse")
@@ -111,26 +114,61 @@ function drawGraph(data) {
             .selectAll("stop")
             .data([
                 {offset: "0%", color: blue},
-                {offset: "46%", color: blue},
-                {offset: "46%", color: yellow},
-                {offset: "84%", color: yellow},
-                {offset: "84%", color: red},
+                {offset: "50%", color: blue},
+                {offset: "50%", color: lightblue},
+                {offset: "72%", color: lightblue},
+                {offset: "72%", color: lightred},
+                {offset: "94%", color: lightred},
+                {offset: "94%", color: red},
                 {offset: "100%", color: red}
             ])
             .enter().append("stop")
-            .attr("offset", function(d) { return d.offset; })
-            .attr("stop-color", function(d) { return d.color; });
+            .attr("offset", (d) => d.offset )
+            .attr("stop-color", (d) => d.color );
 
+    //ADD GRADIENT FOR CONTEXT
+    context.append("linearGradient")
+        .attr("id", "context-line-gradient")
+        .attr("gradientUnits", "userSpaceOnUse")
+        .attr("x1", 0).attr("y1", y(0))
+        .attr("x2", 0).attr("y2", y(3))
+        .selectAll("stop")
+        .data([
+            {offset: "0%", color: blue},
+            {offset: "90%", color: blue},
+            {offset: "90%", color: lightblue},
+            {offset: "96%", color: lightblue},
+            {offset: "96%", color: red},
+            {offset: "100%", color: red}
+        ])
+        .enter().append("stop")
+        .attr("offset", (d) => d.offset )
+        .attr("stop-color", (d) => d.color );
+
+    
     // append the x axis for the top chart
     focus.append("g")
-        .attr("class", "axis axis--x")
-        .attr("transform", "translate(0," + height + ")")
-        .call(xAxis);
-
-    // append the y axis for the top chart
+           .attr("class", "axis axis--x")
+           .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+        .append('text')
+          .attr('x', 300)
+          .attr('y', 300)
+          .attr('class', 'axis-label')
+          .style('text-anchor', 'middle')
+          .text('Date');
+        
+        // append the y axis for the top chart
     focus.append("g")
-        .attr("class", "axis axis--y")
-        .call(yAxis);
+           .attr("class", "axis axis--y")
+         .call(yAxis)
+         .append('text')
+            .attr('x', -100)
+            .attr('y', -50)
+            .attr('transform', () => 'rotate(-90)')
+            .attr('class', 'axis-label')
+            .text('Zika Risk Index');
+        
 
     // append the path with its data to the clipPath container
     let path = graph.append("path")
@@ -139,41 +177,44 @@ function drawGraph(data) {
                       .attr("d", line);
 
     // animate the path in
-    const lineTransition = d3.transition().duration(1100).ease(d3.easeLinear);
-    const pathLength = path.node().getTotalLength();
-    path.attr('stroke-dasharray', `${pathLength} ${pathLength}`)
-        .attr('stroke-dashoffset', pathLength)
-        .transition(lineTransition)
-            .attr('stroke-dashoffset', 0);
+    // const lineTransition = d3.transition().duration(1100).ease(d3.easeLinear);
+    // const pathLength = path.node().getTotalLength();
+    // path.attr('stroke-dasharray', `${pathLength} ${pathLength}`)
+    //     .attr('stroke-dashoffset', pathLength)
+    //     .transition(lineTransition)
+    //         .attr('stroke-dashoffset', 0);
 
+    function labelRisk(r) {
+        if (r < 0.5) {
+            return blue;
+        } else if (r < 1.0) {
+            return lightblue;
+        } else if (r < 2.0) {
+            return lightred;
+        } else return red;
+    }
+    
     // ADD IN SCATTER points to be able to mouseover data
     graph.append('g')
-                    .attr('class', 'dots')
-                    .selectAll('.dots')
-                        .data(data)
-                        .enter()
-                        .append('circle')
-                        .attr('cx', (d) => x(d.date))
-                        .attr('cy', (d) => y(d.risk))
-                        .attr('r', 2)
-                        .on('mouseover', tipMouseover)
-                        .on('mouseout', tipMouseout)
-                        .style('cursor', 'pointer')
-                        .attr('fill', 'white')
-                        .attr('stroke', (d) => {
-                                if (d.risk < .125) {
-                                    return blue;
-                                } else if (d.risk < 1) {
-                                    return yellow;
-                                } else return red;
-                            });
+            .attr('class', 'dots')
+            .selectAll('.dots')
+                .data(data)
+                .enter()
+                .append('circle')
+                .attr('cx', (d) => x(d.date))
+                .attr('cy', (d) => y(d.risk))
+                .attr('r', 2)
+                .on('mouseover', tipMouseover)
+                .on('mouseout', tipMouseout)
+                .style('cursor', 'pointer')
+                .attr('fill', 'none')
+                .attr('stroke', (d) => labelRisk(d.risk) );
 
     // bottom chart gets same path
     context.append("path")
         .datum(data)
-        .attr("class", "context-line")
-        .attr("d", line2)
-        .style('fill', 'yellow');
+        .attr("class", "context-line line")
+        .attr("d", line2);
 
     // bottom chart gets x axis with xAxis2
     context.append("g")
@@ -201,14 +242,7 @@ function drawGraph(data) {
             .style('opacity', 0);
 
     function tipMouseover(d) {
-        let color;
-        if (d.risk > .99) {
-            color = red;
-        } else if (d.risk > .12) {
-            color = yellow;
-        } else {
-            color = blue;
-        }
+        let color = labelRisk(d.risk);
 
         var html = `
             <div class='toolTip__risk' style='background:${color}'> <div> Risk Factor</div> <div class='toolTip__risk--value'> ${d.risk}</div> </div>
@@ -254,3 +288,5 @@ function drawGraph(data) {
                 .attr('cy', (d) => y(d.risk));
     }
 }
+
+fetchData("Fresno");
