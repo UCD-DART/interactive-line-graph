@@ -207,7 +207,7 @@ function drawGraph(data) {
                 .on('mouseover', tipMouseover)
                 .on('mouseout', tipMouseout)
                 .style('cursor', 'pointer')
-                .attr('fill', 'none')
+                .attr('fill', (d) => labelRisk(d.risk) )
                 .attr('stroke', (d) => labelRisk(d.risk) );
 
     // bottom chart gets same path
@@ -284,7 +284,7 @@ function drawGraph(data) {
         if (d3.event.sourceEvent && d3.event.sourceEvent.type === "brush") return; // ignore zoom-by-brush
         var t = d3.event.transform;
         x.domain(t.rescaleX(x2).domain());
-        graph.select(".line").attr("d", line);
+        focus.select(".line").attr("d", line);
         focus.select(".axis--x").call(xAxis);
         context.select(".brush").call(brush.move, x.range().map(t.invertX, t));
         graph.selectAll('circle')
