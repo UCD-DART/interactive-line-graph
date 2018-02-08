@@ -3,8 +3,27 @@ body {
     margin: 0 auto;
 }
 
+.container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+.map {
+    margin: 100px auto;
+    text-align: center;
+    border-radius: 30px;
+    /* border: red 2px solid; */
+    height: 520px;
+    width: 420px;
+    overflow: hidden;
+}
+
+.city-data {
+
+}
+
 .card {
-    margin: 30px auto;
+    margin: 10px auto;
     display: block;
     background: #fff;
     text-align: center;
@@ -12,6 +31,12 @@ body {
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     cursor: move;
 }
+
+.map-gif {
+    height: inherit;
+    width: inherit;
+}
+
 
 .buttons {
     width: 50%;
@@ -36,7 +61,7 @@ body {
     font-family: Helvetica;
     width:  220px;
     height: auto;
-    pointer-events: none;
+    /* pointer-events: none; */
     background-color: #fff;
     border-radius: 2px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
@@ -101,14 +126,13 @@ body {
 .legend {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    height: 10px;
-    width: 500px;
+    width: 800px;
     margin: 0 auto;
     text-align: center;
 }
 
 .legend__risk {
-    padding: 30px;
+    padding: 10px;
     font-weight: bold;
     font-style: italic;
 }
