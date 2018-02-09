@@ -6,8 +6,9 @@
 
 <div class='container'>
 
-    <div id='gif' class='map'>
-        <img class='map-gif' src='https://s3-us-west-2.amazonaws.com/zika-map/zikaMapVideo+(1).gif'>
+    <div class='map'>
+        <!-- <img class='map-gif' src='https://s3-us-west-2.amazonaws.com/zika-map/zikaMapVideo+(1).gif'> -->
+        <!-- <img class='map-gif' src='zika.gif'> -->
     </div>
     
     <div class='city-data'>
@@ -26,6 +27,19 @@
             <div class='legend__risk legend__risk--moderate'>Moderate Risk</div>
             <div class='legend__risk legend__risk--high'>High Risk</div>
         </div>
+
+        <div class='date-data'>
+            <div class="slidecontainer">
+                <input type="range" min="1" max="100" value="50" class="slider" id="pickDate">
+            </div>
+            <div class='card cityData'>
+                <h3> City Data</h3>
+                <div id='cityData'>
+                    
+                </div>
+            </div>
+        </div>
+
         
     </div>
 
