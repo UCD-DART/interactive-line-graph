@@ -1,7 +1,7 @@
 const svg = d3.select('#chart')
               .append('svg')
                 .attr('height', 400)
-                .attr('width', 800) 
+                .attr('width', 700) 
                 .attr('class', 'card');
 
 const margin    = {top: 20, right: 50, bottom: 110, left: 80}, 
@@ -137,8 +137,8 @@ function drawGraph(data) {
             {offset: "0%", color: blue},
             {offset: "90%", color: blue},
             {offset: "90%", color: lightblue},
-            {offset: "96%", color: lightblue},
-            {offset: "96%", color: red},
+            {offset: "94%", color: lightblue},
+            {offset: "94%", color: red},
             {offset: "100%", color: red}
         ])
         .enter().append("stop")
@@ -177,12 +177,15 @@ function drawGraph(data) {
                       .attr("d", line);
 
     // animate the path in
-    // const lineTransition = d3.transition().duration(1100).ease(d3.easeLinear);
-    // const pathLength = path.node().getTotalLength();
-    // path.attr('stroke-dasharray', `${pathLength} ${pathLength}`)
-    //     .attr('stroke-dashoffset', pathLength)
-    //     .transition(lineTransition)
-    //         .attr('stroke-dashoffset', 0);
+    function animateLine(line, time) {
+        const lineTransition = d3.transition().duration(time).ease(d3.easeLinear);
+        let pathLength = line.node().getTotalLength();
+        line.attr('stroke-dasharray', `${pathLength} ${pathLength}`)
+            .attr('stroke-dashoffset', pathLength)
+            .transition(lineTransition)
+                .attr('stroke-dashoffset', 0);
+    }
+    
 
     function labelRisk(r) {
         if (r < 0.5) {
@@ -211,10 +214,12 @@ function drawGraph(data) {
                 .attr('stroke', (d) => labelRisk(d.risk) );
 
     // bottom chart gets same path
-    context.append("path")
+    let mini = context.append("path")
         .datum(data)
         .attr("class", "context-line line")
         .attr("d", line2);
+
+    animateLine(mini, 2000);
 
     // bottom chart gets x axis with xAxis2
     context.append("g")
@@ -228,8 +233,8 @@ function drawGraph(data) {
         .call(brush)
         .call(brush.move, x.range());
     
-    const start = new Date( new Date().getFullYear() - 1, 4, 15);
-    const end = new Date( new Date().getFullYear() - 1, 9, 15);
+    const start = new Date( new Date().getFullYear() - 2, 4, 15);
+    const end = new Date( new Date().getFullYear() - 2, 9, 15);
     d3.select('.brush').call(brush.move, [x(start), x(end)]);
 
     // allows zooming directly over the chart using the mouse scroll, add a zoom rectangle rectangle over the whole chart
@@ -249,7 +254,7 @@ function drawGraph(data) {
         let color = labelRisk(d.risk);
 
         var html = `
-            <div class='toolTip__risk' style='background:${color}'> <div> Risk Factor</div> <div class='toolTip__risk--value'> ${d.risk}</div> </div>
+            <div class='toolTip__risk' style='background:${color}'> <div class='toolTip__risk--title'> Risk Factor</div> <div class='toolTip__risk--value'> ${d.risk}</div> </div>
             <div class='toolTip__date'>${formatDate(d.date)}</div>
         `;
         tooltip.html(html)
@@ -278,19 +283,86 @@ function drawGraph(data) {
         svg.select(".zoom").call(zoom.transform, d3.zoomIdentity
             .scale(width / (s[1] - s[0]))
             .translate(-s[0], 0));
+
+        animateLine(path, 0);
     }
 
     function zoomed() {
         if (d3.event.sourceEvent && d3.event.sourceEvent.type === "brush") return; // ignore zoom-by-brush
         var t = d3.event.transform;
         x.domain(t.rescaleX(x2).domain());
-        focus.select(".line").attr("d", line);
+        graph.select(".line").attr("d", line);
         focus.select(".axis--x").call(xAxis);
         context.select(".brush").call(brush.move, x.range().map(t.invertX, t));
         graph.selectAll('circle')
                     .attr('cx', (d) => x(d.date))
                     .attr('cy', (d) => y(d.risk));
+        
     }
+
+    // animateLine(path, 3000);
 }
 
 fetchData("Fresno");
+
+//SLIDER STUFF
+
+//generate some fake data
+let fake = [];
+
+for (let i = 0; i < 100; i++) {
+    let obj = {};
+    let date = new Date('06-01-2017');
+
+    date.setDate(date.getDate() + i);
+    obj["date"] = formatDate(date);
+    obj["tempMin"] = +(Math.random() * 20).toFixed(2);
+    obj["tempMax"] = +(Math.random() * 20 + obj["tempMin"]).toFixed(2);
+    obj["risk"] = +(Math.random() * 3).toFixed(2);
+    obj["bites"] = +(Math.random() * 50).toFixed(1);
+    obj["survival"] = +(Math.random() * 50 + 25).toFixed(0);
+
+    fake.push(obj);
+}
+console.log(fake);
+
+const slider = document.getElementById('pickDate');
+const table = document.getElementById('cityData');
+
+function showTable(i) {
+    let data = fake[i];
+    console.log(data);
+
+    let html = `
+
+      <p> Date: ${data.date}</p>
+      <table>
+        <th>
+            <td class='table-headers'> Min Temp</td>
+            <td class='table-headers'> Max Temp </td>
+            <td class='table-headers'> Risk Idx</td>
+            <td class='table-headers'> Bites per Person</td>
+            <td class='table-headers'> Daily Survival of mosq</td>
+        </th>
+
+        <tr class='table-data'>
+          <td> City's Data </td>
+          <td> ${data.tempMin}</td>
+          <td> ${data.tempMax}</td>
+          <td> ${data.risk}</td>
+          <td> ${data.bites}</td>
+          <td> ${data.survival}%</td>
+        </tr>
+        
+      </table>
+    
+    `
+    table.innerHTML = html;
+}
+slider.oninput = function() {
+  showTable(this.value)   
+}
+
+showTable(45);
+
+// slider.defaultValue = 50;
