@@ -11,9 +11,7 @@ body {
 .map {
     margin: 20px auto;
     text-align: center;
-    border: 1px solid red;
     border-radius: 30px;
-    /* border: red 2px solid; */
     height: 600px;
     width: 420px;
     overflow: hidden;
@@ -24,7 +22,7 @@ body {
 }
 
 .city-data {
-    border: 2px red solid;
+    /* border: 2px red solid; */
 }
 
 .card {
@@ -168,6 +166,11 @@ body {
 }
 
 /* SLIDER */
+
+.sliderContainer {
+    text-align: center;
+}
+
 .slider {
     -webkit-appearance: none;  /* Override default CSS styles */
     margin-top: 20px;
@@ -205,6 +208,7 @@ body {
 /* CITY DATA TABLE */
 
 .cityData {
+    width: 90%;
     text-align: center;
     padding-top: 30px;
 }
