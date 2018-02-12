@@ -15,7 +15,7 @@ body {
     height: 600px;
     width: 420px;
     overflow: hidden;
-    background-image: url('zika.gif');
+    background-image: url('../img/zika.gif');
     background-position: -260px -180px;
     background-size: 800px 800px;
 

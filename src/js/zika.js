@@ -8,7 +8,7 @@ const margin    = {top: 20, right: 50, bottom: 110, left: 80},
       margin2   = {top: 320, right: 50, bottom: 40, left: 80},
       height    = +svg.attr('height') - margin.top - margin.bottom,
       width     = +svg.attr('width') - margin.left - margin.right,
-      height2   = +svg.attr('height') - margin2.top - margin2.bottom;
+      height2   = +svg.attr('height') - margin2.top - margin2.bottom,
       green     = '#4caf50',
       yellow    = '#fff176',
       red       = '#f44336',
@@ -20,7 +20,7 @@ const parsedate = d3.timeParse("%m/%d/%Y %H:%M");
 const formatDate = d3.timeFormat('%b %d, %Y');
 
 function fetchData (city) {
-    d3.json(`https://maps.calsurv.org/zika/risk/${city}`, (error, data) => {
+    d3.json(`./data/${city}.json`, (error, data) => {
         if (error) console.log(error);
         d3.select('#container').remove();
         drawGraph(data);
@@ -32,40 +32,40 @@ function fetchData (city) {
 function drawGraph(data) {
 
     // SET SCALES for each graph.  same for each, just height is different on smaller graph
-    var x = d3.scaleTime().range([0, width]),
+    const x = d3.scaleTime().range([0, width]),
         x2 = d3.scaleTime().range([0, width]),
         y = d3.scaleLog().range([height, 0]).base(2).clamp(true),
         y2 = d3.scaleLinear().range([height2, 0]);
 
     // SET AXES, need 2 x's since the top one will change, but no second y axis on the bottom
-    var xAxis = d3.axisBottom(x),
+    const xAxis = d3.axisBottom(x),
         xAxis2 = d3.axisBottom(x2),
         yAxis = d3.axisLeft(y).tickValues([0, 0.1, 0.2, 0.5, 1.0, 2.0]);
 
     // INIT BRUSH just on X axis
-    var brush = d3.brushX()
+    const brush = d3.brushX()
         .extent([[0, 0], [width, height2]])
         .on("brush end", brushed);
 
     // INIT ZOOM
-    var zoom = d3.zoom()
+    const zoom = d3.zoom()
         .scaleExtent([1, Infinity])
         .translateExtent([[0, 0], [width, height]])
         .extent([[0, 0], [width, height]])
         .on("zoom", zoomed);
 
     // INIT TOP LINE
-    var line = d3.line()
+    const line = d3.line()
         .x( (d) =>  x(d.date) )
         .y( (d) =>  y(d.risk) );
 
     // INIT BOTTOM LINE
-    var line2 = d3.line()
+    const line2 = d3.line()
         .x( (d) =>  x2(d.date) )
         .y( (d) => y2(d.risk) );
 
     //make only the needed SVG visible
-    var clip = svg.append("defs").append("svg:clipPath")
+    const clip = svg.append("defs").append("svg:clipPath")
         .attr("id", "clip")
         .append("svg:rect")
         .attr("width", width)
@@ -86,12 +86,12 @@ function drawGraph(data) {
                        .attr("clip-path", "url(#clip)");
 
     // append the top chart
-    var focus = container.append("g")
+    const focus = container.append("g")
         .attr("class", "focus")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     // append the bottom chart
-    var context = container.append("g")
+    const context = container.append("g")
         .attr("class", "context")
         .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 
@@ -253,7 +253,7 @@ function drawGraph(data) {
     function tipMouseover(d) {
         let color = labelRisk(d.risk);
 
-        var html = `
+        const html = `
             <div class='toolTip__risk' style='background:${color}'> <div class='toolTip__risk--title'> Risk Factor</div> <div class='toolTip__risk--value'> ${d.risk}</div> </div>
             <div class='toolTip__date'>${formatDate(d.date)}</div>
         `;
@@ -273,7 +273,7 @@ function drawGraph(data) {
     
     function brushed() {
         if (d3.event.sourceEvent && d3.event.sourceEvent.type === "zoom") return; // ignore brush-by-zoom
-        var s = d3.event.selection || x2.range();
+        const s = d3.event.selection || x2.range();
         x.domain(s.map(x2.invert, x2));
         graph.select(".line").attr("d", line);
         graph.selectAll('circle')
@@ -289,7 +289,7 @@ function drawGraph(data) {
 
     function zoomed() {
         if (d3.event.sourceEvent && d3.event.sourceEvent.type === "brush") return; // ignore zoom-by-brush
-        var t = d3.event.transform;
+        const t = d3.event.transform;
         x.domain(t.rescaleX(x2).domain());
         graph.select(".line").attr("d", line);
         focus.select(".axis--x").call(xAxis);
@@ -305,64 +305,3 @@ function drawGraph(data) {
 
 fetchData("Fresno");
 
-//SLIDER STUFF
-
-//generate some fake data
-let fake = [];
-
-for (let i = 0; i < 100; i++) {
-    let obj = {};
-    let date = new Date('06-01-2017');
-
-    date.setDate(date.getDate() + i);
-    obj["date"] = formatDate(date);
-    obj["tempMin"] = +(Math.random() * 20).toFixed(2);
-    obj["tempMax"] = +(Math.random() * 20 + obj["tempMin"]).toFixed(2);
-    obj["risk"] = +(Math.random() * 3).toFixed(2);
-    obj["bites"] = +(Math.random() * 50).toFixed(1);
-    obj["survival"] = +(Math.random() * 50 + 25).toFixed(0);
-
-    fake.push(obj);
-}
-console.log(fake);
-
-const slider = document.getElementById('pickDate');
-const table = document.getElementById('cityData');
-
-function showTable(i) {
-    let data = fake[i];
-    console.log(data);
-
-    let html = `
-
-      <p> Date: ${data.date}</p>
-      <table>
-        <th>
-            <td class='table-headers'> Min Temp</td>
-            <td class='table-headers'> Max Temp </td>
-            <td class='table-headers'> Risk Idx</td>
-            <td class='table-headers'> Bites per Person</td>
-            <td class='table-headers'> Daily Survival of mosq</td>
-        </th>
-
-        <tr class='table-data'>
-          <td> City's Data </td>
-          <td> ${data.tempMin}</td>
-          <td> ${data.tempMax}</td>
-          <td> ${data.risk}</td>
-          <td> ${data.bites}</td>
-          <td> ${data.survival}%</td>
-        </tr>
-        
-      </table>
-    
-    `
-    table.innerHTML = html;
-}
-slider.oninput = function() {
-  showTable(this.value)   
-}
-
-showTable(45);
-
-// slider.defaultValue = 50;

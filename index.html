@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 
-    <link rel='stylesheet' type='text/css' href='zika.css'>
+    <link rel='stylesheet' type='text/css' href='src/css/zika.css'>
 <body>
 
 <div class='container'>
@@ -16,7 +16,7 @@
             <h3>Select a city for Zika Risk Data</h3>
             <button onclick='fetchData("Fresno")'> Fresno</button>
             <button onclick='fetchData("Bakersfield")'> Bakersfield</button>
-            <button onclick='fetchData("San%20Bernardino")'> San Bernadino</button>
+            <button onclick='fetchData("SanBernardino")'> San Bernardino</button>
         </div>
         
         <div id='chart'></div>
@@ -46,6 +46,7 @@
  </div> <!-- container -->
     
 <script src="https://d3js.org/d3.v4.min.js"></script>
-<script src='zika.js'></script>
+<script src='src/js/zika.js'></script>
+<script src='src/js/slider.js'></script> 
 
 </body>
