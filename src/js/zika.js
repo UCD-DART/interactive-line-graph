@@ -1,3 +1,6 @@
+import FakeSlider from './slider';
+import '../css/zika.css';
+
 const svg = d3.select('#chart')
               .append('svg')
                 .attr('height', 400)
@@ -19,8 +22,9 @@ const margin    = {top: 20, right: 50, bottom: 110, left: 80},
 const parsedate = d3.timeParse("%m/%d/%Y %H:%M");
 const formatDate = d3.timeFormat('%b %d, %Y');
 
-function fetchData (city) {
-    d3.json(`./data/${city}.json`, (error, data) => {
+const fetchData = (city) => {
+    // d3.json(`http://maps.calsurv.org/zika/risk/${city}`, (error, data) => {
+    d3.json(__dirname + `./data/${city}.json`, (error, data) => {
         if (error) console.log(error);
         d3.select('#container').remove();
         drawGraph(data);
@@ -80,7 +84,7 @@ function drawGraph(data) {
                         .attr('width', +svg.attr('width'));
 
     //append the top clip path to the svg, give it the clip path attribute linked to the clip element above
-    graph = container.append("g")
+    const graph = container.append("g")
                        .attr("class", "graph")
                        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
                        .attr("clip-path", "url(#clip)");
@@ -305,3 +309,12 @@ function drawGraph(data) {
 
 fetchData("Fresno");
 
+document.getElementById('fresnoButton').addEventListener('click', () => fetchData('Fresno') );
+document.getElementById('bakersfieldButton').addEventListener('click', () => fetchData('Bakersfield') );
+document.getElementById('sanBernardinoButton').addEventListener('click', () => fetchData('SanBernardino') );
+
+const slider = FakeSlider('pickDate', 'cityData');
+
+console.log('who is there');
+
+console.log('less')
