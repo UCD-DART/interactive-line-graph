@@ -1,4 +1,5 @@
 const path = require('path');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
     entry: './src/js/zika.js',
@@ -9,10 +10,11 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.css$/,
+                test: /\.(s*)css$/,
                 use: [
                     'style-loader',
-                    'css-loader'
+                    'css-loader',
+                    'sass-loader'
                 ]
             },
             {
@@ -32,5 +34,8 @@ module.exports = {
     },
     devServer: {
         contentBase: './dist'
-    }
+    },
+    plugins: [
+        new UglifyJSPlugin()
+    ]
 };

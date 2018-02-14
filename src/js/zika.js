@@ -1,5 +1,7 @@
 import FakeSlider from './slider';
 import '../css/zika.css';
+import * as d3 from 'd3';
+import '../scss/zika.scss';
 
 const svg = d3.select('#chart')
               .append('svg')
@@ -314,7 +316,3 @@ document.getElementById('bakersfieldButton').addEventListener('click', () => fet
 document.getElementById('sanBernardinoButton').addEventListener('click', () => fetchData('SanBernardino') );
 
 const slider = FakeSlider('pickDate', 'cityData');
-
-console.log('who is there');
-
-console.log('less')
