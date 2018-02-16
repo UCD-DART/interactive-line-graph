@@ -1,5 +1,233 @@
-// $red: blue;
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 
-// div {
-//     border: 4px solid $red;    
-// }
+body {
+    background: #eee;
+    margin: 0 auto;
+    font-family: 'Roboto', sans-serif;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 455px auto;
+}
+
+.map {
+    margin: 20px auto;
+    text-align: center;
+    border-radius: 30px;
+    height: 600px;
+    width: 420px;
+    overflow: hidden;
+    // background-image: url('../img/zika.gif');
+    background-position: -260px -180px;
+    background-size: 800px 800px;
+
+}
+
+.city-data {
+    /* border: 2px red solid; */
+}
+
+.card {
+    margin: 10px auto;
+    display: block;
+    background: #fff;
+    text-align: center;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    cursor: move;
+}
+
+.map-gif {
+    height: inherit;
+    width: inherit;
+}
+
+
+.buttons {
+    width: 50%;
+    padding: 10px;
+}
+
+.buttons button {
+    color: #6ec6ff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+
+/******* GRAPHING ******/
+.line {
+    fill: none;
+    stroke: url(#line-gradient);
+    stroke-width: 4px;
+}
+
+
+
+.axis path {
+    stroke: #6ec6ff;
+    stroke-width: 4px;
+    shape-rendering:crispEdges;
+}
+
+.axis text {
+    stroke: black;
+    stroke-width: 0px;
+    font-size: 14px;
+    text-align: left;
+}
+
+.axis-label {
+    font-size: 18px;
+    stroke: #2196f3;
+    fill: #2196f3;
+}
+.zoom {
+    cursor: move;
+    fill: none;
+    pointer-events: inherit;
+}
+
+.context-line {
+    stroke: url(#context-line-gradient);
+    stroke-width: 4px;
+    shape-rendering: crispEdges;
+    fill: none;
+}
+
+
+/******* TOOL TIP *********/
+.toolTip {
+    position: absolute;
+    font-family: Helvetica;
+    width:  220px;
+    height: auto;
+    /* pointer-events: none; */
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    
+}
+
+.toolTip__date {
+    font-style:oblique;
+    text-align: right;
+    padding: 25px;
+}
+
+.toolTip__risk {
+    font-style: italic;
+    background: #f44336;
+    font-size: 10px;
+    text-align: center;
+    padding-top: 5px;
+} 
+
+.toolTip__risk--title {
+    margin-top: 10px;
+}
+
+.toolTip__risk--value {
+    font-style: normal;
+    font-size: 36px;
+    color: black;
+    padding: 0 5px;
+}
+
+
+/******* LEGEND ******/ 
+.legend {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    width: 700px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.legend__risk {
+    padding: 10px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.legend__risk--xLow {
+    background: #1565c0;
+    color: white;
+}
+.legend__risk--low {
+    background: #6ec6ff;
+}
+.legend__risk--moderate {
+    background: #ef9a9a;
+}
+.legend__risk--high {
+    background: #f44336;
+}
+
+/* SLIDER */
+
+.sliderContainer {
+    text-align: center;
+}
+
+.slider {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    margin-top: 20px;
+    appearance: none;
+    width: 90%; /* Full-width */
+    height: 25px; /* Specified height */
+    background: #d3d3d3; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+}
+
+.slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */ 
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: blue; /* Green background */
+    cursor: move; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: black; /* Green background */
+    cursor: move; /* Cursor on hover */
+}
+
+/* CITY DATA TABLE */
+
+.cityData {
+    width: 90%;
+    text-align: center;
+    padding-top: 30px;
+}
+
+.cityData table {
+    margin: 0 auto;
+}
+
+.cityData td {
+    padding: 5px;
+}
+
+.table-headers {
+    font-weight: bold;
+}
+
+.cityData .table-data {
+    font-style: italic;
+}

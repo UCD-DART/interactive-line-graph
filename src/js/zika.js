@@ -1,7 +1,7 @@
 import FakeSlider from "./slider";
-import "../css/zika.css";
 import * as d3 from "d3";
 import "../scss/zika.scss";
+import "./map.js";
 
 const svg = d3
   .select("#chart")
@@ -367,5 +367,3 @@ document
   .addEventListener("click", () => fetchData("SanBernardino"));
 
 const slider = FakeSlider("pickDate", "cityData");
-
-console.log("testsss");
