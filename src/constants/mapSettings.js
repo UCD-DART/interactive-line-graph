@@ -176,8 +176,8 @@ export const myMapStyles = [
 ];
 
 export const mapOptions = {
-  center: { lat: 35.57, lng: -118 },
-  zoom: 7,
+  center: { lat: 35.67, lng: -119.1 },
+  zoom: 8,
   mapTypeControl: false,
   styles: myMapStyles
 };
