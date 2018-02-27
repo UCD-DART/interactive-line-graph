@@ -1,7 +1,12 @@
 import FakeSlider from "./slider";
 import * as d3 from "d3";
 import "../scss/zika.scss";
-import "./map.js";
+// import { day } from "./map.js";
+// var map = require("./map");
+import * as map from "./map";
+
+console.log(map.day);
+map.drawMap();
 
 const svg = d3
   .select("#chart")
@@ -25,14 +30,14 @@ const margin = { top: 20, right: 50, bottom: 110, left: 80 },
 // const parsedate = d3.timeParse("%m/%d/%Y %H:%M");
 const formatDate = d3.timeFormat("%b %d, %Y");
 
-const fetchData = city => {
+function fetchData(city) {
   // d3.json(`http://maps.calsurv.org/zika/risk/${city}`, (error, data) => {
   d3.json(__dirname + `./data/${city}.json`, (error, data) => {
     if (error) console.log(error);
     d3.select("#container").remove();
     drawGraph(data);
   });
-};
+}
 
 function drawGraph(data) {
   // SET SCALES for each graph.  same for each, just height is different on smaller graph
