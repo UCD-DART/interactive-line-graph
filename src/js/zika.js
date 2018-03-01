@@ -1,12 +1,19 @@
 import FakeSlider from "./slider";
 import * as d3 from "d3";
 import "../scss/zika.scss";
-// import { day } from "./map.js";
-// var map = require("./map");
-import * as map from "./map";
+import { data } from "../constants/geojson.js";
+import { Map } from "./map";
 
-console.log(map.day);
-map.drawMap();
+let myMap = Map();
+myMap.drawMap(data);
+myMap.setDay("day3");
+// console.log(myMap.getDay());
+
+//this added in just to make sure manipulating the parent js file is utilizing Map module's functions
+document.querySelector("#mapSlider").oninput = function() {
+  let day = "day" + this.value;
+  myMap.setDay(day);
+};
 
 const svg = d3
   .select("#chart")
@@ -20,8 +27,6 @@ const margin = { top: 20, right: 50, bottom: 110, left: 80 },
   height = +svg.attr("height") - margin.top - margin.bottom,
   width = +svg.attr("width") - margin.left - margin.right,
   height2 = +svg.attr("height") - margin2.top - margin2.bottom,
-  // green = "#4caf50",
-  // yellow = "#fff176",
   red = "#f44336",
   blue = "#1565c0",
   lightblue = "#6ec6ff",
