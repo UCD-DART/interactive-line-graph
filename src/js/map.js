@@ -4,12 +4,12 @@ import { colors } from "./helpers";
 export const Map = function(data) {
   let geoJson = data;
   let map = new google.maps.Map(document.getElementById("map"), mapOptions);
-  let day = "day1";
+  let week = 2;
 
   const riskColor = function(feature) {
     let risk = feature.getProperty("risk");
     let color;
-    let current = risk[day];
+    let current = risk[week].risk;
 
     if (current > 2.0) {
       color = colors["dark-red"];
@@ -73,19 +73,20 @@ export const Map = function(data) {
     return g;
   };
 
-  const setDay = function(date) {
-    day = date;
+  const setDay = function(num) {
+    week = num;
     map.data.setStyle(riskColor);
   };
 
   const drawMap = function(geoJson) {
+    console.log(geoJson);
     geoJson.features.forEach(feature => {
       let geo = feature.geometry;
       feature.geometry = decodeGeometry(geo);
     });
     map.data.addGeoJson(geoJson);
     map.data.setStyle(riskColor);
-    let msg = new google.maps.InfoWindow();
+    // let msg = new google.maps.InfoWindow();
     map.data.addListener("click", function(e) {
       // going to have to find a way to manipulate another module,
       // may have to draw the map in zika.js then just use map.js to handle geometry out and provide styling.
