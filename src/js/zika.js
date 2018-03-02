@@ -1,19 +1,25 @@
-import FakeSlider from "./slider";
+import FakeSlider from "./fakeSlider";
 import * as d3 from "d3";
 import "../scss/zika.scss";
 import { data } from "../constants/geojson.js";
 import { Map } from "./map";
+import { Slider } from "./slider";
 
-let myMap = Map();
-myMap.drawMap(data);
-myMap.setDay("day3");
-// console.log(myMap.getDay());
+let zikaMap = Map();
+zikaMap.drawMap(data);
+zikaMap.setDay(65);
+const formatDate = d3.timeFormat("%b %d, %Y");
 
-//this added in just to make sure manipulating the parent js file is utilizing Map module's functions
-document.querySelector("#mapSlider").oninput = function() {
-  let day = "day" + this.value;
-  myMap.setDay(day);
-};
+let mapSlider = Slider("slider", data.features[0].properties.risk.length);
+
+document.querySelector("#pickDate").oninput = e => changeDate(e);
+
+function changeDate(e) {
+  let idx = e.target.value;
+  zikaMap.setDay(idx);
+  const selectedDay = new Date(data.features[0].properties.risk[idx].date);
+  document.getElementById("selected-date").innerHTML = formatDate(selectedDay);
+}
 
 const svg = d3
   .select("#chart")
@@ -33,7 +39,6 @@ const margin = { top: 20, right: 50, bottom: 110, left: 80 },
   lightred = "#ef9a9a";
 
 // const parsedate = d3.timeParse("%m/%d/%Y %H:%M");
-const formatDate = d3.timeFormat("%b %d, %Y");
 
 function fetchData(city) {
   // d3.json(`http://maps.calsurv.org/zika/risk/${city}`, (error, data) => {
@@ -376,4 +381,4 @@ document
   .getElementById("sanBernardinoButton")
   .addEventListener("click", () => fetchData("SanBernardino"));
 
-const slider = FakeSlider("pickDate", "cityData");
+// const slider = FakeSlider("pickDate", "cityData");
