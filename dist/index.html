@@ -12,46 +12,55 @@
 <body>
 
     <div class='container'>
+        <div class='visualizations'>
 
-        <div class='map'>
-            <div id="map"></div>
+            <div class='map'>
+                <div id="map"></div>
 
-            <div class="sliderContainer">
-                <input type="range" min="1" max="5" value="3" class="slider" id="mapSlider">
+                <!-- <div class="sliderContainer">
+                    <input type="range" min="1" max="5" value="3" class="slider" id="mapSlider">
+                </div> -->
+
+            </div>
+
+            <div class='city-data'>
+                <div class='card buttons'>
+                    <h3>Select a city for Zika Risk Data</h3>
+                    <button id='fresnoButton'> Fresno</button>
+                    <button id='bakersfieldButton'> Bakersfield</button>
+                    <button id='sanBernardinoButton'> San Bernardino</button>
+                </div>
+
+                <div id='chart'></div>
+
+                <div class='legend'>
+                    <div class='legend__risk legend__risk--xLow'>Extremely Low Risk</div>
+                    <div class='legend__risk legend__risk--low'>Low Risk</div>
+                    <div class='legend__risk legend__risk--moderate'>Moderate Risk</div>
+                    <div class='legend__risk legend__risk--high'>High Risk</div>
+                </div>
+
+                <!-- <div class='date-data'>
+                    <div class="sliderContainer">
+                        <input type="range" min="1" max="100" value="50" class="slider" id="pickDate">
+                    </div>
+                    <div class='card cityData'>
+                        <h3> City Data</h3>
+                        <div id='cityData'>
+                            
+                        </div>
+                    </div>
+                </div> -->
+
+
             </div>
 
         </div>
-
-        <div class='city-data'>
-            <div class='card buttons'>
-                <h3>Select a city for Zika Risk Data</h3>
-                <button id='fresnoButton'> Fresno</button>
-                <button id='bakersfieldButton'> Bakersfield</button>
-                <button id='sanBernardinoButton'> San Bernardino</button>
+        <div class='sliderContainer'>
+            <div class='card card__date'> DATE:
+                <span id='selected-date'>slider changes Date</span>
             </div>
-
-            <div id='chart'></div>
-
-            <div class='legend'>
-                <div class='legend__risk legend__risk--xLow'>Extremely Low Risk</div>
-                <div class='legend__risk legend__risk--low'>Low Risk</div>
-                <div class='legend__risk legend__risk--moderate'>Moderate Risk</div>
-                <div class='legend__risk legend__risk--high'>High Risk</div>
-            </div>
-
-            <div class='date-data'>
-                <div class="sliderContainer">
-                    <input type="range" min="1" max="100" value="50" class="slider" id="pickDate">
-                </div>
-                <div class='card cityData'>
-                    <h3> City Data</h3>
-                    <div id='cityData'>
-
-                    </div>
-                </div>
-            </div>
-
-
+            <div id="slider"></div>
         </div>
 
     </div>
