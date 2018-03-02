@@ -6,7 +6,7 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
-.container {
+.visualizations {
   display: grid;
   grid-template-columns: 455px auto;
 }
@@ -167,6 +167,8 @@ body {
 }
 
 .slider {
+  text-align: center;
+  margin: 0 auto;
   -webkit-appearance: none; /* Override default CSS styles */
   margin-top: 20px;
   appearance: none;
@@ -198,6 +200,12 @@ body {
   height: 25px; /* Slider handle height */
   background: black; /* Green background */
   cursor: move; /* Cursor on hover */
+}
+
+.card__date {
+  width: 200px;
+  text-align: left;
+  padding: 15px;
 }
 
 /* CITY DATA TABLE */
