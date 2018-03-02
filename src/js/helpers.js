@@ -1,6 +1,6 @@
 export const colors = {
-  "dark-red": "#f44336",
-  "light-red": "#ef9a9a",
-  "light-blue": "#6ec6ff",
-  "dark-blue": "#1565c0"
+  "dark-red": "#f44336", // > 2
+  "light-red": "#ef9a9a", // > 1
+  "light-blue": "#6ec6ff", // > 0.5
+  "dark-blue": "#1565c0" // < 0.5
 };
