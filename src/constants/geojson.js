@@ -1,256 +1,3 @@
-export const data = {
-  type: "FeatureCollection",
-  features: [
-    {
-      geometry: {
-        type: "EncodedPolyline",
-        coordinates: [
-          [
-            {
-              level:
-                "PGGGEFFF??FCCFA@G?EGEBB@ADBBDJBC?GHCGH@FFAGGBAGHFCBEKGHFGHGGIGFGEEGEGEEKG@FFGGGGGGIFFFGEGGFFHEEFDDKEFFHGCCGIEEEEFFDHDGFGEDEEDJDFDBBEHGFFAICGCGHFCGKDGGFFGGFFF@DHEDJFFFHADCI?GFGGFEHFEEGEEEEKGDGDFGCGFGHFFGFCIGGFGFIFGFEG?G?FMGEEHBHGFEGHFEFFGGCCCJEFGGEEFFJGH?HDDDHKFFGGAAIEE@G?HIBHEEFEGHFGGIEEEIFFHC?CBGGFFG@FBIDCECCDEGHFHEEFF?FFFFIEEIFFFEFJEEFFHGEEFEDFFGGFH?EFHG?GHFFFEHFEFFEFFEEKHFFGFGHFEI?GFEGIFFFFDDHEFEFEHFEFKEFGFGHGGIFFEFFF?JCBHHJGGHGFHFGDEEIGFEFGEEGHDEICEMCCE@?A@CAGBA@@B@BE@A?DE@BG@@@BA@C@FC?BEG?@?@@?BB?AEBAAAEBCBGBD@BE?CIAA@@DFEFIEFEG?BABEABDAGADACEEF?A?CIFGEHCDFFA?B@AC@B@E??CA@CJB@GBCDEGDBBA?@FBBCCGDF@A@ACABHFBAB@BEB@CAAIEFEFHFDDEFCFCEDEKEIDGCFBAP",
-              point:
-                "qp_`FjvwyUPnUdVUKaUdcAE@bI`PCAeIt[Mfl@MdqAc@zG_AlNcIfDm@tWPbLBbFCJtBTrDtSjWdBsDv@Cb@h@f@B`@Hb@V?_Ad@??U~pAMZiw@l@cSe@yF?Ixl@Ap@_w@s@gg@rU_EeNyHUWhOIEeo@PuF}f@z@SuENaYM}WkRCnA_gAp@wE~Nga@dAaFpGkp@lr@CEpw@hb@?AtWp`@EFj_@mV?CnzA~k@eB@bVfWi@TrYxI?]`HxJjBt]wEMjG}F~CAfMfUk@Icd@Bi`@oQ@?qLpQ?F{}@_Ub@?wV~TADww@bIBNtXdY@rAtI|CmGjf@wAAsWxTAFlZdO_@HuHfFMD{c@tGiEnAqIdNyJ~FxS[r[zK?IvoBsa@I@uf@_AyH|@yEux@G?jOdFBJ`g@eF?vBj{@lLa@lFpWTd[}UBcKzCJpT{EwFcDt_@`DlEAvH~E?iBjCG`IhJChByB{B_EGcMX?@}GzFyAA|Xnl@NCiMvf@Fvb@SxAyZc@cBs[n@sGtAJanCzc@CAcMwAcMra@C@bTwA~EdYGEhgAuPrD?da@pPAEdR_H?|GbFGva@_@ju@~A~iArL_E|J|ClSQVbPcTJCxT{VGXrx@AzQjDf[FfHaEBo_@B@|VyKCD}VsUABuH}UA@tVrJ@BvHzId@Bh^iE?L|RuERD`_@xa@]Bsr@vAqMdEhC@dIz]DxDwBnTkTaO}E@mWjb@S`AsZ_NCDa[xOBHeOhDmg@xOABrw@rUAD|[l_@GfA~K|IaLxk@?[e[nM?Dqi@dJoLhFsGGpGGnJjLA@ddB_a@CIvEiICBnp@e@nw@ku@@M~ZcIIAp[cWAG`hAfHa@SjLjIIf@xZcS?@hYn@??fb@k@dG_J_@GcKia@AEye@mUp@}@{EeTY@mJql@?B`j@hl@KPleAJtq@`n@@fU`A@`BhTCFbp@mk@LJcOwm@PCu`@ol@MuU]cVCB`KaHSA|OLb[`HBrl@NFhu@ml@Lel@Y@rOiGK?bIjG@DjZ_UjABiKqVi@Kyi@_TG_D|p@fAtNfFA?tLwZRCeNwSQy@_H?oB`@aZG}W_@kEkV@AiKjVIBub@_WBcDCgBgJo@aAqKL?{AkEh@wAv@AnDeAA?fFgJA?tu@pl@GBnNaKEDlGaUCDqGuJ?uUEAeIsUpFCcK{[BCnOpEC_A`bAaKDt@gZqM@_EuH?m_@oKQ?rMiGr@QrY`HCN~YfUoA@`OmGHBjGnG@CsE|K@?bLj_@EDnZwT?j@`\\jS?jDCZfJ~NSDpl@aUAyJDDfYpJ@E{JjT?LhJtVMBxOcLBAdEdLJoFjKpFtCoK?HdGjLB?bIgm@GAiPhVIAeHgb@G@h[sSsAQ{ZnG@E{u@}S?sHBEvY~HEBn\\ol@HGiw@nM?Hk[cJEp@uZrBCKmOuGHA{GsEhHwLt@GdMsI?iCgY{H?A{\\uIESjw@pJGDzw@rQEzClMsAz`BcSFOqg@gv@}@qCrLnM@@|[gJ??bMjJfEJ`{ABj@wRAmAe@iWDSsoB}j@FFfw@tZE^pXs[I?h^o]FEtTlP?sCnE]`PkG?ErJ{a@z@?{QuO??yMgJ?GkQhI?BkEm`@?Vi]nCF|@wOmZf^}bArtAoP|\\aAi@aCZcDqAqAcAm@s@yAiAmCwCgB_B{CkEs@_BSkBD_AZmAJy@l@aHGiAAiBTsBdBeFb@}@~@yCn@_CxGkHZeI\\iFEuD[sCMg@CcAMm@g@{MMg@MsBm@{Dw@oDiAkBeA[WEsSoOsGsNC]W}BGoBOqBQoAi@qGa@oE_@iIHwAAk@UaBf@}BB{BVwBnAqGX_DQaEXcCyAeFMqB{@oAsA[gA?sALkGs@oKaJiD}C_DoAhLg]\\o@zAsEBYzDkLb[on@vLR\\oOpOiAoK_b@mJ_LsMiG_GfCtC_E`AwATs@z@oAX{ALeBE_Bc@mCq@kBaByCcFwH_Aw@uFuBe@GaMwHiFxDiGwD{@eDc@uAa@{BEQe@aHj[hACwI~]~Tt@fFhAuPp@gs@bEaWkNcFhCkJLMXm@b@_B`@eC~CgLn@qAfBgC^_A^oA^_DZeBPyABuASyFKcAl@aLwGaSiA}F{@eDmAOcAReJmE{^_Ca]mLgGoIoBiJgByDIsA}@eEYcAGy@qBiBuAYe@cAao@s[oEwE_DwUNuUUWOw@m@aAm@uAg@s@eCuBeB{@qCeDkc@eFaB|@_@CaA\\yCpBiA`AcTlLeCNUQ_AUmANcBv@eAFjAsEkHoAdVoEjJaO?y_@qM{E}JgTsGgY_D{B_@uMeD}Dw\\}ScFaJmXit@aS}RyE}JsHgYnE?c@gxA~VtRdInBtD[rSeLz\\UjzACjzAS"
-            },
-            {
-              level: "PF@GHGP",
-              point: "msa`Fln}yU?qNiQMuBDe@lw@fVAAqg@"
-            },
-            {
-              level: "PCCF@@BAHCCCEP",
-              point: "se|_FpahzUvDdIIzB~FjU^@`AQf@?rANtAU{DqNkEiKiBmAyAkFuC|@"
-            },
-            {
-              level: "PFGFDDP",
-              point: "qr{_FjjzyUrJAAiZyMYIjXlB?BxA"
-            },
-            {
-              level: "PGHDDDGEEP",
-              point: "_g{_FhnyyUbUKJol@uU@?yBoCC{C|BAfInHTBza@"
-            },
-            {
-              level: "PFGEGDBHCDI@FEEFGP",
-              point:
-                "cd{_FnvnzUmS\\qDhXxUfF?`IqDlBiUgEeB@hKhOrAh@vRda@RuO@oDdGKE{LbHCXkw@aRH"
-            },
-            {
-              level: "PFCHAFP",
-              point: "omz_FzerzUkHtBxA`MBzMpRaZVo@{LaC"
-            },
-            {
-              level: "PFEDFH?GEP",
-              point: "uez_FfhnzUlKDqCw`@gD@o@q[sH@AlIJn`AbGA@{L"
-            },
-            {
-              level: "PF@GBGHEP",
-              point: "uyz_Fv_tzU{@uLkO|Lg@f@nRo@tXSKiScJh@eMrR"
-            },
-            {
-              level: "PGEEGEHDDEFHFEFBGGFFJCEGGHGHFFEH?FEEHEEIFGG?GGGFEHGP",
-              point:
-                "ofx_FjjlzUn]CKq`@iE]kEwT`N@dCuIrC`A~ByDbh@~C@lHtU?GqSnMLfE{Ft@{O@gJqU@EaMjSaBm@y`@cRiDiJCiJpDDl`@sUEoBmc@gRZB~T`KPmGhKE|PeBCsJBaAoa@lIcH_BwHqJZeDpHmUt@F`h@iU?Kx[jACjSOBds@}\\zBiAn[yKC?|[bl@i@zBkZ"
-            },
-            {
-              level: "PGEEHFEEP",
-              point: "iiy_F`agzUh]??oM}G@S_]uM`@RtO}Eg@F|Z"
-            },
-            {
-              level:
-                "PFFFCGBEEIFGDEBHDBFADFBDJEEFFGHDEECCIBDFFGEEFGDEEFHFEHEFHEEFEFHFFEFJ?EEDEEFIEEDGGFFP",
-              point:
-                "qct_FhkfzU@nUpOPUrLaPg@Aj@n@zD@~FtLfM?`Mt`ADzFeNhBd@?bNrDOGRhD_Gz@cI@}IdEBtBQJpArKqR`GeInKcK?sJoJqCCuIoUCEsP}`@AlEqHa@sQtD@CoKdAA?uCeA?qUbH_SXbB_Lmi@\\kGbIDvUsJAeA`MiBA_DyHjDiA}DoLkUwA@h[`L?AnE}OsEy^Ez@lLeJsD?_GwE?cCyVvIS@sPiPGfAwIqFtBAbMqUCAtDDjLlFBN`OtA?C|\\fKDT`V|TuGvDzEf^FfRkCCcb@fOl@`@pRxOh@"
-            },
-            {
-              level: "P?FFCHFFDIEEGEGHGBI?EDDEEP",
-              point:
-                "cmt_FzmkzUwa@AoXDD~L{RkAqF{ACpRmSj@Cd[fDpI|Ue@BzDtOz@|DqJEeb@xU@?jw@lX?vDVBQbDgKqAoSl@s\\`EsPoA_FgC~@"
-            },
-            {
-              level: "PCFEDFGGFFJDEGEEEEDE?ICFFHGJDCECCCCFGFFGGFDEEIEFFGFP",
-              point:
-                "iil_Fjt{yUsA|QRjHiOEsA~EyBf@Bnp@qT?PfYbTCBbSnHaCbLhBfMkMdBg^hD?S{p@_FgFTiFhEoBByUAkFa@m@iO\\MqN_ZGBetAeg@G@xDqAAIzU}D?@x@cAB?{@yDA?`MjJBCbMxUAC`[mJHAdM{DjOwDIAnRtJgIbJB?dPpZDrEk[hLF"
-            },
-            {
-              level: "PHHFFGFDHFFCGEEBGEDEJBHEFEABHDFIFFFGEHFDDDDP",
-              point:
-                "eyh_FlusyU{j@HCnw@`I?AeWhJgCBpThJ|EfJCCrYyMn@iBxI{BbE_H@OmLmAFaIoA?dZpCbMlDhBmDnKnf@o@|RBEgMpG_MqECQmh@WoNTwLlW?rOlB|DkIuDmb@{OCA{V{TjEIwV}FsKiN`C?t]pA?BfCsA?AnM"
-            },
-            {
-              level: "PGHABGCP",
-              point: "qkg_FdouyUIhs@vUS@yVb@eF@gTsVOA`@"
-            },
-            {
-              level: "PFFHBHEEGP",
-              point: "ivc_FxgwyUxNAl@rZ|VSR}YKkZ}Y]MoG}LSCld@"
-            }
-          ],
-          [
-            {
-              level: "PEFFHGP",
-              point: "eyh_FlusyUlF?{Bh[`Pd@c@dKmR]Awg@"
-            }
-          ],
-          [
-            {
-              level: "PFEP",
-              point: "u`e_FhrqyU`DxH_D?AyH"
-            }
-          ],
-          [
-            {
-              level: "PFGFCP",
-              point: "}pd_FrvsyUkJCB{RjJ?^zQc@b@"
-            }
-          ],
-          [
-            {
-              level: "PFGIGHHEFJH@HHIKI@P",
-              point:
-                "af`_F~xuzUlL??qSfyBBMfw@bm@VDdv@zn@B?|Ldi@UzCth@wEHuvATLby@{yAu@RrnBgzAFWyuGGid@"
-            }
-          ]
-        ]
-      },
-      type: "Feature",
-      id: 13832,
-      properties: {
-        county: "Fresno",
-        city: "Fresno",
-        detected: true,
-        /*fresnoFormatted */
-        risk: {
-          day1: 0.5,
-          day2: 1.5,
-          day3: 2.5,
-          day4: 2.2,
-          day5: 0.1
-        }
-      }
-    },
-    {
-      geometry: {
-        type: "EncodedPolyline",
-        coordinates: [
-          [
-            {
-              level:
-                "PHFHIFGHJA?HGGGEFIBBGFGDDFDCCI?GEEGFEFFIGDCEDFHHIGHGDCFGFDDGFIGGIHGFFGHGGJGGIGFGGIJHIAJJIJBHFEEBFDDLGEGFFFFGGFFGHGFFGGHHFGJGHJDGFFGHFFEEGJFEIGFFFGFGG@JHGGEEFFFFIGFEGFFJHEBCFFHDD@DFGHFFIEFFFFEFGEFGFHFFLDGFDDEFFIGFFHEGIHBGGFFIEEG?GBDHFFGBFDIFGIHHGGMGGGICGEIIGEFGDDEHFCGFIHHHGCCKGI@GGDEGJHHFFIHFEDHGIHGFGBBFFFFGFEBHCDDDHJDFECHFFFHGIGFGGEEJFFEGFDEEFDDFDEGEFGFKFEFHHDEGGGGGEFGEIDFDDDJEEBDB?ICDEEB@@?E@HABDABBF@DFDDFCFCHFGIFEIADECHFICDCEDCCEDIDFBCAGEDGBEBCKBDFEFGHDGCHDCDFEEHEDCFGDFIII@HGHBDFDCEHFHMHIIIJHGGIDGGHFFHJFEGHIHHGKFFGI@GFHFGEEFDCGHGCHFGICDEEGCGIIGDCEDEGAEGEEGEF?IHFEFDFFEEEHFFFGDHEEFGHCAL@DG@EGBHBADDECBDAGAEFCDHDDIEE@EEEGEEFFEFEGGJGGDFFFGFEFGGFEIGFFEHHIEEEEDKHBGHEDIHHIHIP",
-              point:
-                "mfdvExzbuU_a@ABva@lQtSos@A?iv@yUC?uZ{yAKExZ\\rnB@|L|a@wL@beByW~FjH~FxAyEBloBtU??Sba@c@AqYhJA^xG~A?MtJ~E~DdK~@AhAj@B?nAw@t\\qUaF}F|EsM?Ejo@uD?AvL_PJAlKjf@J|DmD@sDtD_DB{RtCsQtI@Phv@jl@B@tZkbAEKjeA}F?AbBsM?AlH|M?AjHtFpFAvIsU?AzLvk@?Voh@dUBEhv@rl@@AvLyU@A`^yUkGAvQrl@BQhv@{bAE?qa@gUqCGpoAlU@?lMmU?Efw@wyACAfu@tyAEKvrBHtmBotDa@TzjIqnC[bEzGjaAhqBbNbhDtJlL~Bh\\T?pH`LrAjPoD|Wn@rE_NlQA{aA_DsLaPABoa@uUA?wSsUC@qv@wUEI_TgJAUkhAea@EG{Q_ME@sZo^KHymBsl@KLmv@aVDBuZqP?cD`nBcl@NEanB_DsZyPAEaMqUsLCov@tJA@kv@nI[?{KhUwAZg]kL?hCmGspA?`@hr@nT`C?tZaPBEtZdPC?xZqU?CtZERal@HAe\\bf@OKmXnEc@@}EkJ?AyKnI?Bwb@gbA?@gIwL?AoI}G@?tSoUACso@nG|EbM@?b@vI?dAiLfv@s@@mg@}B?xBeMD?YuZyTBDkv@~^DOeMjL_BKaJkIFxIcCBab@yIAbBqPwJCBwZoLAA{K{J[Czg@iGC@yTkMAB_`@wNAmF~BEn`AsC??nBcG@?fDvK@Aj`@kU??w[aMHm@aTmFJ@|Swl@BTxrAVUdb@XE`RnJqOo@tLnO|DmHdJpDfCmMpP{GCgb@@ElGeA`HfAlc@iIh@GqLsa@CArLyAfY_F|K{Wf\\dKnMyUzZEx|Ekl@CCdsA_m@YElZmyAKDunB|TwY{TCNwxFpa@AvEgAxf@yo@vHwByyAn@@}YvY??eIjO?xCoR?eRxF?\\qSgUgGaEj@gJrE@vf@eP?JyeDhk@FHmv@}i@JV_w@vAmSMaIh{@ynAnX?EtmBIlv@uUCKlv@mDROlv@~[BKaw@xw@ABuZiJHNorAlv@AJ}f@lG??qNbC?Env@tU?JkmBw`@JCbZwIW@_Z]?@kMxHCt@oZnJCLcx@cQPAkU}C\\?OjCa@nJ`AnHpD`Ks@vFfCNsh@vq@fv@lOhJ?fIbJzRfKhNAdKi[AA|SaPADso@yVGA`w@rVIGzv@v]?@~LaG?Qzh@lVC@}L`NhGr\\}A@ePyBS{CbDg@gEbGC_BG?wBqF??gBjK?@kJpJ?pJrIAxQlNoNts@GDkdA_BwGqREBkZct@[B{ZnF?ByXcUC@_]lZFPmZw\\Q@}JkN?BoXhF_DcMmByrAtA}P~CqCzEgMbG{Aw@dQcVrCmUdDmChJcMrFaLlHeLdBeCcB}AoFwNoD{RiKoFgLi[Yi@k@{AeAwBgFwLuQwQaDoDYuACaC^kBtA_ChAmAA}@f@a@e@{AkEoLaGaG{Fci@i@kXcFgX|DuL\\eGwFgQ{G}_@kI{Jwq@NiQyc@Vqd@nNqn@lGAgAbQwBvd@kDxQJrAnDvErPxPteA_@cE}QcM}^aC_UqF{SoG_J{[}x@f@_@}JuSsO}d@eBiT}EwIaHaFaFuAyOoCaJq@oCG{L`@ic@vVcGZmEaAaCuAiC{CuAaD{@aFGsCp@gHvKi]bIPKcSxNAe@{uB~\\eDpHeFjC{DbSeu@jBaR_A[_Cm`@xAoFyDmY}RwR^iMpFiLAsKzCsLzBwV_Ays@tFgBvV}WdFaWlAc{A}_BQGcVEsz@tf@k@vK{ZsGeIgGaFaFyKkH_XkDyd@iBcKyH}LDePjl@Q`@kmB~k@c@w@z{EjtDU|@~gBzyAvDFpnBoyAe@Ftc@ag@F_CfIWl~@tUAJrZoX@sGiZqJCBhh@tUf@rEnKxe@LE{v@byAAZ~mB`zAG?`rArUB@xLwUC@zLczA@DtHDrl@nYI|F`Kka@dA@zLjJ?@bMpG@GbMbB?FvZpU@Hvd@sZ_@qPl@Lzk@pU^Nlk@gD@sGeEmFSk@hDgSyJ@{Q_BeLyy@Pn@brApSREvL|EdJtAx@~AtZxA?XtZvOSh@Q|BfDLtSgJzABhJdJlAHzLrUCzKB}Hph@{B{LuMm@kB|EuBi@@sLwUiCAyLuD@G{LqD@FrZyI?jJph@m^?Et]|DdN{G@?fHml@^?tZsWNnC~L~FtNrL`Xdk@]lKAxGjBxAaBnG_Gy@wRn@HvLbNAgIQEAcOeB?AcJlA??uBTFTcJHwQjE?vE_@hAuHbF`ElGbBdLh@?qe@}Bk@vBwN`XRh@sDdBb@`OnCjDiFzJnFfAmFtInFxMB@xJvUdGAcEjJ?@dJ~FfCdBg\\xUAIsZtU?CoVmBeCgR?Imv@aH?BePxGoIxK@IuZ_WCC{SiJAEsa@rU@HpZnUBBxYjE?nEst@hrAWCyZ_E?@sv@jC@C}SkC_Ebl@BRpu@l@t\\je@BD|XtD?Dvv@voG?F~pAzyAHCkqAxyAF@xmB"
-            },
-            {
-              level: "PCHGGHGFJGGDGGEFJGGFGP",
-              point:
-                "g~kvEhzbuU}@?HvrAwUBA{ZizADBtZcUDBvZjpBI@`a@fU\\xUqEHxYtUA?yLdU?Ach@sk@IMk}@wS?Eap@"
-            },
-            {
-              level: "PGFHIEGFHP",
-              point: "ctjvEb}|uUww@JAm[_JACpz@pGwDlo@VGd[bJA@qu@"
-            },
-            {
-              level: "PGHGP",
-              point: "ykkvElhavUaUA?z\\`UD?_]"
-            },
-            {
-              level: "PEAGFP",
-              point: "}fmvEhjouU_Eh@rC~P@r@xJkDoIqN"
-            },
-            {
-              level: "PEFBFHGBFP",
-              point: "gmmvE~pruUwS??vCm@uDOgMuULC`ZtUVxUpA?sN"
-            },
-            {
-              level: "PGDEEHECCCBIGGFEEFFGFCDEGDDEDEIDGFEGEFFP",
-              point:
-                "wcnvEfxiuUpU@?ih@rC{LsC??}R{T`BmVuByKwBiBp@?UqEgA?ft@uU?@hYoG?BqKgGBAlK{Ld@iExLdMjC\\pAlI??|E{F?AeCoA?]dCaL??jE`L?vUxFAaNjJ@AsXrArKvG@?{Ljl@?"
-            },
-            {
-              level: "PGCJFFGHECJDEHEP",
-              point:
-                "}sovErbivUkz@@qJhHcvAbr@ChTzUFAnZ|t@TlMpf@pGvz@x@jBdF_C~c@oi@rFqQ|C}UC}{B"
-            },
-            {
-              level: "PDDDHGFHEFGHEEFEFJCCHDHFECGDHDEGEDHFGHHAIEGFFFFBHP",
-              point:
-                "sfuvE`xiuUAslBkBAhBgFCoScl@QK{ZiJCNra@dJwBa@vVySMKsR`FBEwG_FA[aXqJ?AjZbA`Zu@vWl\\v]~C@?el@dMF?}Hj@??|HxHtTuAxHoNnLgLp^XnVfD?@nZrUH?yZtU@@xnBtU?|T]?wa@_DsCtDsNRvKhMmH}McMWeG?{c@sk@?"
-            },
-            {
-              level: "PDHGP",
-              point: "evsvEj~juUxd@a]|BeGki@?Rfe@"
-            },
-            {
-              level: "PEFF?EHEEEIDCBFBEGCFFDEGEGEFGFDDJ@GDDDGBCFCHDFCDFGEFDDP",
-              point:
-                "sfuvEfsnuUuD@sD{L?}LtD?vCD?aMgf@?eDvE?wEsU@aEvLHxLY?eCtZsAV{FCX`ZbD~En@~EzNXu@jGhInHEjKkLGo@uHmErSpClFwP~AE`l@`C??fJdPhNtD@vQf@?}A_B?`B}BLyn@hMrC?f@fGrA@e@hRuFwCuIJkd@wBI?wAqI{BA_N~FwL`G?nAy^dCK?oH"
-            },
-            {
-              level: "PEIGGIFEGDP",
-              point: "w`vvEzzwuUwZkG}d@AGt_@tu@j_@kBda@vMcDhCu]bFCwDkPyDod@"
-            },
-            {
-              level: "PGEGCP",
-              point: "gdxvEh}ivU_VH`A|K`RbM|@?AkZ"
-            },
-            {
-              level: "PDFDFEIFP",
-              point: "sifwEjcbvUkHEqDvCcBxr@sClYtGA@jPzL?@ccB"
-            },
-            {
-              level: "PFGFP",
-              point: "o`gwEthavU`UFAoKcUCBjK"
-            },
-            {
-              level: "PFGFP",
-              point: "u_{vErebvUoID?zKhI@DcL"
-            },
-            {
-              level: "PEGEP",
-              point: "y`|vEbwavUiHA?tLhH??sL"
-            },
-            {
-              level: "PGHGP",
-              point: "sohvEbvwuUFuZuU@GvZtUC"
-            }
-          ],
-          [
-            {
-              level: "PHEIHP",
-              point: "ekavEb{buUB|aAix@tHu`@cAKyiAfzAH"
-            }
-          ],
-          [
-            {
-              level: "PIIIHJHHFEGGP",
-              point: "ip~uEn}{tU~yAGDfnBqyAHg@jmBgyAAEkmBxm@?Aw[zJ?E_c@b`@SO{l@"
-            }
-          ],
-          [
-            {
-              level: "PIJIP",
-              point: "cu{uEnl_uUvzAKMrmBczACEcmB"
-            }
-          ]
-        ]
-      },
-      type: "Feature",
-      id: 13632,
-      properties: {
-        county: "Kern",
-        city: "Bakersfield",
-        detected: true,
-        /*bakersfieldkFormatted*/
-        risk: {
-          day1: 1.2,
-          day2: 0.5,
-          day3: 2.1,
-          day4: 1.7,
-          day5: 0.3
-        }
-      }
-    }
-  ]
-};
-
 let bakersfield = [
   ["2016-01-02", "4.68e-306"],
   ["2016-01-03", "3.74e-256"],
@@ -1799,6 +1546,795 @@ let fresno = [
   ["2018-02-10", "0.00000140"]
 ];
 
+let tulare = [
+  ["2016-01-04", "1.55e-310"],
+  ["2016-01-05", "1.04e-259"],
+  ["2016-01-06", "8.42e-106"],
+  ["2016-01-07", "1.55e-51"],
+  ["2016-01-08", "5.00e-33"],
+  ["2016-01-09", "5.58e-27"],
+  ["2016-01-10", "6.42e-21"],
+  ["2016-01-11", "1.74e-18"],
+  ["2016-01-12", "1.53e-30"],
+  ["2016-01-13", "1.50e-32"],
+  ["2016-01-14", "2.63e-43"],
+  ["2016-01-15", "1.26e-28"],
+  ["2016-01-16", "3.99e-21"],
+  ["2016-01-17", "2.74e-21"],
+  ["2016-01-18", "5.55e-12"],
+  ["2016-01-19", "3.92e-11"],
+  ["2016-01-20", "2.17e-11"],
+  ["2016-01-21", "5.32e-11"],
+  ["2016-01-22", "6.30e-11"],
+  ["2016-01-23", "4.46e-11"],
+  ["2016-01-24", "6.77e-12"],
+  ["2016-01-25", "6.59e-13"],
+  ["2016-01-26", "1.19e-16"],
+  ["2016-01-27", "1.42e-15"],
+  ["2016-01-28", "5.54e-19"],
+  ["2016-01-29", "4.90e-19"],
+  ["2016-01-30", "1.14e-17"],
+  ["2016-01-31", "1.53e-13"],
+  ["2016-02-01", "1.71e-16"],
+  ["2016-02-02", "3.77e-27"],
+  ["2016-02-03", "5.44e-46"],
+  ["2016-02-04", "1.64e-54"],
+  ["2016-02-05", "2.99e-85"],
+  ["2016-02-06", "1.18e-141"],
+  ["2016-02-07", "1.45e-145"],
+  ["2016-02-08", "4.09e-109"],
+  ["2016-02-09", "6.73e-67"],
+  ["2016-02-10", "1.80e-38"],
+  ["2016-02-11", "3.29e-26"],
+  ["2016-02-12", "5.47e-19"],
+  ["2016-02-13", "8.91e-15"],
+  ["2016-02-14", "2.33e-11"],
+  ["2016-02-15", "2.35e-9"],
+  ["2016-02-16", "2.35e-9"],
+  ["2016-02-17", "3.47e-9"],
+  ["2016-02-18", "2.84e-9"],
+  ["2016-02-19", "1.73e-9"],
+  ["2016-02-20", "9.02e-10"],
+  ["2016-02-21", "3.84e-10"],
+  ["2016-02-22", "2.88e-10"],
+  ["2016-02-23", "1.87e-10"],
+  ["2016-02-24", "1.15e-10"],
+  ["2016-02-25", "3.81e-11"],
+  ["2016-02-26", "1.36e-9"],
+  ["2016-02-27", "5.79e-9"],
+  ["2016-02-28", "1.49e-8"],
+  ["2016-02-29", "2.65e-8"],
+  ["2016-03-01", "7.24e-8"],
+  ["2016-03-02", "1.29e-7"],
+  ["2016-03-03", "1.22e-7"],
+  ["2016-03-04", "1.15e-7"],
+  ["2016-03-05", "2.02e-7"],
+  ["2016-03-06", "2.72e-7"],
+  ["2016-03-07", "1.22e-7"],
+  ["2016-03-08", "4.54e-8"],
+  ["2016-03-09", "1.75e-8"],
+  ["2016-03-10", "3.55e-8"],
+  ["2016-03-11", "1.69e-8"],
+  ["2016-03-12", "3.35e-9"],
+  ["2016-03-13", "1.45e-9"],
+  ["2016-03-14", "4.14e-9"],
+  ["2016-03-15", "3.26e-9"],
+  ["2016-03-16", "5.31e-9"],
+  ["2016-03-17", "3.70e-9"],
+  ["2016-03-18", "1.55e-8"],
+  ["2016-03-19", "9.13e-8"],
+  ["2016-03-20", "4.13e-7"],
+  ["2016-03-21", "6.17e-7"],
+  ["2016-03-22", "9.08e-7"],
+  ["2016-03-23", "6.76e-7"],
+  ["2016-03-24", "4.98e-7"],
+  ["2016-03-25", "3.76e-7"],
+  ["2016-03-26", "2.75e-7"],
+  ["2016-03-27", "2.50e-7"],
+  ["2016-03-28", "1.55e-7"],
+  ["2016-03-29", "1.19e-7"],
+  ["2016-03-30", "1.49e-7"],
+  ["2016-03-31", "1.74e-7"],
+  ["2016-04-01", "2.79e-7"],
+  ["2016-04-02", "6.22e-7"],
+  ["2016-04-03", "0.00000110"],
+  ["2016-04-04", "0.00000352"],
+  ["2016-04-05", "0.0000115"],
+  ["2016-04-06", "0.0000404"],
+  ["2016-04-07", "0.000119"],
+  ["2016-04-08", "0.000152"],
+  ["2016-04-09", "0.000131"],
+  ["2016-04-10", "0.0000953"],
+  ["2016-04-11", "0.0000820"],
+  ["2016-04-12", "0.0000859"],
+  ["2016-04-13", "0.0000597"],
+  ["2016-04-14", "0.0000228"],
+  ["2016-04-15", "0.0000112"],
+  ["2016-04-16", "0.0000108"],
+  ["2016-04-17", "0.0000199"],
+  ["2016-04-18", "0.0000435"],
+  ["2016-04-19", "0.0000871"],
+  ["2016-04-20", "0.000158"],
+  ["2016-04-21", "0.000324"],
+  ["2016-04-22", "0.000560"],
+  ["2016-04-23", "0.000470"],
+  ["2016-04-24", "0.000347"],
+  ["2016-04-25", "0.000132"],
+  ["2016-04-26", "0.0000430"],
+  ["2016-04-27", "0.0000190"],
+  ["2016-04-28", "0.00000823"],
+  ["2016-04-29", "0.0000103"],
+  ["2016-04-30", "0.0000180"],
+  ["2016-05-01", "0.0000376"],
+  ["2016-05-02", "0.000146"],
+  ["2016-05-03", "0.000465"],
+  ["2016-05-04", "0.00107"],
+  ["2016-05-05", "0.00169"],
+  ["2016-05-06", "0.00151"],
+  ["2016-05-07", "0.00170"],
+  ["2016-05-08", "0.00128"],
+  ["2016-05-09", "0.00137"],
+  ["2016-05-10", "0.00138"],
+  ["2016-05-11", "0.00178"],
+  ["2016-05-12", "0.00437"],
+  ["2016-05-13", "0.0113"],
+  ["2016-05-14", "0.0158"],
+  ["2016-05-15", "0.0210"],
+  ["2016-05-16", "0.0196"],
+  ["2016-05-17", "0.0229"],
+  ["2016-05-18", "0.0291"],
+  ["2016-05-19", "0.0297"],
+  ["2016-05-20", "0.0147"],
+  ["2016-05-21", "0.00935"],
+  ["2016-05-22", "0.00672"],
+  ["2016-05-23", "0.00525"],
+  ["2016-05-24", "0.00388"],
+  ["2016-05-25", "0.00202"],
+  ["2016-05-26", "0.00117"],
+  ["2016-05-27", "0.00245"],
+  ["2016-05-28", "0.00701"],
+  ["2016-05-29", "0.0176"],
+  ["2016-05-30", "0.0351"],
+  ["2016-05-31", "0.0668"],
+  ["2016-06-01", "0.146"],
+  ["2016-06-02", "0.241"],
+  ["2016-06-03", "0.340"],
+  ["2016-06-04", "0.464"],
+  ["2016-06-05", "0.569"],
+  ["2016-06-06", "0.658"],
+  ["2016-06-07", "0.735"],
+  ["2016-06-08", "0.682"],
+  ["2016-06-09", "0.598"],
+  ["2016-06-10", "0.491"],
+  ["2016-06-11", "0.342"],
+  ["2016-06-12", "0.254"],
+  ["2016-06-13", "0.215"],
+  ["2016-06-14", "0.132"],
+  ["2016-06-15", "0.0702"],
+  ["2016-06-16", "0.0425"],
+  ["2016-06-17", "0.0375"],
+  ["2016-06-18", "0.0409"],
+  ["2016-06-19", "0.0475"],
+  ["2016-06-20", "0.0619"],
+  ["2016-06-21", "0.107"],
+  ["2016-06-22", "0.224"],
+  ["2016-06-23", "0.377"],
+  ["2016-06-24", "0.487"],
+  ["2016-06-25", "0.562"],
+  ["2016-06-26", "0.676"],
+  ["2016-06-27", "0.769"],
+  ["2016-06-28", "0.895"],
+  ["2016-06-29", "1.04"],
+  ["2016-06-30", "1.19"],
+  ["2016-07-01", "1.36"],
+  ["2016-07-02", "1.53"],
+  ["2016-07-03", "1.53"],
+  ["2016-07-04", "1.43"],
+  ["2016-07-05", "1.26"],
+  ["2016-07-06", "1.01"],
+  ["2016-07-07", "0.875"],
+  ["2016-07-08", "0.743"],
+  ["2016-07-09", "0.631"],
+  ["2016-07-10", "0.505"],
+  ["2016-07-11", "0.389"],
+  ["2016-07-12", "0.355"],
+  ["2016-07-13", "0.351"],
+  ["2016-07-14", "0.420"],
+  ["2016-07-15", "0.510"],
+  ["2016-07-16", "0.570"],
+  ["2016-07-17", "0.687"],
+  ["2016-07-18", "0.786"],
+  ["2016-07-19", "0.764"],
+  ["2016-07-20", "0.771"],
+  ["2016-07-21", "0.715"],
+  ["2016-07-22", "0.633"],
+  ["2016-07-23", "0.571"],
+  ["2016-07-24", "0.678"],
+  ["2016-07-25", "0.873"],
+  ["2016-07-26", "1.15"],
+  ["2016-07-27", "1.46"],
+  ["2016-07-28", "1.71"],
+  ["2016-07-29", "1.43"],
+  ["2016-07-30", "0.915"],
+  ["2016-07-31", "1.01"],
+  ["2016-08-01", "1.14"],
+  ["2016-08-02", "1.41"],
+  ["2016-08-03", "1.95"],
+  ["2016-08-04", "1.88"],
+  ["2016-08-05", "1.60"],
+  ["2016-08-06", "1.23"],
+  ["2016-08-07", "0.972"],
+  ["2016-08-08", "0.796"],
+  ["2016-08-09", "0.685"],
+  ["2016-08-10", "0.603"],
+  ["2016-08-11", "0.551"],
+  ["2016-08-12", "0.624"],
+  ["2016-08-13", "0.770"],
+  ["2016-08-14", "0.988"],
+  ["2016-08-15", "1.14"],
+  ["2016-08-16", "1.24"],
+  ["2016-08-17", "1.39"],
+  ["2016-08-18", "1.49"],
+  ["2016-08-19", "1.50"],
+  ["2016-08-20", "1.43"],
+  ["2016-08-21", "1.30"],
+  ["2016-08-22", "1.18"],
+  ["2016-08-23", "1.14"],
+  ["2016-08-24", "1.00"],
+  ["2016-08-25", "0.866"],
+  ["2016-08-26", "0.736"],
+  ["2016-08-27", "0.583"],
+  ["2016-08-28", "0.509"],
+  ["2016-08-29", "0.507"],
+  ["2016-08-30", "0.491"],
+  ["2016-08-31", "0.497"],
+  ["2016-09-01", "0.472"],
+  ["2016-09-02", "0.482"],
+  ["2016-09-03", "0.494"],
+  ["2016-09-04", "0.349"],
+  ["2016-09-05", "0.221"],
+  ["2016-09-06", "0.171"],
+  ["2016-09-07", "0.158"],
+  ["2016-09-08", "0.182"],
+  ["2016-09-09", "0.185"],
+  ["2016-09-10", "0.233"],
+  ["2016-09-11", "0.370"],
+  ["2016-09-12", "0.482"],
+  ["2016-09-13", "0.317"],
+  ["2016-09-14", "0.184"],
+  ["2016-09-15", "0.110"],
+  ["2016-09-16", "0.0861"],
+  ["2016-09-17", "0.0646"],
+  ["2016-09-18", "0.0680"],
+  ["2016-09-19", "0.0973"],
+  ["2016-09-20", "0.234"],
+  ["2016-09-21", "0.378"],
+  ["2016-09-22", "0.278"],
+  ["2016-09-23", "0.183"],
+  ["2016-09-24", "0.128"],
+  ["2016-09-25", "0.0936"],
+  ["2016-09-26", "0.0776"],
+  ["2016-09-27", "0.0668"],
+  ["2016-09-28", "0.0796"],
+  ["2016-09-29", "0.194"],
+  ["2016-09-30", "0.325"],
+  ["2016-10-01", "0.270"],
+  ["2016-10-02", "0.149"],
+  ["2016-10-03", "0.0561"],
+  ["2016-10-04", "0.0206"],
+  ["2016-10-05", "0.00594"],
+  ["2016-10-06", "0.00152"],
+  ["2016-10-07", "0.000651"],
+  ["2016-10-08", "0.00111"],
+  ["2016-10-09", "0.00248"],
+  ["2016-10-10", "0.00584"],
+  ["2016-10-11", "0.00927"],
+  ["2016-10-12", "0.0127"],
+  ["2016-10-13", "0.0150"],
+  ["2016-10-14", "0.0169"],
+  ["2016-10-15", "0.0165"],
+  ["2016-10-16", "0.0166"],
+  ["2016-10-17", "0.0119"],
+  ["2016-10-18", "0.00674"],
+  ["2016-10-19", "0.00440"],
+  ["2016-10-20", "0.00412"],
+  ["2016-10-21", "0.00373"],
+  ["2016-10-22", "0.00322"],
+  ["2016-10-23", "0.00241"],
+  ["2016-10-24", "0.00250"],
+  ["2016-10-25", "0.00381"],
+  ["2016-10-26", "0.00639"],
+  ["2016-10-27", "0.00834"],
+  ["2016-10-28", "0.00847"],
+  ["2016-10-29", "0.00684"],
+  ["2016-10-30", "0.00493"],
+  ["2016-10-31", "0.00271"],
+  ["2016-11-01", "0.00171"],
+  ["2016-11-02", "0.000778"],
+  ["2016-11-03", "0.000320"],
+  ["2016-11-04", "0.000189"],
+  ["2016-11-05", "0.000155"],
+  ["2016-11-06", "0.0000983"],
+  ["2016-11-07", "0.000136"],
+  ["2016-11-08", "0.000183"],
+  ["2016-11-09", "0.000330"],
+  ["2016-11-10", "0.000646"],
+  ["2016-11-11", "0.00109"],
+  ["2016-11-12", "0.00134"],
+  ["2016-11-13", "0.00163"],
+  ["2016-11-14", "0.00169"],
+  ["2016-11-15", "0.00121"],
+  ["2016-11-16", "0.000459"],
+  ["2016-11-17", "0.0000756"],
+  ["2016-11-18", "0.0000126"],
+  ["2016-11-19", "0.00000251"],
+  ["2016-11-20", "0.00000101"],
+  ["2016-11-21", "1.98e-7"],
+  ["2016-11-22", "3.57e-8"],
+  ["2016-11-23", "5.69e-9"],
+  ["2016-11-24", "5.79e-10"],
+  ["2016-11-25", "8.15e-13"],
+  ["2016-11-26", "6.52e-16"],
+  ["2016-11-27", "4.77e-18"],
+  ["2016-11-28", "7.61e-23"],
+  ["2016-11-29", "1.70e-22"],
+  ["2016-11-30", "3.40e-32"],
+  ["2016-12-01", "2.66e-27"],
+  ["2016-12-02", "5.79e-23"],
+  ["2016-12-03", "5.49e-28"],
+  ["2016-12-04", "1.53e-42"],
+  ["2016-12-05", "3.22e-60"],
+  ["2016-12-06", "6.62e-76"],
+  ["2016-12-07", "1.29e-76"],
+  ["2016-12-08", "2.06e-53"],
+  ["2016-12-09", "5.21e-25"],
+  ["2016-12-10", "1.92e-10"],
+  ["2016-12-11", "5.88e-9"],
+  ["2016-12-12", "2.34e-8"],
+  ["2016-12-13", "2.47e-7"],
+  ["2016-12-14", "0.00000152"],
+  ["2016-12-15", "0.00000237"],
+  ["2016-12-16", "4.69e-7"],
+  ["2016-12-17", "1.42e-8"],
+  ["2016-12-18", "1.05e-10"],
+  ["2016-12-19", "4.76e-18"],
+  ["2016-12-20", "7.90e-49"],
+  ["2016-12-21", "2.79e-88"],
+  ["2016-12-22", "2.07e-253"],
+  ["2016-12-23", "1.85e-280"],
+  ["2016-12-24", "2.92e-237"],
+  ["2016-12-25", "2.58e-221"],
+  ["2016-12-26", "1.66e-165"],
+  ["2016-12-27", "3.27e-170"],
+  ["2016-12-28", "4.63e-183"],
+  ["2016-12-29", "6.32e-244"],
+  ["2016-12-30", "8.04e-222"],
+  ["2016-12-31", "2.21e-230"],
+  ["2017-01-01", "1.38e-132"],
+  ["2017-01-02", "5.09e-91"],
+  ["2017-01-03", "5.63e-53"],
+  ["2017-01-04", "2.54e-22"],
+  ["2017-01-05", "7.47e-17"],
+  ["2017-01-06", "6.70e-27"],
+  ["2017-01-07", "1.74e-20"],
+  ["2017-01-08", "2.04e-13"],
+  ["2017-01-09", "2.20e-12"],
+  ["2017-01-10", "8.95e-12"],
+  ["2017-01-11", "2.15e-11"],
+  ["2017-01-12", "7.02e-11"],
+  ["2017-01-13", "7.38e-11"],
+  ["2017-01-14", "2.34e-11"],
+  ["2017-01-15", "4.33e-13"],
+  ["2017-01-16", "5.53e-15"],
+  ["2017-01-17", "3.41e-17"],
+  ["2017-01-18", "3.28e-40"],
+  ["2017-01-19", "1.19e-38"],
+  ["2017-01-20", "6.71e-30"],
+  ["2017-01-21", "2.25e-28"],
+  ["2017-01-22", "1.08e-20"],
+  ["2017-01-23", "5.98e-17"],
+  ["2017-01-24", "4.94e-15"],
+  ["2017-01-25", "5.95e-18"],
+  ["2017-01-26", "6.29e-38"],
+  ["2017-01-27", "5.85e-69"],
+  ["2017-01-28", "1.09e-109"],
+  ["2017-01-29", "4.02e-270"],
+  ["2017-01-30", "3.67e-266"],
+  ["2017-01-31", "7.49e-246"],
+  ["2017-02-01", "3.50e-210"],
+  ["2017-02-02", "4.10e-93"],
+  ["2017-02-03", "1.55e-35"],
+  ["2017-02-04", "4.41e-19"],
+  ["2017-02-05", "4.13e-11"],
+  ["2017-02-06", "3.03e-10"],
+  ["2017-02-07", "2.20e-9"],
+  ["2017-02-08", "7.65e-9"],
+  ["2017-02-09", "1.08e-8"],
+  ["2017-02-10", "6.75e-9"],
+  ["2017-02-11", "3.11e-9"],
+  ["2017-02-12", "3.69e-9"],
+  ["2017-02-13", "1.56e-9"],
+  ["2017-02-14", "5.31e-10"],
+  ["2017-02-15", "4.29e-10"],
+  ["2017-02-16", "7.97e-11"],
+  ["2017-02-17", "5.04e-11"],
+  ["2017-02-18", "2.64e-10"],
+  ["2017-02-19", "3.63e-10"],
+  ["2017-02-20", "1.38e-9"],
+  ["2017-02-21", "4.03e-9"],
+  ["2017-02-22", "1.01e-9"],
+  ["2017-02-23", "2.52e-10"],
+  ["2017-02-24", "3.16e-11"],
+  ["2017-02-25", "9.49e-13"],
+  ["2017-02-26", "2.28e-15"],
+  ["2017-02-27", "1.50e-24"],
+  ["2017-02-28", "3.60e-61"],
+  ["2017-03-01", "5.80e-91"],
+  ["2017-03-02", "1.48e-81"],
+  ["2017-03-03", "1.50e-58"],
+  ["2017-03-04", "5.40e-37"],
+  ["2017-03-05", "5.60e-33"],
+  ["2017-03-06", "6.73e-54"],
+  ["2017-03-07", "4.53e-50"],
+  ["2017-03-08", "4.03e-41"],
+  ["2017-03-09", "3.05e-30"],
+  ["2017-03-10", "2.09e-19"],
+  ["2017-03-11", "1.15e-13"],
+  ["2017-03-12", "1.63e-9"],
+  ["2017-03-13", "4.43e-8"],
+  ["2017-03-14", "5.26e-7"],
+  ["2017-03-15", "0.00000344"],
+  ["2017-03-16", "0.00000659"],
+  ["2017-03-17", "0.0000114"],
+  ["2017-03-18", "0.0000206"],
+  ["2017-03-19", "0.0000219"],
+  ["2017-03-20", "0.0000204"],
+  ["2017-03-21", "0.0000155"],
+  ["2017-03-22", "0.00000456"],
+  ["2017-03-23", "0.00000148"],
+  ["2017-03-24", "5.74e-7"],
+  ["2017-03-25", "1.66e-7"],
+  ["2017-03-26", "6.78e-8"],
+  ["2017-03-27", "3.26e-8"],
+  ["2017-03-28", "1.12e-8"],
+  ["2017-03-29", "2.73e-8"],
+  ["2017-03-30", "7.80e-8"],
+  ["2017-03-31", "6.48e-8"],
+  ["2017-04-01", "1.06e-7"],
+  ["2017-04-02", "3.57e-7"],
+  ["2017-04-03", "7.91e-7"],
+  ["2017-04-04", "0.00000166"],
+  ["2017-04-05", "0.00000336"],
+  ["2017-04-06", "0.00000803"],
+  ["2017-04-07", "0.0000156"],
+  ["2017-04-08", "0.00000850"],
+  ["2017-04-09", "0.00000228"],
+  ["2017-04-10", "9.49e-7"],
+  ["2017-04-11", "8.41e-7"],
+  ["2017-04-12", "8.09e-7"],
+  ["2017-04-13", "4.57e-7"],
+  ["2017-04-14", "2.21e-7"],
+  ["2017-04-15", "4.20e-7"],
+  ["2017-04-16", "0.00000206"],
+  ["2017-04-17", "0.00000838"],
+  ["2017-04-18", "0.00000796"],
+  ["2017-04-19", "0.00000659"],
+  ["2017-04-20", "0.00000770"],
+  ["2017-04-21", "0.0000176"],
+  ["2017-04-22", "0.0000459"],
+  ["2017-04-23", "0.0000528"],
+  ["2017-04-24", "0.0000297"],
+  ["2017-04-25", "0.0000386"],
+  ["2017-04-26", "0.0000426"],
+  ["2017-04-27", "0.0000664"],
+  ["2017-04-28", "0.0000755"],
+  ["2017-04-29", "0.0000623"],
+  ["2017-04-30", "0.0000890"],
+  ["2017-05-01", "0.000218"],
+  ["2017-05-02", "0.000609"],
+  ["2017-05-03", "0.00176"],
+  ["2017-05-04", "0.00498"],
+  ["2017-05-05", "0.0100"],
+  ["2017-05-06", "0.00915"],
+  ["2017-05-07", "0.00657"],
+  ["2017-05-08", "0.00514"],
+  ["2017-05-09", "0.00482"],
+  ["2017-05-10", "0.00314"],
+  ["2017-05-11", "0.00141"],
+  ["2017-05-12", "0.000482"],
+  ["2017-05-13", "0.000449"],
+  ["2017-05-14", "0.000457"],
+  ["2017-05-15", "0.000336"],
+  ["2017-05-16", "0.000199"],
+  ["2017-05-17", "0.000123"],
+  ["2017-05-18", "0.0000883"],
+  ["2017-05-19", "0.000297"],
+  ["2017-05-20", "0.00118"],
+  ["2017-05-21", "0.00458"],
+  ["2017-05-22", "0.0154"],
+  ["2017-05-23", "0.0391"],
+  ["2017-05-24", "0.0846"],
+  ["2017-05-25", "0.102"],
+  ["2017-05-26", "0.0739"],
+  ["2017-05-27", "0.0545"],
+  ["2017-05-28", "0.0444"],
+  ["2017-05-29", "0.0385"],
+  ["2017-05-30", "0.0287"],
+  ["2017-05-31", "0.0158"],
+  ["2017-06-01", "0.0214"],
+  ["2017-06-02", "0.0441"],
+  ["2017-06-03", "0.0820"],
+  ["2017-06-04", "0.110"],
+  ["2017-06-05", "0.104"],
+  ["2017-06-06", "0.118"],
+  ["2017-06-07", "0.177"],
+  ["2017-06-08", "0.183"],
+  ["2017-06-09", "0.176"],
+  ["2017-06-10", "0.108"],
+  ["2017-06-11", "0.0507"],
+  ["2017-06-12", "0.0247"],
+  ["2017-06-13", "0.0129"],
+  ["2017-06-14", "0.0105"],
+  ["2017-06-15", "0.0140"],
+  ["2017-06-16", "0.0197"],
+  ["2017-06-17", "0.0488"],
+  ["2017-06-18", "0.169"],
+  ["2017-06-19", "0.549"],
+  ["2017-06-20", "1.08"],
+  ["2017-06-21", "1.41"],
+  ["2017-06-22", "1.53"],
+  ["2017-06-23", "0.942"],
+  ["2017-06-24", "0.939"],
+  ["2017-06-25", "0.943"],
+  ["2017-06-26", "1.50"],
+  ["2017-06-27", "1.59"],
+  ["2017-06-28", "1.40"],
+  ["2017-06-29", "1.15"],
+  ["2017-06-30", "0.919"],
+  ["2017-07-01", "0.817"],
+  ["2017-07-02", "0.644"],
+  ["2017-07-03", "0.646"],
+  ["2017-07-04", "0.763"],
+  ["2017-07-05", "0.924"],
+  ["2017-07-06", "1.07"],
+  ["2017-07-07", "1.26"],
+  ["2017-07-08", "1.48"],
+  ["2017-07-09", "1.67"],
+  ["2017-07-10", "1.81"],
+  ["2017-07-11", "1.85"],
+  ["2017-07-12", "1.84"],
+  ["2017-07-13", "1.83"],
+  ["2017-07-14", "1.80"],
+  ["2017-07-15", "1.69"],
+  ["2017-07-16", "1.67"],
+  ["2017-07-17", "1.63"],
+  ["2017-07-18", "1.60"],
+  ["2017-07-19", "1.52"],
+  ["2017-07-20", "1.39"],
+  ["2017-07-21", "1.24"],
+  ["2017-07-22", "1.21"],
+  ["2017-07-23", "1.19"],
+  ["2017-07-24", "1.12"],
+  ["2017-07-25", "1.10"],
+  ["2017-07-26", "1.18"],
+  ["2017-07-27", "1.39"],
+  ["2017-07-28", "1.61"],
+  ["2017-07-29", "1.69"],
+  ["2017-07-30", "1.65"],
+  ["2017-07-31", "1.67"],
+  ["2017-08-01", "1.76"],
+  ["2017-08-02", "1.96"],
+  ["2017-08-03", "1.99"],
+  ["2017-08-04", "1.99"],
+  ["2017-08-05", "1.99"],
+  ["2017-08-06", "1.99"],
+  ["2017-08-07", "1.92"],
+  ["2017-08-08", "1.81"],
+  ["2017-08-09", "1.58"],
+  ["2017-08-10", "1.44"],
+  ["2017-08-11", "1.34"],
+  ["2017-08-12", "1.28"],
+  ["2017-08-13", "1.24"],
+  ["2017-08-14", "1.13"],
+  ["2017-08-15", "0.932"],
+  ["2017-08-16", "0.757"],
+  ["2017-08-17", "0.738"],
+  ["2017-08-18", "0.758"],
+  ["2017-08-19", "0.814"],
+  ["2017-08-20", "0.829"],
+  ["2017-08-21", "0.895"],
+  ["2017-08-22", "1.10"],
+  ["2017-08-23", "1.28"],
+  ["2017-08-24", "1.35"],
+  ["2017-08-25", "1.36"],
+  ["2017-08-26", "1.36"],
+  ["2017-08-27", "1.56"],
+  ["2017-08-28", "1.81"],
+  ["2017-08-29", "2.13"],
+  ["2017-08-30", "2.27"],
+  ["2017-08-31", "1.82"],
+  ["2017-09-01", "1.46"],
+  ["2017-09-02", "1.17"],
+  ["2017-09-03", "1.12"],
+  ["2017-09-04", "1.54"],
+  ["2017-09-05", "2.41"],
+  ["2017-09-06", "2.37"],
+  ["2017-09-07", "2.28"],
+  ["2017-09-08", "2.04"],
+  ["2017-09-09", "1.72"],
+  ["2017-09-10", "1.38"],
+  ["2017-09-11", "1.23"],
+  ["2017-09-12", "1.14"],
+  ["2017-09-13", "0.931"],
+  ["2017-09-14", "0.773"],
+  ["2017-09-15", "0.592"],
+  ["2017-09-16", "0.442"],
+  ["2017-09-17", "0.326"],
+  ["2017-09-18", "0.198"],
+  ["2017-09-19", "0.106"],
+  ["2017-09-20", "0.0611"],
+  ["2017-09-21", "0.0334"],
+  ["2017-09-22", "0.0173"],
+  ["2017-09-23", "0.00928"],
+  ["2017-09-24", "0.00469"],
+  ["2017-09-25", "0.00331"],
+  ["2017-09-26", "0.00350"],
+  ["2017-09-27", "0.00574"],
+  ["2017-09-28", "0.0122"],
+  ["2017-09-29", "0.0303"],
+  ["2017-09-30", "0.0459"],
+  ["2017-10-01", "0.0465"],
+  ["2017-10-02", "0.0273"],
+  ["2017-10-03", "0.0125"],
+  ["2017-10-04", "0.00487"],
+  ["2017-10-05", "0.00241"],
+  ["2017-10-06", "0.00182"],
+  ["2017-10-07", "0.00205"],
+  ["2017-10-08", "0.00181"],
+  ["2017-10-09", "0.00250"],
+  ["2017-10-10", "0.00408"],
+  ["2017-10-11", "0.00552"],
+  ["2017-10-12", "0.00365"],
+  ["2017-10-13", "0.00190"],
+  ["2017-10-14", "0.000918"],
+  ["2017-10-15", "0.000672"],
+  ["2017-10-16", "0.000594"],
+  ["2017-10-17", "0.000595"],
+  ["2017-10-18", "0.000892"],
+  ["2017-10-19", "0.00166"],
+  ["2017-10-20", "0.00179"],
+  ["2017-10-21", "0.00122"],
+  ["2017-10-22", "0.000808"],
+  ["2017-10-23", "0.000687"],
+  ["2017-10-24", "0.000834"],
+  ["2017-10-25", "0.000934"],
+  ["2017-10-26", "0.00165"],
+  ["2017-10-27", "0.00416"],
+  ["2017-10-28", "0.0121"],
+  ["2017-10-29", "0.0204"],
+  ["2017-10-30", "0.0239"],
+  ["2017-10-31", "0.0105"],
+  ["2017-11-01", "0.00385"],
+  ["2017-11-02", "0.00109"],
+  ["2017-11-03", "0.000544"],
+  ["2017-11-04", "0.000264"],
+  ["2017-11-05", "0.0000795"],
+  ["2017-11-06", "0.0000193"],
+  ["2017-11-07", "0.0000128"],
+  ["2017-11-08", "0.0000174"],
+  ["2017-11-09", "0.0000374"],
+  ["2017-11-10", "0.0000311"],
+  ["2017-11-11", "0.0000134"],
+  ["2017-11-12", "0.00000877"],
+  ["2017-11-13", "0.0000101"],
+  ["2017-11-14", "0.0000122"],
+  ["2017-11-15", "0.0000108"],
+  ["2017-11-16", "0.0000216"],
+  ["2017-11-17", "0.0000109"],
+  ["2017-11-18", "0.00000607"],
+  ["2017-11-19", "0.00000427"],
+  ["2017-11-20", "0.00000464"],
+  ["2017-11-21", "0.0000102"],
+  ["2017-11-22", "0.0000109"],
+  ["2017-11-23", "0.00000397"],
+  ["2017-11-24", "0.00000494"],
+  ["2017-11-25", "0.0000153"],
+  ["2017-11-26", "0.0000857"],
+  ["2017-11-27", "0.0000587"],
+  ["2017-11-28", "0.0000127"],
+  ["2017-11-29", "0.00000361"],
+  ["2017-11-30", "5.71e-7"],
+  ["2017-12-01", "9.50e-8"],
+  ["2017-12-02", "4.53e-14"],
+  ["2017-12-03", "1.32e-24"],
+  ["2017-12-04", "4.34e-40"],
+  ["2017-12-05", "1.29e-52"],
+  ["2017-12-06", "5.74e-81"],
+  ["2017-12-07", "3.89e-119"],
+  ["2017-12-08", "4.78e-167"],
+  ["2017-12-09", "1.25e-171"],
+  ["2017-12-10", "1.47e-180"],
+  ["2017-12-11", "4.82e-176"],
+  ["2017-12-12", "3.95e-170"],
+  ["2017-12-13", "7.63e-171"],
+  ["2017-12-14", "1.37e-170"],
+  ["2017-12-15", "1.93e-175"],
+  ["2017-12-16", "7.06e-177"],
+  ["2017-12-17", "1.56e-177"],
+  ["2017-12-18", "1.78e-175"],
+  ["2017-12-19", "7.36e-171"],
+  ["2017-12-20", "5.91e-155"],
+  ["2017-12-21", "5.31e-168"],
+  ["2017-12-22", "1.67e-205"],
+  ["2017-12-23", "9.07e-214"],
+  ["2017-12-24", "1.45e-214"],
+  ["2017-12-25", "7.42e-172"],
+  ["2017-12-26", "8.64e-102"],
+  ["2017-12-27", "1.36e-115"],
+  ["2017-12-28", "1.71e-84"],
+  ["2017-12-29", "8.41e-65"],
+  ["2017-12-30", "1.42e-63"],
+  ["2017-12-31", "6.70e-61"],
+  ["2018-01-01", "3.91e-58"],
+  ["2018-01-02", "5.89e-59"],
+  ["2018-01-03", "2.14e-44"],
+  ["2018-01-04", "3.96e-24"],
+  ["2018-01-05", "2.24e-9"],
+  ["2018-01-06", "2.04e-8"],
+  ["2018-01-07", "5.89e-8"],
+  ["2018-01-08", "2.33e-7"],
+  ["2018-01-09", "5.95e-7"],
+  ["2018-01-10", "7.88e-7"],
+  ["2018-01-11", "5.47e-7"],
+  ["2018-01-12", "1.66e-7"],
+  ["2018-01-13", "3.87e-8"],
+  ["2018-01-14", "8.56e-9"],
+  ["2018-01-15", "2.39e-9"],
+  ["2018-01-16", "3.65e-10"],
+  ["2018-01-17", "1.71e-10"],
+  ["2018-01-18", "2.69e-10"],
+  ["2018-01-19", "9.68e-11"],
+  ["2018-01-20", "1.84e-11"],
+  ["2018-01-21", "2.64e-12"],
+  ["2018-01-22", "4.79e-13"],
+  ["2018-01-23", "3.57e-13"],
+  ["2018-01-24", "2.44e-26"],
+  ["2018-01-25", "9.86e-35"],
+  ["2018-01-26", "1.57e-55"],
+  ["2018-01-27", "8.30e-56"],
+  ["2018-01-28", "8.85e-47"],
+  ["2018-01-29", "1.40e-37"],
+  ["2018-01-30", "1.82e-32"],
+  ["2018-01-31", "1.13e-25"],
+  ["2018-02-01", "2.05e-26"],
+  ["2018-02-02", "1.47e-15"],
+  ["2018-02-03", "1.44e-9"],
+  ["2018-02-04", "8.16e-9"],
+  ["2018-02-05", "2.51e-8"],
+  ["2018-02-06", "4.71e-8"],
+  ["2018-02-07", "1.25e-7"],
+  ["2018-02-08", "2.39e-7"],
+  ["2018-02-09", "3.60e-7"],
+  ["2018-02-10", "4.62e-7"],
+  ["2018-02-11", "2.70e-7"],
+  ["2018-02-12", "5.89e-8"],
+  ["2018-02-13", "1.54e-8"],
+  ["2018-02-14", "5.74e-9"],
+  ["2018-02-15", "1.10e-9"],
+  ["2018-02-16", "7.70e-15"],
+  ["2018-02-17", "2.36e-22"],
+  ["2018-02-18", "5.48e-21"],
+  ["2018-02-19", "5.87e-27"],
+  ["2018-02-20", "6.32e-41"],
+  ["2018-02-21", "8.87e-75"],
+  ["2018-02-22", "1.10e-100"],
+  ["2018-02-23", "2.31e-118"],
+  ["2018-02-24", "1.43e-211"],
+  ["2018-02-25", "7.49e-240"],
+  ["2018-02-26", "6.98e-226"],
+  ["2018-02-27", "1.86e-158"]
+];
+
 function formatData(city) {
   let buckets = [[]];
 
@@ -1815,8 +2351,12 @@ function formatData(city) {
     let values = bucket.map(pair => +pair[1]);
     let avg = values.reduce((a, b) => a + b) / values.length;
     let day = bucket[bucket.length - 1][0];
-    let obj = {};
-    obj[day] = avg;
+    let obj = {
+      date: day,
+      risk: avg
+    };
+
+    // obj[day] = avg;
     return obj;
   });
 
@@ -1825,5 +2365,280 @@ function formatData(city) {
 
 let bakersfieldkFormatted = formatData(bakersfield);
 let fresnoFormatted = formatData(fresno);
+let tulareFormatted = formatData(tulare);
 
-// console.log(fresnoFormatted);
+export const data = {
+  type: "FeatureCollection",
+  features: [
+    {
+      geometry: {
+        type: "EncodedPolyline",
+        coordinates: [
+          [
+            {
+              level:
+                "PGGGEFFF??FCCFA@G?EGEBB@ADBBDJBC?GHCGH@FFAGGBAGHFCBEKGHFGHGGIGFGEEGEGEEKG@FFGGGGGGIFFFGEGGFFHEEFDDKEFFHGCCGIEEEEFFDHDGFGEDEEDJDFDBBEHGFFAICGCGHFCGKDGGFFGGFFF@DHEDJFFFHADCI?GFGGFEHFEEGEEEEKGDGDFGCGFGHFFGFCIGGFGFIFGFEG?G?FMGEEHBHGFEGHFEFFGGCCCJEFGGEEFFJGH?HDDDHKFFGGAAIEE@G?HIBHEEFEGHFGGIEEEIFFHC?CBGGFFG@FBIDCECCDEGHFHEEFF?FFFFIEEIFFFEFJEEFFHGEEFEDFFGGFH?EFHG?GHFFFEHFEFFEFFEEKHFFGFGHFEI?GFEGIFFFFDDHEFEFEHFEFKEFGFGHGGIFFEFFF?JCBHHJGGHGFHFGDEEIGFEFGEEGHDEICEMCCE@?A@CAGBA@@B@BE@A?DE@BG@@@BA@C@FC?BEG?@?@@?BB?AEBAAAEBCBGBD@BE?CIAA@@DFEFIEFEG?BABEABDAGADACEEF?A?CIFGEHCDFFA?B@AC@B@E??CA@CJB@GBCDEGDBBA?@FBBCCGDF@A@ACABHFBAB@BEB@CAAIEFEFHFDDEFCFCEDEKEIDGCFBAP",
+              point:
+                "qp_`FjvwyUPnUdVUKaUdcAE@bI`PCAeIt[Mfl@MdqAc@zG_AlNcIfDm@tWPbLBbFCJtBTrDtSjWdBsDv@Cb@h@f@B`@Hb@V?_Ad@??U~pAMZiw@l@cSe@yF?Ixl@Ap@_w@s@gg@rU_EeNyHUWhOIEeo@PuF}f@z@SuENaYM}WkRCnA_gAp@wE~Nga@dAaFpGkp@lr@CEpw@hb@?AtWp`@EFj_@mV?CnzA~k@eB@bVfWi@TrYxI?]`HxJjBt]wEMjG}F~CAfMfUk@Icd@Bi`@oQ@?qLpQ?F{}@_Ub@?wV~TADww@bIBNtXdY@rAtI|CmGjf@wAAsWxTAFlZdO_@HuHfFMD{c@tGiEnAqIdNyJ~FxS[r[zK?IvoBsa@I@uf@_AyH|@yEux@G?jOdFBJ`g@eF?vBj{@lLa@lFpWTd[}UBcKzCJpT{EwFcDt_@`DlEAvH~E?iBjCG`IhJChByB{B_EGcMX?@}GzFyAA|Xnl@NCiMvf@Fvb@SxAyZc@cBs[n@sGtAJanCzc@CAcMwAcMra@C@bTwA~EdYGEhgAuPrD?da@pPAEdR_H?|GbFGva@_@ju@~A~iArL_E|J|ClSQVbPcTJCxT{VGXrx@AzQjDf[FfHaEBo_@B@|VyKCD}VsUABuH}UA@tVrJ@BvHzId@Bh^iE?L|RuERD`_@xa@]Bsr@vAqMdEhC@dIz]DxDwBnTkTaO}E@mWjb@S`AsZ_NCDa[xOBHeOhDmg@xOABrw@rUAD|[l_@GfA~K|IaLxk@?[e[nM?Dqi@dJoLhFsGGpGGnJjLA@ddB_a@CIvEiICBnp@e@nw@ku@@M~ZcIIAp[cWAG`hAfHa@SjLjIIf@xZcS?@hYn@??fb@k@dG_J_@GcKia@AEye@mUp@}@{EeTY@mJql@?B`j@hl@KPleAJtq@`n@@fU`A@`BhTCFbp@mk@LJcOwm@PCu`@ol@MuU]cVCB`KaHSA|OLb[`HBrl@NFhu@ml@Lel@Y@rOiGK?bIjG@DjZ_UjABiKqVi@Kyi@_TG_D|p@fAtNfFA?tLwZRCeNwSQy@_H?oB`@aZG}W_@kEkV@AiKjVIBub@_WBcDCgBgJo@aAqKL?{AkEh@wAv@AnDeAA?fFgJA?tu@pl@GBnNaKEDlGaUCDqGuJ?uUEAeIsUpFCcK{[BCnOpEC_A`bAaKDt@gZqM@_EuH?m_@oKQ?rMiGr@QrY`HCN~YfUoA@`OmGHBjGnG@CsE|K@?bLj_@EDnZwT?j@`\\jS?jDCZfJ~NSDpl@aUAyJDDfYpJ@E{JjT?LhJtVMBxOcLBAdEdLJoFjKpFtCoK?HdGjLB?bIgm@GAiPhVIAeHgb@G@h[sSsAQ{ZnG@E{u@}S?sHBEvY~HEBn\\ol@HGiw@nM?Hk[cJEp@uZrBCKmOuGHA{GsEhHwLt@GdMsI?iCgY{H?A{\\uIESjw@pJGDzw@rQEzClMsAz`BcSFOqg@gv@}@qCrLnM@@|[gJ??bMjJfEJ`{ABj@wRAmAe@iWDSsoB}j@FFfw@tZE^pXs[I?h^o]FEtTlP?sCnE]`PkG?ErJ{a@z@?{QuO??yMgJ?GkQhI?BkEm`@?Vi]nCF|@wOmZf^}bArtAoP|\\aAi@aCZcDqAqAcAm@s@yAiAmCwCgB_B{CkEs@_BSkBD_AZmAJy@l@aHGiAAiBTsBdBeFb@}@~@yCn@_CxGkHZeI\\iFEuD[sCMg@CcAMm@g@{MMg@MsBm@{Dw@oDiAkBeA[WEsSoOsGsNC]W}BGoBOqBQoAi@qGa@oE_@iIHwAAk@UaBf@}BB{BVwBnAqGX_DQaEXcCyAeFMqB{@oAsA[gA?sALkGs@oKaJiD}C_DoAhLg]\\o@zAsEBYzDkLb[on@vLR\\oOpOiAoK_b@mJ_LsMiG_GfCtC_E`AwATs@z@oAX{ALeBE_Bc@mCq@kBaByCcFwH_Aw@uFuBe@GaMwHiFxDiGwD{@eDc@uAa@{BEQe@aHj[hACwI~]~Tt@fFhAuPp@gs@bEaWkNcFhCkJLMXm@b@_B`@eC~CgLn@qAfBgC^_A^oA^_DZeBPyABuASyFKcAl@aLwGaSiA}F{@eDmAOcAReJmE{^_Ca]mLgGoIoBiJgByDIsA}@eEYcAGy@qBiBuAYe@cAao@s[oEwE_DwUNuUUWOw@m@aAm@uAg@s@eCuBeB{@qCeDkc@eFaB|@_@CaA\\yCpBiA`AcTlLeCNUQ_AUmANcBv@eAFjAsEkHoAdVoEjJaO?y_@qM{E}JgTsGgY_D{B_@uMeD}Dw\\}ScFaJmXit@aS}RyE}JsHgYnE?c@gxA~VtRdInBtD[rSeLz\\UjzACjzAS"
+            },
+            {
+              level: "PF@GHGP",
+              point: "msa`Fln}yU?qNiQMuBDe@lw@fVAAqg@"
+            },
+            {
+              level: "PCCF@@BAHCCCEP",
+              point: "se|_FpahzUvDdIIzB~FjU^@`AQf@?rANtAU{DqNkEiKiBmAyAkFuC|@"
+            },
+            {
+              level: "PFGFDDP",
+              point: "qr{_FjjzyUrJAAiZyMYIjXlB?BxA"
+            },
+            {
+              level: "PGHDDDGEEP",
+              point: "_g{_FhnyyUbUKJol@uU@?yBoCC{C|BAfInHTBza@"
+            },
+            {
+              level: "PFGEGDBHCDI@FEEFGP",
+              point:
+                "cd{_FnvnzUmS\\qDhXxUfF?`IqDlBiUgEeB@hKhOrAh@vRda@RuO@oDdGKE{LbHCXkw@aRH"
+            },
+            {
+              level: "PFCHAFP",
+              point: "omz_FzerzUkHtBxA`MBzMpRaZVo@{LaC"
+            },
+            {
+              level: "PFEDFH?GEP",
+              point: "uez_FfhnzUlKDqCw`@gD@o@q[sH@AlIJn`AbGA@{L"
+            },
+            {
+              level: "PF@GBGHEP",
+              point: "uyz_Fv_tzU{@uLkO|Lg@f@nRo@tXSKiScJh@eMrR"
+            },
+            {
+              level: "PGEEGEHDDEFHFEFBGGFFJCEGGHGHFFEH?FEEHEEIFGG?GGGFEHGP",
+              point:
+                "ofx_FjjlzUn]CKq`@iE]kEwT`N@dCuIrC`A~ByDbh@~C@lHtU?GqSnMLfE{Ft@{O@gJqU@EaMjSaBm@y`@cRiDiJCiJpDDl`@sUEoBmc@gRZB~T`KPmGhKE|PeBCsJBaAoa@lIcH_BwHqJZeDpHmUt@F`h@iU?Kx[jACjSOBds@}\\zBiAn[yKC?|[bl@i@zBkZ"
+            },
+            {
+              level: "PGEEHFEEP",
+              point: "iiy_F`agzUh]??oM}G@S_]uM`@RtO}Eg@F|Z"
+            },
+            {
+              level:
+                "PFFFCGBEEIFGDEBHDBFADFBDJEEFFGHDEECCIBDFFGEEFGDEEFHFEHEFHEEFEFHFFEFJ?EEDEEFIEEDGGFFP",
+              point:
+                "qct_FhkfzU@nUpOPUrLaPg@Aj@n@zD@~FtLfM?`Mt`ADzFeNhBd@?bNrDOGRhD_Gz@cI@}IdEBtBQJpArKqR`GeInKcK?sJoJqCCuIoUCEsP}`@AlEqHa@sQtD@CoKdAA?uCeA?qUbH_SXbB_Lmi@\\kGbIDvUsJAeA`MiBA_DyHjDiA}DoLkUwA@h[`L?AnE}OsEy^Ez@lLeJsD?_GwE?cCyVvIS@sPiPGfAwIqFtBAbMqUCAtDDjLlFBN`OtA?C|\\fKDT`V|TuGvDzEf^FfRkCCcb@fOl@`@pRxOh@"
+            },
+            {
+              level: "P?FFCHFFDIEEGEGHGBI?EDDEEP",
+              point:
+                "cmt_FzmkzUwa@AoXDD~L{RkAqF{ACpRmSj@Cd[fDpI|Ue@BzDtOz@|DqJEeb@xU@?jw@lX?vDVBQbDgKqAoSl@s\\`EsPoA_FgC~@"
+            },
+            {
+              level: "PCFEDFGGFFJDEGEEEEDE?ICFFHGJDCECCCCFGFFGGFDEEIEFFGFP",
+              point:
+                "iil_Fjt{yUsA|QRjHiOEsA~EyBf@Bnp@qT?PfYbTCBbSnHaCbLhBfMkMdBg^hD?S{p@_FgFTiFhEoBByUAkFa@m@iO\\MqN_ZGBetAeg@G@xDqAAIzU}D?@x@cAB?{@yDA?`MjJBCbMxUAC`[mJHAdM{DjOwDIAnRtJgIbJB?dPpZDrEk[hLF"
+            },
+            {
+              level: "PHHFFGFDHFFCGEEBGEDEJBHEFEABHDFIFFFGEHFDDDDP",
+              point:
+                "eyh_FlusyU{j@HCnw@`I?AeWhJgCBpThJ|EfJCCrYyMn@iBxI{BbE_H@OmLmAFaIoA?dZpCbMlDhBmDnKnf@o@|RBEgMpG_MqECQmh@WoNTwLlW?rOlB|DkIuDmb@{OCA{V{TjEIwV}FsKiN`C?t]pA?BfCsA?AnM"
+            },
+            {
+              level: "PGHABGCP",
+              point: "qkg_FdouyUIhs@vUS@yVb@eF@gTsVOA`@"
+            },
+            {
+              level: "PFFHBHEEGP",
+              point: "ivc_FxgwyUxNAl@rZ|VSR}YKkZ}Y]MoG}LSCld@"
+            }
+          ],
+          [
+            {
+              level: "PEFFHGP",
+              point: "eyh_FlusyUlF?{Bh[`Pd@c@dKmR]Awg@"
+            }
+          ],
+          [
+            {
+              level: "PFEP",
+              point: "u`e_FhrqyU`DxH_D?AyH"
+            }
+          ],
+          [
+            {
+              level: "PFGFCP",
+              point: "}pd_FrvsyUkJCB{RjJ?^zQc@b@"
+            }
+          ],
+          [
+            {
+              level: "PFGIGHHEFJH@HHIKI@P",
+              point:
+                "af`_F~xuzUlL??qSfyBBMfw@bm@VDdv@zn@B?|Ldi@UzCth@wEHuvATLby@{yAu@RrnBgzAFWyuGGid@"
+            }
+          ]
+        ]
+      },
+      type: "Feature",
+      id: 13832,
+      properties: {
+        county: "Fresno",
+        city: "Fresno",
+        detected: true,
+        risk: fresnoFormatted
+        // risk: {
+        //   day1: 0.5,
+        //   day2: 1.5,
+        //   day3: 2.5,
+        //   day4: 2.2,
+        //   day5: 0.1
+        // }
+      }
+    },
+    {
+      geometry: {
+        type: "EncodedPolyline",
+        coordinates: [
+          [
+            {
+              level:
+                "PHFHIFGHJA?HGGGEFIBBGFGDDFDCCI?GEEGFEFFIGDCEDFHHIGHGDCFGFDDGFIGGIHGFFGHGGJGGIGFGGIJHIAJJIJBHFEEBFDDLGEGFFFFGGFFGHGFFGGHHFGJGHJDGFFGHFFEEGJFEIGFFFGFGG@JHGGEEFFFFIGFEGFFJHEBCFFHDD@DFGHFFIEFFFFEFGEFGFHFFLDGFDDEFFIGFFHEGIHBGGFFIEEG?GBDHFFGBFDIFGIHHGGMGGGICGEIIGEFGDDEHFCGFIHHHGCCKGI@GGDEGJHHFFIHFEDHGIHGFGBBFFFFGFEBHCDDDHJDFECHFFFHGIGFGGEEJFFEGFDEEFDDFDEGEFGFKFEFHHDEGGGGGEFGEIDFDDDJEEBDB?ICDEEB@@?E@HABDABBF@DFDDFCFCHFGIFEIADECHFICDCEDCCEDIDFBCAGEDGBEBCKBDFEFGHDGCHDCDFEEHEDCFGDFIII@HGHBDFDCEHFHMHIIIJHGGIDGGHFFHJFEGHIHHGKFFGI@GFHFGEEFDCGHGCHFGICDEEGCGIIGDCEDEGAEGEEGEF?IHFEFDFFEEEHFFFGDHEEFGHCAL@DG@EGBHBADDECBDAGAEFCDHDDIEE@EEEGEEFFEFEGGJGGDFFFGFEFGGFEIGFFEHHIEEEEDKHBGHEDIHHIHIP",
+              point:
+                "mfdvExzbuU_a@ABva@lQtSos@A?iv@yUC?uZ{yAKExZ\\rnB@|L|a@wL@beByW~FjH~FxAyEBloBtU??Sba@c@AqYhJA^xG~A?MtJ~E~DdK~@AhAj@B?nAw@t\\qUaF}F|EsM?Ejo@uD?AvL_PJAlKjf@J|DmD@sDtD_DB{RtCsQtI@Phv@jl@B@tZkbAEKjeA}F?AbBsM?AlH|M?AjHtFpFAvIsU?AzLvk@?Voh@dUBEhv@rl@@AvLyU@A`^yUkGAvQrl@BQhv@{bAE?qa@gUqCGpoAlU@?lMmU?Efw@wyACAfu@tyAEKvrBHtmBotDa@TzjIqnC[bEzGjaAhqBbNbhDtJlL~Bh\\T?pH`LrAjPoD|Wn@rE_NlQA{aA_DsLaPABoa@uUA?wSsUC@qv@wUEI_TgJAUkhAea@EG{Q_ME@sZo^KHymBsl@KLmv@aVDBuZqP?cD`nBcl@NEanB_DsZyPAEaMqUsLCov@tJA@kv@nI[?{KhUwAZg]kL?hCmGspA?`@hr@nT`C?tZaPBEtZdPC?xZqU?CtZERal@HAe\\bf@OKmXnEc@@}EkJ?AyKnI?Bwb@gbA?@gIwL?AoI}G@?tSoUACso@nG|EbM@?b@vI?dAiLfv@s@@mg@}B?xBeMD?YuZyTBDkv@~^DOeMjL_BKaJkIFxIcCBab@yIAbBqPwJCBwZoLAA{K{J[Czg@iGC@yTkMAB_`@wNAmF~BEn`AsC??nBcG@?fDvK@Aj`@kU??w[aMHm@aTmFJ@|Swl@BTxrAVUdb@XE`RnJqOo@tLnO|DmHdJpDfCmMpP{GCgb@@ElGeA`HfAlc@iIh@GqLsa@CArLyAfY_F|K{Wf\\dKnMyUzZEx|Ekl@CCdsA_m@YElZmyAKDunB|TwY{TCNwxFpa@AvEgAxf@yo@vHwByyAn@@}YvY??eIjO?xCoR?eRxF?\\qSgUgGaEj@gJrE@vf@eP?JyeDhk@FHmv@}i@JV_w@vAmSMaIh{@ynAnX?EtmBIlv@uUCKlv@mDROlv@~[BKaw@xw@ABuZiJHNorAlv@AJ}f@lG??qNbC?Env@tU?JkmBw`@JCbZwIW@_Z]?@kMxHCt@oZnJCLcx@cQPAkU}C\\?OjCa@nJ`AnHpD`Ks@vFfCNsh@vq@fv@lOhJ?fIbJzRfKhNAdKi[AA|SaPADso@yVGA`w@rVIGzv@v]?@~LaG?Qzh@lVC@}L`NhGr\\}A@ePyBS{CbDg@gEbGC_BG?wBqF??gBjK?@kJpJ?pJrIAxQlNoNts@GDkdA_BwGqREBkZct@[B{ZnF?ByXcUC@_]lZFPmZw\\Q@}JkN?BoXhF_DcMmByrAtA}P~CqCzEgMbG{Aw@dQcVrCmUdDmChJcMrFaLlHeLdBeCcB}AoFwNoD{RiKoFgLi[Yi@k@{AeAwBgFwLuQwQaDoDYuACaC^kBtA_ChAmAA}@f@a@e@{AkEoLaGaG{Fci@i@kXcFgX|DuL\\eGwFgQ{G}_@kI{Jwq@NiQyc@Vqd@nNqn@lGAgAbQwBvd@kDxQJrAnDvErPxPteA_@cE}QcM}^aC_UqF{SoG_J{[}x@f@_@}JuSsO}d@eBiT}EwIaHaFaFuAyOoCaJq@oCG{L`@ic@vVcGZmEaAaCuAiC{CuAaD{@aFGsCp@gHvKi]bIPKcSxNAe@{uB~\\eDpHeFjC{DbSeu@jBaR_A[_Cm`@xAoFyDmY}RwR^iMpFiLAsKzCsLzBwV_Ays@tFgBvV}WdFaWlAc{A}_BQGcVEsz@tf@k@vK{ZsGeIgGaFaFyKkH_XkDyd@iBcKyH}LDePjl@Q`@kmB~k@c@w@z{EjtDU|@~gBzyAvDFpnBoyAe@Ftc@ag@F_CfIWl~@tUAJrZoX@sGiZqJCBhh@tUf@rEnKxe@LE{v@byAAZ~mB`zAG?`rArUB@xLwUC@zLczA@DtHDrl@nYI|F`Kka@dA@zLjJ?@bMpG@GbMbB?FvZpU@Hvd@sZ_@qPl@Lzk@pU^Nlk@gD@sGeEmFSk@hDgSyJ@{Q_BeLyy@Pn@brApSREvL|EdJtAx@~AtZxA?XtZvOSh@Q|BfDLtSgJzABhJdJlAHzLrUCzKB}Hph@{B{LuMm@kB|EuBi@@sLwUiCAyLuD@G{LqD@FrZyI?jJph@m^?Et]|DdN{G@?fHml@^?tZsWNnC~L~FtNrL`Xdk@]lKAxGjBxAaBnG_Gy@wRn@HvLbNAgIQEAcOeB?AcJlA??uBTFTcJHwQjE?vE_@hAuHbF`ElGbBdLh@?qe@}Bk@vBwN`XRh@sDdBb@`OnCjDiFzJnFfAmFtInFxMB@xJvUdGAcEjJ?@dJ~FfCdBg\\xUAIsZtU?CoVmBeCgR?Imv@aH?BePxGoIxK@IuZ_WCC{SiJAEsa@rU@HpZnUBBxYjE?nEst@hrAWCyZ_E?@sv@jC@C}SkC_Ebl@BRpu@l@t\\je@BD|XtD?Dvv@voG?F~pAzyAHCkqAxyAF@xmB"
+            },
+            {
+              level: "PCHGGHGFJGGDGGEFJGGFGP",
+              point:
+                "g~kvEhzbuU}@?HvrAwUBA{ZizADBtZcUDBvZjpBI@`a@fU\\xUqEHxYtUA?yLdU?Ach@sk@IMk}@wS?Eap@"
+            },
+            {
+              level: "PGFHIEGFHP",
+              point: "ctjvEb}|uUww@JAm[_JACpz@pGwDlo@VGd[bJA@qu@"
+            },
+            {
+              level: "PGHGP",
+              point: "ykkvElhavUaUA?z\\`UD?_]"
+            },
+            {
+              level: "PEAGFP",
+              point: "}fmvEhjouU_Eh@rC~P@r@xJkDoIqN"
+            },
+            {
+              level: "PEFBFHGBFP",
+              point: "gmmvE~pruUwS??vCm@uDOgMuULC`ZtUVxUpA?sN"
+            },
+            {
+              level: "PGDEEHECCCBIGGFEEFFGFCDEGDDEDEIDGFEGEFFP",
+              point:
+                "wcnvEfxiuUpU@?ih@rC{LsC??}R{T`BmVuByKwBiBp@?UqEgA?ft@uU?@hYoG?BqKgGBAlK{Ld@iExLdMjC\\pAlI??|E{F?AeCoA?]dCaL??jE`L?vUxFAaNjJ@AsXrArKvG@?{Ljl@?"
+            },
+            {
+              level: "PGCJFFGHECJDEHEP",
+              point:
+                "}sovErbivUkz@@qJhHcvAbr@ChTzUFAnZ|t@TlMpf@pGvz@x@jBdF_C~c@oi@rFqQ|C}UC}{B"
+            },
+            {
+              level: "PDDDHGFHEFGHEEFEFJCCHDHFECGDHDEGEDHFGHHAIEGFFFFBHP",
+              point:
+                "sfuvE`xiuUAslBkBAhBgFCoScl@QK{ZiJCNra@dJwBa@vVySMKsR`FBEwG_FA[aXqJ?AjZbA`Zu@vWl\\v]~C@?el@dMF?}Hj@??|HxHtTuAxHoNnLgLp^XnVfD?@nZrUH?yZtU@@xnBtU?|T]?wa@_DsCtDsNRvKhMmH}McMWeG?{c@sk@?"
+            },
+            {
+              level: "PDHGP",
+              point: "evsvEj~juUxd@a]|BeGki@?Rfe@"
+            },
+            {
+              level: "PEFF?EHEEEIDCBFBEGCFFDEGEGEFGFDDJ@GDDDGBCFCHDFCDFGEFDDP",
+              point:
+                "sfuvEfsnuUuD@sD{L?}LtD?vCD?aMgf@?eDvE?wEsU@aEvLHxLY?eCtZsAV{FCX`ZbD~En@~EzNXu@jGhInHEjKkLGo@uHmErSpClFwP~AE`l@`C??fJdPhNtD@vQf@?}A_B?`B}BLyn@hMrC?f@fGrA@e@hRuFwCuIJkd@wBI?wAqI{BA_N~FwL`G?nAy^dCK?oH"
+            },
+            {
+              level: "PEIGGIFEGDP",
+              point: "w`vvEzzwuUwZkG}d@AGt_@tu@j_@kBda@vMcDhCu]bFCwDkPyDod@"
+            },
+            {
+              level: "PGEGCP",
+              point: "gdxvEh}ivU_VH`A|K`RbM|@?AkZ"
+            },
+            {
+              level: "PDFDFEIFP",
+              point: "sifwEjcbvUkHEqDvCcBxr@sClYtGA@jPzL?@ccB"
+            },
+            {
+              level: "PFGFP",
+              point: "o`gwEthavU`UFAoKcUCBjK"
+            },
+            {
+              level: "PFGFP",
+              point: "u_{vErebvUoID?zKhI@DcL"
+            },
+            {
+              level: "PEGEP",
+              point: "y`|vEbwavUiHA?tLhH??sL"
+            },
+            {
+              level: "PGHGP",
+              point: "sohvEbvwuUFuZuU@GvZtUC"
+            }
+          ],
+          [
+            {
+              level: "PHEIHP",
+              point: "ekavEb{buUB|aAix@tHu`@cAKyiAfzAH"
+            }
+          ],
+          [
+            {
+              level: "PIIIHJHHFEGGP",
+              point: "ip~uEn}{tU~yAGDfnBqyAHg@jmBgyAAEkmBxm@?Aw[zJ?E_c@b`@SO{l@"
+            }
+          ],
+          [
+            {
+              level: "PIJIP",
+              point: "cu{uEnl_uUvzAKMrmBczACEcmB"
+            }
+          ]
+        ]
+      },
+      type: "Feature",
+      id: 13632,
+      properties: {
+        county: "Kern",
+        city: "Bakersfield",
+        detected: true,
+        risk: bakersfieldkFormatted
+        // risk: {
+        //   day1: 1.2,
+        //   day2: 0.5,
+        //   day3: 2.1,
+        //   day4: 1.7,
+        //   day5: 0.3
+        // }
+      }
+    },
+    {
+      geometry: {
+        type: "EncodedPolyline",
+        coordinates: [
+          [
+            {
+              level:
+                "PEGH?FFFFHAJ?AIHFFEFHGG@JIHGCJHIFFBFFEIFGKG@GFEEHEFGFGFFFHDEIGGFFFEHHK@HHFFGHGFGGJGFIGFHFAGIFHGFGFFGIAEKAGCP",
+              point:
+                "guw{ExtkwUgNv@cEjF]xaBwk@FwV?EoMwQWwAbN_l@BBbUd@l\\rxAn@lk@Phl@f@~@lu@iSJH|LeNA?{LqIDHrZ`k@EBrYRvu@}xAXO_v@uj@VmAqv@Amv@cl@FPjnBoKFCc[kCJg[oCWyLqJLwOcSoOzARf~@sTFAyV}WEeVDKaR{UkCaA{HwNiAA{GrOQ?mVkIeDi@yf@ySH@cNaK?sAcb@qi@tHCaC{\\xEm@_k@n]oUSyzA}HCAsYlIJCa[el@g@Msx@hl@KhyAGWa{@r|AH^qO|bA^Fo]zUESx^rWEK{^bSOMdv@gSP@bt@hf@^uF}SbYg`@zLvk@pHgHlA}Apf@rcAdc@mb@dl@wHFrXhUNGzW`UJFmRlHtBlg@b}@tf@{Jr_@_H`|@mEYlM@dL{gFvs@y_AjO"
+            }
+          ]
+        ]
+      },
+      type: "Feature",
+      id: 14325,
+      properties: {
+        county: "Tulare",
+        city: "Tulare",
+        detected: true,
+        risk: tulareFormatted
+      }
+    }
+  ]
+};
