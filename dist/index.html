@@ -16,6 +16,9 @@
 
             <div class='map'>
                 <div id="map"></div>
+                <div class='card card__date'> Week of:
+                    <span id='selected-date' class='card__date card__date--value'>slider changes Date</span>
+                </div>
 
                 <!-- <div class="sliderContainer">
                     <input type="range" min="1" max="5" value="3" class="slider" id="mapSlider">
@@ -24,11 +27,8 @@
             </div>
 
             <div class='city-data'>
-                <div class='card buttons'>
-                    <h3>Select a city for Zika Risk Data</h3>
-                    <button id='fresnoButton'> Fresno</button>
-                    <button id='bakersfieldButton'> Bakersfield</button>
-                    <button id='sanBernardinoButton'> San Bernardino</button>
+                <div class='card city'>
+                    <h1 id="currentCity">Select a city for Zika Risk Data</h1>
                 </div>
 
                 <div id='chart'></div>
@@ -57,9 +57,7 @@
 
         </div>
         <div class='sliderContainer'>
-            <div class='card card__date'> DATE:
-                <span id='selected-date'>slider changes Date</span>
-            </div>
+
             <div id="slider"></div>
         </div>
 
