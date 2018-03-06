@@ -4,7 +4,7 @@ export const Slider = function(divId, length) {
   const id = divId || "slider";
 
   const min = 0;
-  const max = length;
+  const max = length - 1;
   const start = Math.floor(length / 3);
 
   document.getElementById(id).innerHTML = `
