@@ -2,21 +2,27 @@ import FakeSlider from "./fakeSlider";
 import * as d3 from "d3";
 import "../scss/zika.scss";
 import { data } from "../constants/geojson.js";
+import { mapOptions } from "../constants/mapSettings";
 import { Map } from "./map";
 import { Slider } from "./slider";
 
-let zikaMap = Map();
+//MAP BEHAVIOR
+const map = new google.maps.Map(document.getElementById("map"), mapOptions);
+const zikaMap = Map(map);
 zikaMap.drawMap(data);
-zikaMap.setDay(65);
+map.data.addListener("click", function(e) {
+  console.log(e.feature.getProperty("city") + " is listening to clicks too");
+  fetchData(e.feature.getProperty("city"));
+});
+
+// SLIDER BEHAVIOR
+Slider("slider", data.features[0].properties.risk.length);
+document.querySelector("#pickDate").oninput = e => changeDate(e.target.value);
+
 const formatDate = d3.timeFormat("%b %d, %Y");
-
-let mapSlider = Slider("slider", data.features[0].properties.risk.length);
-
-document.querySelector("#pickDate").oninput = e => changeDate(e);
-
-function changeDate(e) {
-  let idx = e.target.value;
-  zikaMap.setDay(idx);
+function changeDate(idx) {
+  // let idx = e.target.value;
+  zikaMap.setWeek(idx);
   const selectedDay = new Date(data.features[0].properties.risk[idx].date);
   document.getElementById("selected-date").innerHTML = formatDate(selectedDay);
 }
@@ -40,16 +46,36 @@ const margin = { top: 20, right: 50, bottom: 110, left: 80 },
 
 // const parsedate = d3.timeParse("%m/%d/%Y %H:%M");
 
+// function fetchData(city) {
+//   // d3.json(`http://maps.calsurv.org/zika/risk/${city}`, (error, data) => {
+//   d3.json(__dirname + `./data/${city}.json`, (error, data) => {
+//     if (error) console.log(error);
+//     console.log(data);
+//     drawGraph(data);
+//   });
+// }
+
+const fresnoRisk = data.features[0].properties.risk;
+// console.log(fresnoRisk);
 function fetchData(city) {
-  // d3.json(`http://maps.calsurv.org/zika/risk/${city}`, (error, data) => {
-  d3.json(__dirname + `./data/${city}.json`, (error, data) => {
-    if (error) console.log(error);
-    d3.select("#container").remove();
-    drawGraph(data);
+  console.log(city);
+  let riskObj;
+  data.features.forEach(d => {
+    if (d.properties.city === city) {
+      riskObj = d.properties.risk;
+    }
   });
+  document.getElementById("currentCity").innerHTML = city;
+  drawGraph(riskObj);
 }
 
 function drawGraph(data) {
+  d3.select("#chartContainer").remove();
+
+  data.forEach(d => {
+    (d.date = new Date(d.date)), (d.risk = +d.risk.toFixed(3));
+  });
+
   // SET SCALES for each graph.  same for each, just height is different on smaller graph
   const x = d3.scaleTime().range([0, width]),
     x2 = d3.scaleTime().range([0, width]),
@@ -82,12 +108,14 @@ function drawGraph(data) {
   // INIT TOP LINE
   const line = d3
     .line()
+    .curve(d3.curveCatmullRom)
     .x(d => x(d.date))
     .y(d => y(d.risk));
 
   // INIT BOTTOM LINE
   const line2 = d3
     .line()
+    .curve(d3.curveCardinal)
     .x(d => x2(d.date))
     .y(d => y2(d.risk));
 
@@ -104,8 +132,8 @@ function drawGraph(data) {
 
   const container = svg
     .append("g")
-    .attr("class", "container")
-    .attr("id", "container")
+    .attr("class", "chartContainer")
+    .attr("id", "chartContainer")
     .attr("height", +svg.attr("height"))
     .attr("width", +svg.attr("width"));
 
@@ -128,10 +156,10 @@ function drawGraph(data) {
     .attr("class", "context")
     .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 
-  data.forEach(d => {
-    d.date = new Date(d[0]);
-    d.risk = +d[1];
-  });
+  // data.forEach(d => {
+  //   d.date = new Date(d[0]);
+  //   d.risk = +d[1];
+  // });
 
   x.domain(
     d3.extent(data, function(d) {
@@ -371,14 +399,14 @@ function drawGraph(data) {
 
 fetchData("Fresno");
 
-document
-  .getElementById("fresnoButton")
-  .addEventListener("click", () => fetchData("Fresno"));
-document
-  .getElementById("bakersfieldButton")
-  .addEventListener("click", () => fetchData("Bakersfield"));
-document
-  .getElementById("sanBernardinoButton")
-  .addEventListener("click", () => fetchData("SanBernardino"));
+// document
+//   .getElementById("fresnoButton")
+//   .addEventListener("click", () => fetchData("Fresno"));
+// document
+//   .getElementById("bakersfieldButton")
+//   .addEventListener("click", () => fetchData("Bakersfield"));
+// document
+//   .getElementById("tulareButton")
+//   .addEventListener("click", () => fetchData("Tulare"));
 
 // const slider = FakeSlider("pickDate", "cityData");

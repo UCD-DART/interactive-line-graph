@@ -1,10 +1,10 @@
 import { mapOptions } from "../constants/mapSettings.js";
 import { colors } from "./helpers";
 
-export const Map = function(data) {
-  let geoJson = data;
-  let map = new google.maps.Map(document.getElementById("map"), mapOptions);
-  let week = 2;
+export const Map = function(mapObj) {
+  // let geoJson = data;
+  let map = mapObj;
+  let week = 25; // just a random number picked to stylet he map
 
   const riskColor = function(feature) {
     let risk = feature.getProperty("risk");
@@ -28,6 +28,10 @@ export const Map = function(data) {
       strokeColor: color
     };
   };
+
+  function showParam() {
+    console.log(mapObj);
+  }
 
   const depthOf = function(object) {
     var level = 1;
@@ -73,31 +77,23 @@ export const Map = function(data) {
     return g;
   };
 
-  const setDay = function(num) {
+  const setWeek = function(num) {
     week = num;
     map.data.setStyle(riskColor);
   };
 
   const drawMap = function(geoJson) {
-    console.log(geoJson);
+    // console.log(geoJson);
     geoJson.features.forEach(feature => {
       let geo = feature.geometry;
       feature.geometry = decodeGeometry(geo);
     });
     map.data.addGeoJson(geoJson);
     map.data.setStyle(riskColor);
-    // let msg = new google.maps.InfoWindow();
-    map.data.addListener("click", function(e) {
-      // going to have to find a way to manipulate another module,
-      // may have to draw the map in zika.js then just use map.js to handle geometry out and provide styling.
-      // when using redux, this could then just update the current city variable, trigger render for chart and details
-
-      console.log(e.feature.getProperty("city"));
-    });
   };
 
   return {
     drawMap: drawMap,
-    setDay: setDay
+    setWeek: setWeek
   };
 };
