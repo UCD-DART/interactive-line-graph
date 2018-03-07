@@ -29,10 +29,6 @@ export const Map = function(mapObj) {
     };
   };
 
-  function showParam() {
-    console.log(mapObj);
-  }
-
   const depthOf = function(object) {
     var level = 1;
     for (let key in object) {
