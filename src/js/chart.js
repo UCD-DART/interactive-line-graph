@@ -1,6 +1,8 @@
 // import { colors } from "./helpers";
 import * as d3 from "d3";
 
+const formatDate = d3.timeFormat("%b %d, %Y");
+
 export const Chart = function(svg) {
   const margin = { top: 20, right: 50, bottom: 110, left: 80 },
     margin2 = { top: 320, right: 50, bottom: 40, left: 80 },
@@ -112,6 +114,17 @@ export const Chart = function(svg) {
     y.domain([0.1, 2.5]);
     x2.domain(x.domain());
     y2.domain(y.domain());
+
+    let moved = new Date("2016-04-01");
+    // let test = x.invert(moved);
+    // console.log(x2.domain());
+    const marker = context
+      .append("line")
+      .attr("id", "marker")
+      .attr("y1", 0)
+      .attr("y2", height2)
+      .attr("x1", x(moved))
+      .attr("x2", x(moved));
 
     //ADD IN GRADIENT FOR MAIN GRAPH
     graph
