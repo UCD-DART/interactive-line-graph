@@ -1,0 +1,49 @@
+body {
+  background: #eee;
+  margin: 0 auto;
+  font-family: "Roboto", sans-serif;
+}
+
+.visualizations {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+#map {
+  margin: 10px auto;
+  text-align: center;
+  border-radius: 10px;
+  height: 650px;
+  width: 500px;
+  overflow: hidden;
+  border: 4px gray solid;
+}
+
+.city-data {
+  // border: 2px red solid;
+}
+
+.card {
+  margin: 10px auto;
+  display: block;
+  background: #fff;
+  text-align: center;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  cursor: move;
+}
+
+.city {
+  width: 50%;
+  padding: 10px;
+}
+
+.card__date {
+  width: 350px;
+  text-align: left;
+  padding: 15px;
+
+  @at-root #{&}--value {
+    font-weight: bold;
+  }
+}

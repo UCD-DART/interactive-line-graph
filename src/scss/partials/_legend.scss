@@ -1,0 +1,27 @@
+.legend {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.legend__risk {
+  padding: 10px;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.legend__risk--xLow {
+  background: #1565c0;
+  color: white;
+}
+.legend__risk--low {
+  background: #6ec6ff;
+}
+.legend__risk--moderate {
+  background: #ef9a9a;
+}
+.legend__risk--high {
+  background: #f44336;
+}
