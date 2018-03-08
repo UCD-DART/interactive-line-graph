@@ -33,7 +33,7 @@ const svg = d3
   .select("#chart")
   .append("svg")
   .attr("height", 400)
-  .attr("width", 700)
+  .attr("width", 600)
   .attr("class", "card");
 
 const riskGraph = Chart(svg);
