@@ -1,0 +1,57 @@
+.card__date {
+  width: 350px;
+  // text-align: left;
+  padding: 0px;
+
+  @at-root #{&}--value {
+    font-weight: bold;
+  }
+}
+
+#currentCity {
+  font-size: 28px;
+  // font-weight: bold;
+  text-transform: uppercase;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  // display: flex;
+  // flex-direction: row;
+  // justify-content: center;
+  padding: 10px 0;
+  // border: 1px solid red;
+}
+
+.row4 {
+  display: grid;
+  grid-template-columns: repeat(4, 120px);
+  justify-content: space-around;
+  // border: solid blue 1px;
+  margin-top: 5px;
+}
+
+.label {
+  font-size: 12px;
+  text-transform: uppercase;
+  font-style: italic;
+}
+
+.value {
+  color: $dark-blue;
+  font-size: 22px;
+}
+
+.temp {
+  font-size: 40px;
+  color: $light-blue;
+}
+#riskValue {
+  font-size: 40px;
+  color: $dark-red;
+}
+
+.smallItem {
+  // width: 100px;
+}
