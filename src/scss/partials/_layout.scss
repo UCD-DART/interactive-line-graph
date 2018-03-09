@@ -34,16 +34,7 @@ body {
 }
 
 .city {
-  width: 50%;
-  padding: 10px;
-}
-
-.card__date {
-  width: 350px;
-  text-align: left;
-  padding: 15px;
-
-  @at-root #{&}--value {
-    font-weight: bold;
-  }
+  width: $city-width;
+  padding: 0px;
+  height: 200px;
 }
