@@ -26,6 +26,8 @@ function changeDate(idx) {
   zikaMap.setWeek(idx);
   const selectedDay = new Date(data.features[0].properties.risk[idx].date);
   document.getElementById("selected-date").innerHTML = formatDate(selectedDay);
+  riskGraph.moveLine(selectedDay);
+  // console.log(selectedDay);
 }
 
 // DRAW GRAPH
@@ -36,21 +38,8 @@ const svg = d3
   .attr("width", 600)
   .attr("class", "card");
 
-const riskGraph = Chart(svg);
+let riskGraph;
 
-// const parsedate = d3.timeParse("%m/%d/%Y %H:%M");
-
-// function fetchData(city) {
-//   // d3.json(`http://maps.calsurv.org/zika/risk/${city}`, (error, data) => {
-//   d3.json(__dirname + `./data/${city}.json`, (error, data) => {
-//     if (error) console.log(error);
-//     console.log(data);
-//     drawGraph(data);
-//   });
-// }
-
-// const fresnoRisk = data.features[0].properties.risk;
-// console.log(fresnoRisk);
 function fetchData(city) {
   // console.log(city);
   let riskObj;
@@ -60,19 +49,14 @@ function fetchData(city) {
     }
   });
   document.getElementById("currentCity").innerHTML = city;
+  riskGraph = Chart(svg, riskObj);
   riskGraph.drawGraph(riskObj);
 }
 
 fetchData("Fresno");
 
-// document
-//   .getElementById("fresnoButton")
-//   .addEventListener("click", () => fetchData("Fresno"));
-// document
-//   .getElementById("bakersfieldButton")
-//   .addEventListener("click", () => fetchData("Bakersfield"));
-// document
-//   .getElementById("tulareButton")
-//   .addEventListener("click", () => fetchData("Tulare"));
+let date1 = "2016-07-04";
+let date2 = new Date(date1);
+// riskGraph.moveLine(date2);
 
-// const slider = FakeSlider("pickDate", "cityData");
+// changeDate(10);

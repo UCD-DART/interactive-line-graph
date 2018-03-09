@@ -3,7 +3,7 @@ import * as d3 from "d3";
 
 const formatDate = d3.timeFormat("%b %d, %Y");
 
-export const Chart = function(svg) {
+export const Chart = function(svg, riskObj) {
   const margin = { top: 20, right: 50, bottom: 110, left: 80 },
     margin2 = { top: 320, right: 50, bottom: 40, left: 80 },
     height = +svg.attr("height") - margin.top - margin.bottom,
@@ -14,22 +14,31 @@ export const Chart = function(svg) {
     lightblue = "#6ec6ff",
     lightred = "#ef9a9a";
 
+  // SET SCALES for each graph.  same for each, just height is different on smaller graph
+  const x = d3.scaleTime().range([0, width]),
+    x2 = d3.scaleTime().range([0, width]),
+    y = d3
+      .scaleLog()
+      .range([height, 0])
+      .base(2)
+      .clamp(true),
+    y2 = d3.scaleLinear().range([height2, 0]);
+
+  riskObj.forEach(d => {
+    (d.date = new Date(d.date)), (d.risk = +d.risk.toFixed(3));
+  });
+
+  x.domain(
+    d3.extent(riskObj, function(d) {
+      return d.date;
+    })
+  );
+  y.domain([0.1, 2.5]);
+  x2.domain(x.domain());
+  y2.domain(y.domain());
+
   function drawGraph(data) {
     d3.select("#chartContainer").remove();
-
-    data.forEach(d => {
-      (d.date = new Date(d.date)), (d.risk = +d.risk.toFixed(3));
-    });
-
-    // SET SCALES for each graph.  same for each, just height is different on smaller graph
-    const x = d3.scaleTime().range([0, width]),
-      x2 = d3.scaleTime().range([0, width]),
-      y = d3
-        .scaleLog()
-        .range([height, 0])
-        .base(2)
-        .clamp(true),
-      y2 = d3.scaleLinear().range([height2, 0]);
 
     // SET AXES, need 2 x's since the top one will change, but no second y axis on the bottom
     const xAxis = d3.axisBottom(x),
@@ -99,32 +108,8 @@ export const Chart = function(svg) {
     const context = container
       .append("g")
       .attr("class", "context")
+      .attr("id", "context")
       .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
-
-    // data.forEach(d => {
-    //   d.date = new Date(d[0]);
-    //   d.risk = +d[1];
-    // });
-
-    x.domain(
-      d3.extent(data, function(d) {
-        return d.date;
-      })
-    );
-    y.domain([0.1, 2.5]);
-    x2.domain(x.domain());
-    y2.domain(y.domain());
-
-    let moved = new Date("2016-04-01");
-    // let test = x.invert(moved);
-    // console.log(x2.domain());
-    const marker = context
-      .append("line")
-      .attr("id", "marker")
-      .attr("y1", 0)
-      .attr("y2", height2)
-      .attr("x1", x(moved))
-      .attr("x2", x(moved));
 
     //ADD IN GRADIENT FOR MAIN GRAPH
     graph
@@ -351,10 +336,31 @@ export const Chart = function(svg) {
         .attr("cy", d => y(d.risk));
     }
 
+    const marker = d3
+      .select("#context")
+      .append("line")
+      .attr("id", "marker")
+      .attr("y1", 0)
+      .attr("y2", height2)
+      .attr("x1", 50)
+      .attr("x2", 50);
+
     // animateLine(path, 3000);
   }
 
+  function moveLine(dateObj) {
+    const newSpot = x2(dateObj);
+    d3
+      .select("#marker")
+      .attr("x1", newSpot)
+      .attr("x2", newSpot);
+  }
+
+  // moveLine();
+  // let moved = new Date("2016-04-01");
+
   return {
-    drawGraph: drawGraph
+    drawGraph: drawGraph,
+    moveLine: moveLine
   };
 };
