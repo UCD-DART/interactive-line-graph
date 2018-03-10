@@ -150,8 +150,8 @@ export const Chart = function(svg, riskObj) {
         { offset: "0%", color: blue },
         { offset: "90%", color: blue },
         { offset: "90%", color: lightblue },
-        { offset: "94%", color: lightblue },
-        { offset: "94%", color: red },
+        { offset: "92%", color: lightblue },
+        { offset: "92%", color: red },
         { offset: "100%", color: red }
       ])
       .enter()
