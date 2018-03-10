@@ -19,6 +19,17 @@ body {
   border: 4px gray solid;
 }
 
+#instruction {
+  height: 50px;
+  width: 500px;
+  font-size: 14px;
+  text-align: left;
+
+  p {
+    margin-left: 10px;
+  }
+}
+
 .city-data {
   // border: 2px red solid;
 }
