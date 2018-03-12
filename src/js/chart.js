@@ -1,7 +1,26 @@
 // import { colors } from "./helpers";
-import * as d3 from "d3";
+// import * as d3 from "d3";
+import {
+  timeFormat,
+  scaleTime,
+  scaleLog,
+  scaleLinear,
+  extent,
+  select,
+  axisBottom,
+  axisLeft,
+  brushX,
+  zoom as d3zoom,
+  line as d3line,
+  curveCardinal,
+  curveCatmullRom,
+  transition,
+  easeLinear,
+  event,
+  zoomIdentity
+} from "d3";
 
-const formatDate = d3.timeFormat("%b %d, %Y");
+const formatDate = timeFormat("%b %d, %Y");
 
 export const Chart = function(svg, riskObj) {
   const margin = { top: 20, right: 50, bottom: 110, left: 80 },
@@ -15,21 +34,20 @@ export const Chart = function(svg, riskObj) {
     lightred = "#ef9a9a";
 
   // SET SCALES for each graph.  same for each, just height is different on smaller graph
-  const x = d3.scaleTime().range([0, width]),
-    x2 = d3.scaleTime().range([0, width]),
-    y = d3
-      .scaleLog()
+  const x = scaleTime().range([0, width]),
+    x2 = scaleTime().range([0, width]),
+    y = scaleLog()
       .range([height, 0])
       .base(2)
       .clamp(true),
-    y2 = d3.scaleLinear().range([height2, 0]);
+    y2 = scaleLinear().range([height2, 0]);
 
   riskObj.forEach(d => {
     (d.date = new Date(d.date)), (d.risk = +d.risk.toFixed(3));
   });
 
   x.domain(
-    d3.extent(riskObj, function(d) {
+    extent(riskObj, function(d) {
       return d.date;
     })
   );
@@ -40,8 +58,7 @@ export const Chart = function(svg, riskObj) {
   let dots, graph;
 
   //ADD TOOLTIP on hover
-  const tooltip = d3
-    .select("#chart")
+  const tooltip = select("#chart")
     .append("div")
     .attr("class", "toolTip")
     .style("opacity", 0);
@@ -59,8 +76,8 @@ export const Chart = function(svg, riskObj) {
             `;
     tooltip
       .html(html)
-      .style("left", d3.event.pageX + 15 + "px")
-      .style("top", d3.event.pageY - 28 + "px")
+      .style("left", event.pageX + 15 + "px")
+      .style("top", event.pageY - 28 + "px")
       .transition()
       .duration(500)
       .style("opacity", 0.9);
@@ -84,38 +101,34 @@ export const Chart = function(svg, riskObj) {
   }
 
   function drawGraph(data) {
-    d3.select("#chartContainer").remove();
+    select("#chartContainer").remove();
 
     // SET AXES, need 2 x's since the top one will change, but no second y axis on the bottom
-    const xAxis = d3.axisBottom(x),
-      xAxis2 = d3.axisBottom(x2),
-      yAxis = d3.axisLeft(y).tickValues([0, 0.1, 0.2, 0.5, 1.0, 2.0]);
+    const xAxis = axisBottom(x),
+      xAxis2 = axisBottom(x2),
+      yAxis = axisLeft(y).tickValues([0, 0.1, 0.2, 0.5, 1.0, 2.0]);
 
     // INIT BRUSH just on X axis
-    const brush = d3
-      .brushX()
+    const brush = brushX()
       .extent([[0, 0], [width, height2]])
       .on("brush end", brushed);
 
     // INIT ZOOM
-    const zoom = d3
-      .zoom()
+    const zoom = d3zoom()
       .scaleExtent([1, Infinity])
       .translateExtent([[0, 0], [width, height]])
       .extent([[0, 0], [width, height]])
       .on("zoom", zoomed);
 
     // INIT TOP LINE
-    const line = d3
-      .line()
-      .curve(d3.curveCatmullRom)
+    const line = d3line()
+      .curve(curveCatmullRom)
       .x(d => x(d.date))
       .y(d => y(d.risk));
 
     // INIT BOTTOM LINE
-    const line2 = d3
-      .line()
-      .curve(d3.curveCardinal)
+    const line2 = d3line()
+      .curve(curveCardinal)
       .x(d => x2(d.date))
       .y(d => y2(d.risk));
 
@@ -239,10 +252,9 @@ export const Chart = function(svg, riskObj) {
 
     // animate the path in
     function animateLine(line, time) {
-      const lineTransition = d3
-        .transition()
+      const lineTransition = transition()
         .duration(time)
-        .ease(d3.easeLinear);
+        .ease(easeLinear);
       let pathLength = line.node().getTotalLength();
 
       line
@@ -294,7 +306,7 @@ export const Chart = function(svg, riskObj) {
 
     const start = new Date(new Date().getFullYear() - 2, 4, 15);
     const end = new Date(new Date().getFullYear() - 2, 9, 15);
-    d3.select(".brush").call(brush.move, [x(start), x(end)]);
+    select(".brush").call(brush.move, [x(start), x(end)]);
 
     // allows zooming directly over the chart using the mouse scroll, add a zoom rectangle rectangle over the whole chart
     svg
@@ -306,8 +318,8 @@ export const Chart = function(svg, riskObj) {
       .call(zoom);
 
     function brushed() {
-      if (d3.event.sourceEvent && d3.event.sourceEvent.type === "zoom") return; // ignore brush-by-zoom
-      const s = d3.event.selection || x2.range();
+      if (event.sourceEvent && event.sourceEvent.type === "zoom") return; // ignore brush-by-zoom
+      const s = event.selection || x2.range();
       x.domain(s.map(x2.invert, x2));
       graph.select(".line").attr("d", line);
       graph
@@ -319,15 +331,15 @@ export const Chart = function(svg, riskObj) {
         .select(".zoom")
         .call(
           zoom.transform,
-          d3.zoomIdentity.scale(width / (s[1] - s[0])).translate(-s[0], 0)
+          zoomIdentity.scale(width / (s[1] - s[0])).translate(-s[0], 0)
         );
 
       animateLine(path, 0);
     }
 
     function zoomed() {
-      if (d3.event.sourceEvent && d3.event.sourceEvent.type === "brush") return; // ignore zoom-by-brush
-      const t = d3.event.transform;
+      if (event.sourceEvent && event.sourceEvent.type === "brush") return; // ignore zoom-by-brush
+      const t = event.transform;
       x.domain(t.rescaleX(x2).domain());
       graph.select(".line").attr("d", line);
       focus.select(".axis--x").call(xAxis);
@@ -338,8 +350,7 @@ export const Chart = function(svg, riskObj) {
         .attr("cy", d => y(d.risk));
     }
 
-    const marker = d3
-      .select("#context")
+    const marker = select("#context")
       .append("line")
       .attr("id", "marker")
       .attr("y1", 0)
@@ -352,14 +363,13 @@ export const Chart = function(svg, riskObj) {
 
   function moveLine(dateObj) {
     const newSpot = x2(dateObj);
-    d3
-      .select("#marker")
+    select("#marker")
       .attr("x1", newSpot)
       .attr("x2", newSpot);
   }
 
   function drawCircles(riskObj, week) {
-    d3.select(".dots").remove();
+    select(".dots").remove();
 
     const selectedDate = riskObj[week].date;
 
@@ -383,25 +393,6 @@ export const Chart = function(svg, riskObj) {
       .attr("fill", d => labelRisk(d.risk))
       .attr("stroke", d => labelRisk(d.risk));
   }
-
-  // function enlargeCircle(week) {
-  //   // let newDots = d3.select(dots._groups[0]);
-  //   // let current = newDots[week];
-  //   let prev = d3.select(dots._groups[0][week - 1]);
-  //   let next = d3.select(dots._groups[0][week + 1]);
-  //   let current = d3.select(dots._groups[0][week]);
-  //   // let next = d3.select(dots._groups[0][week + 1]);
-  //   console.log();
-  //   // current.attr("r", 15);
-  //   // prev.attr("r", 25);
-  //   prev.attr("r", 15);
-  //   // d3.select(dots._groups[0][week - 1]).attr("r", 3); // current
-  //   // d3.select(dots._groups[0][week + 1]).attr("r", 3); // current
-  //   // d3.select(dots._groups[0][week]).attr("r", 10); // current
-
-  //   // if (next) next.attr
-  //   // current.attr("r", 10);
-  // }
 
   return {
     drawGraph: drawGraph,
