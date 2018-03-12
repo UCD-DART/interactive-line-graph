@@ -83,6 +83,7 @@ function fetchData(city) {
   document.getElementById("currentCity").innerHTML = city;
   riskGraph = Chart(svg, riskObj);
   riskGraph.drawGraph(riskObj);
+  riskGraph.setBrush();
 }
 
 fetchData("Fresno");

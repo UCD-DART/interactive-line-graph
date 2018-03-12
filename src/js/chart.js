@@ -98,37 +98,106 @@ export const Chart = function(svg, riskObj) {
     } else return red;
   }
 
+  // SET AXES, need 2 x's since the top one will change, but no second y axis on the bottom
+  const xAxis = axisBottom(x),
+    xAxis2 = axisBottom(x2),
+    yAxis = axisLeft(y).tickValues([0, 0.1, 0.2, 0.5, 1.0, 2.0]);
+
+  // INIT ZOOM
+  const zoom = d3zoom()
+    .scaleExtent([1, Infinity])
+    .translateExtent([[0, 0], [width, height]])
+    .extent([[0, 0], [width, height]])
+    .on("zoom", zoomed);
+
+  // INIT BRUSH just on X axis
+  let brushStart, brushEnd;
+  const brush = brushX()
+    .extent([[0, 0], [width, height2]])
+    .on("brush end", brushed);
+
+  function brushed() {
+    if (
+      document.readyState == "complete" &&
+      event.selection[0] > 5 &&
+      event.selection[1] < width
+    ) {
+      brushStart = event.selection[0];
+      brushEnd = event.selection[1];
+    }
+
+    console.log("new brush values are " + [brushStart, brushEnd]);
+
+    if (event.sourceEvent && event.sourceEvent.type === "zoom") return; // ignore brush-by-zoom
+    const s = event.selection || x2.range();
+    x.domain(s.map(x2.invert, x2));
+    select(".graph")
+      .select(".line")
+      .attr("d", line);
+    select(".graph")
+      .selectAll("circle")
+      .attr("cx", d => x(d.date))
+      .attr("cy", d => y(d.risk));
+    select(".focus")
+      .select(".axis--x")
+      .call(xAxis);
+    svg
+      .select(".zoom")
+      .call(
+        zoom.transform,
+        zoomIdentity.scale(width / (s[1] - s[0])).translate(-s[0], 0)
+      );
+  }
+
+  // INIT TOP LINE
+  const line = d3line()
+    .curve(curveCatmullRom)
+    .x(d => x(d.date))
+    .y(d => y(d.risk));
+
+  // INIT BOTTOM LINE
+  const line2 = d3line()
+    .curve(curveCardinal)
+    .x(d => x2(d.date))
+    .y(d => y2(d.risk));
+
+  function zoomed() {
+    if (event.sourceEvent && event.sourceEvent.type === "brush") return; // ignore zoom-by-brush
+    const t = event.transform;
+    x.domain(t.rescaleX(x2).domain());
+    select(".graph")
+      .select(".line")
+      .attr("d", line);
+    select(".focus")
+      .select(".axis--x")
+      .call(xAxis);
+    select(".context")
+      .select(".brush")
+      .call(brush.move, x.range().map(t.invertX, t));
+    select(".graph")
+      .selectAll("circle")
+      .attr("cx", d => x(d.date))
+      .attr("cy", d => y(d.risk));
+  }
+
+  // animate the path in
+  function animateLine(line, time) {
+    const lineTransition = transition()
+      .duration(time)
+      .ease(easeLinear);
+    let pathLength = line.node().getTotalLength();
+
+    line
+      .attr("stroke-dasharray", `${pathLength} ${pathLength}`)
+      .attr("stroke-dashoffset", pathLength)
+      .transition(lineTransition)
+      .attr("stroke-dashoffset", 0);
+  }
+
   function drawGraph(data) {
     select("#chartContainer").remove();
-
-    // SET AXES, need 2 x's since the top one will change, but no second y axis on the bottom
-    const xAxis = axisBottom(x),
-      xAxis2 = axisBottom(x2),
-      yAxis = axisLeft(y).tickValues([0, 0.1, 0.2, 0.5, 1.0, 2.0]);
-
-    // INIT BRUSH just on X axis
-    const brush = brushX()
-      .extent([[0, 0], [width, height2]])
-      .on("brush end", brushed);
-
-    // INIT ZOOM
-    const zoom = d3zoom()
-      .scaleExtent([1, Infinity])
-      .translateExtent([[0, 0], [width, height]])
-      .extent([[0, 0], [width, height]])
-      .on("zoom", zoomed);
-
-    // INIT TOP LINE
-    const line = d3line()
-      .curve(curveCatmullRom)
-      .x(d => x(d.date))
-      .y(d => y(d.risk));
-
-    // INIT BOTTOM LINE
-    const line2 = d3line()
-      .curve(curveCardinal)
-      .x(d => x2(d.date))
-      .y(d => y2(d.risk));
+    // brushStart = x(new Date(new Date().getFullYear() - 2, 4, 15));
+    // brushEnd = x(new Date(new Date().getFullYear() - 2, 9, 15));
 
     //make only the needed SVG visible
     const clip = svg
@@ -248,20 +317,6 @@ export const Chart = function(svg, riskObj) {
       .attr("class", "line")
       .attr("d", line);
 
-    // animate the path in
-    function animateLine(line, time) {
-      const lineTransition = transition()
-        .duration(time)
-        .ease(easeLinear);
-      let pathLength = line.node().getTotalLength();
-
-      line
-        .attr("stroke-dasharray", `${pathLength} ${pathLength}`)
-        .attr("stroke-dashoffset", pathLength)
-        .transition(lineTransition)
-        .attr("stroke-dashoffset", 0);
-    }
-
     // ADD IN SCATTER points to be able to mouseover data
     dots = graph
       .append("g")
@@ -302,10 +357,6 @@ export const Chart = function(svg, riskObj) {
       .call(brush)
       .call(brush.move, x.range());
 
-    const start = new Date(new Date().getFullYear() - 2, 4, 15);
-    const end = new Date(new Date().getFullYear() - 2, 9, 15);
-    select(".brush").call(brush.move, [x(start), x(end)]);
-
     // allows zooming directly over the chart using the mouse scroll, add a zoom rectangle rectangle over the whole chart
     svg
       .append("rect")
@@ -315,43 +366,9 @@ export const Chart = function(svg, riskObj) {
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
       .call(zoom);
 
-    function brushed() {
-      if (event.sourceEvent && event.sourceEvent.type === "zoom") return; // ignore brush-by-zoom
-      const s = event.selection || x2.range();
-      x.domain(s.map(x2.invert, x2));
-      graph.select(".line").attr("d", line);
-      graph
-        .selectAll("circle")
-        .attr("cx", d => x(d.date))
-        .attr("cy", d => y(d.risk));
-      focus.select(".axis--x").call(xAxis);
-      svg
-        .select(".zoom")
-        .call(
-          zoom.transform,
-          zoomIdentity.scale(width / (s[1] - s[0])).translate(-s[0], 0)
-        );
-
-      animateLine(path, 0);
-    }
-
-    function zoomed() {
-      if (event.sourceEvent && event.sourceEvent.type === "brush") return; // ignore zoom-by-brush
-      const t = event.transform;
-      x.domain(t.rescaleX(x2).domain());
-      graph.select(".line").attr("d", line);
-      focus.select(".axis--x").call(xAxis);
-      context.select(".brush").call(brush.move, x.range().map(t.invertX, t));
-      graph
-        .selectAll("circle")
-        .attr("cx", d => x(d.date))
-        .attr("cy", d => y(d.risk));
-    }
-
-    let initialMarkerPlace = x2(
+    const initialMarkerPlace = x2(
       riskObj[document.querySelector("#pickDate").value].date
     );
-    console.log(initialMarkerPlace);
 
     const marker = select("#context")
       .append("line")
@@ -361,17 +378,24 @@ export const Chart = function(svg, riskObj) {
       .attr("x1", initialMarkerPlace)
       .attr("x2", initialMarkerPlace);
 
-    // animateLine(path, 3000);
-  }
+    setBrush();
+  } // END of drawgraph
 
   function moveLine(dateObj) {
     const newSpot = x2(dateObj);
+    if (newSpot > brushEnd) {
+      brushStart = newSpot;
+      brushEnd = newSpot + 90;
+      setBrush();
+    } else if (newSpot < brushStart) {
+      brushEnd = newSpot;
+      brushStart = newSpot - 90;
+      setBrush();
+    }
     select("#marker")
       .attr("x1", newSpot)
       .attr("x2", newSpot);
   }
-
-  function adjustBrush() {}
 
   function drawCircles(riskObj, week) {
     select(".dots").remove();
@@ -399,9 +423,23 @@ export const Chart = function(svg, riskObj) {
       .attr("stroke", d => labelRisk(d.risk));
   }
 
+  brushStart = x(new Date(new Date().getFullYear() - 2, 4, 15));
+  brushEnd = x(new Date(new Date().getFullYear() - 2, 9, 15));
+
+  // console.log("original values are " + brushStart + "and " + brushEnd);
+
+  function setBrush() {
+    console.log("set brush was called");
+    console.log("values are " + brushStart + " and " + brushEnd);
+    select(".brush").call(brush.move, [brushStart, brushEnd]);
+  }
+
+  setBrush();
+
   return {
     drawGraph: drawGraph,
     moveLine: moveLine,
-    drawCircles: drawCircles
+    drawCircles: drawCircles,
+    setBrush: setBrush
   };
 };
