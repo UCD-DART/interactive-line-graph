@@ -1,6 +1,5 @@
-import FakeSlider from "./fakeSlider";
 import axios from "axios";
-import * as d3 from "d3";
+import { timeFormat, select } from "d3";
 import "../scss/zika.scss";
 import { data } from "../constants/geojson.js";
 import { mapOptions } from "../constants/mapSettings";
@@ -53,7 +52,7 @@ function changeData(i) {
 Slider("slider", data.features[0].properties.risk.length);
 document.querySelector("#pickDate").oninput = e => changeDate(e.target.value);
 
-const formatDate = d3.timeFormat("%b %d, %Y");
+const formatDate = timeFormat("%b %d, %Y");
 function changeDate(idx) {
   week = idx;
   // let idx = e.target.value;
@@ -68,8 +67,7 @@ function changeDate(idx) {
 }
 
 // DRAW GRAPH
-const svg = d3
-  .select("#chart")
+const svg = select("#chart")
   .append("svg")
   .attr("height", 400)
   .attr("width", 600)
