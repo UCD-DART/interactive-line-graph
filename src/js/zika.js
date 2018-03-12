@@ -63,6 +63,7 @@ function changeDate(idx) {
   let riskValue = riskObj[week].risk === 0 ? "<0.001" : riskObj[week].risk;
   document.getElementById("riskValue").innerHTML = riskValue;
   riskGraph.moveLine(selectedDay);
+  riskGraph.drawCircles(riskObj, week);
   changeData(idx);
 }
 

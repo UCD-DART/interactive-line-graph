@@ -37,6 +37,52 @@ export const Chart = function(svg, riskObj) {
   x2.domain(x.domain());
   y2.domain(y.domain());
 
+  let dots, graph;
+
+  //ADD TOOLTIP on hover
+  const tooltip = d3
+    .select("#chart")
+    .append("div")
+    .attr("class", "toolTip")
+    .style("opacity", 0);
+
+  function tipMouseover(d) {
+    let color = labelRisk(d.risk);
+
+    const html = `
+                <div class='toolTip__risk' style='background:${color}'> 
+                <div class='toolTip__risk--title'> Risk Factor</div> 
+                <div class='toolTip__risk--value'> ${d.risk}
+                </div> 
+                </div>
+                <div class='toolTip__date'>${formatDate(d.date)}</div>
+            `;
+    tooltip
+      .html(html)
+      .style("left", d3.event.pageX + 15 + "px")
+      .style("top", d3.event.pageY - 28 + "px")
+      .transition()
+      .duration(500)
+      .style("opacity", 0.9);
+  }
+
+  function tipMouseout() {
+    tooltip
+      .transition()
+      .duration(300)
+      .style("opacity", 0);
+  }
+
+  function labelRisk(r) {
+    if (r < 0.5) {
+      return blue;
+    } else if (r < 1.0) {
+      return lightblue;
+    } else if (r < 2.0) {
+      return lightred;
+    } else return red;
+  }
+
   function drawGraph(data) {
     d3.select("#chartContainer").remove();
 
@@ -92,7 +138,7 @@ export const Chart = function(svg, riskObj) {
       .attr("width", +svg.attr("width"));
 
     //append the top clip path to the svg, give it the clip path attribute linked to the clip element above
-    const graph = container
+    graph = container
       .append("g")
       .attr("class", "graph")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
@@ -206,18 +252,8 @@ export const Chart = function(svg, riskObj) {
         .attr("stroke-dashoffset", 0);
     }
 
-    function labelRisk(r) {
-      if (r < 0.5) {
-        return blue;
-      } else if (r < 1.0) {
-        return lightblue;
-      } else if (r < 2.0) {
-        return lightred;
-      } else return red;
-    }
-
     // ADD IN SCATTER points to be able to mouseover data
-    graph
+    dots = graph
       .append("g")
       .attr("class", "dots")
       .selectAll(".dots")
@@ -226,7 +262,7 @@ export const Chart = function(svg, riskObj) {
       .append("circle")
       .attr("cx", d => x(d.date))
       .attr("cy", d => y(d.risk))
-      .attr("r", 3)
+      .attr("r", 5)
       .on("mouseover", tipMouseover)
       .on("mouseout", tipMouseout)
       .style("cursor", "pointer")
@@ -268,40 +304,6 @@ export const Chart = function(svg, riskObj) {
       .attr("height", height)
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
       .call(zoom);
-
-    //ADD TOOLTIP on hover
-    const tooltip = d3
-      .select("#chart")
-      .append("div")
-      .attr("class", "toolTip")
-      .style("opacity", 0);
-
-    function tipMouseover(d) {
-      let color = labelRisk(d.risk);
-
-      const html = `
-                <div class='toolTip__risk' style='background:${color}'> 
-                <div class='toolTip__risk--title'> Risk Factor</div> 
-                <div class='toolTip__risk--value'> ${d.risk}
-                </div> 
-                </div>
-                <div class='toolTip__date'>${formatDate(d.date)}</div>
-            `;
-      tooltip
-        .html(html)
-        .style("left", d3.event.pageX + 15 + "px")
-        .style("top", d3.event.pageY - 28 + "px")
-        .transition()
-        .duration(500)
-        .style("opacity", 0.9);
-    }
-
-    function tipMouseout() {
-      tooltip
-        .transition()
-        .duration(300)
-        .style("opacity", 0);
-    }
 
     function brushed() {
       if (d3.event.sourceEvent && d3.event.sourceEvent.type === "zoom") return; // ignore brush-by-zoom
@@ -356,11 +358,54 @@ export const Chart = function(svg, riskObj) {
       .attr("x2", newSpot);
   }
 
-  // moveLine();
-  // let moved = new Date("2016-04-01");
+  function drawCircles(riskObj, week) {
+    d3.select(".dots").remove();
+
+    const selectedDate = riskObj[week].date;
+
+    dots = graph
+      .append("g")
+      .attr("class", "dots")
+      .selectAll(".dots")
+      .data(riskObj)
+      .enter()
+      .append("circle")
+      .attr("cx", d => x(d.date))
+      .attr("cy", d => y(d.risk))
+      .attr("r", function(d) {
+        if (d.date == selectedDate) {
+          return 10;
+        } else return 5;
+      })
+      .on("mouseover", tipMouseover)
+      .on("mouseout", tipMouseout)
+      .style("cursor", "pointer")
+      .attr("fill", d => labelRisk(d.risk))
+      .attr("stroke", d => labelRisk(d.risk));
+  }
+
+  // function enlargeCircle(week) {
+  //   // let newDots = d3.select(dots._groups[0]);
+  //   // let current = newDots[week];
+  //   let prev = d3.select(dots._groups[0][week - 1]);
+  //   let next = d3.select(dots._groups[0][week + 1]);
+  //   let current = d3.select(dots._groups[0][week]);
+  //   // let next = d3.select(dots._groups[0][week + 1]);
+  //   console.log();
+  //   // current.attr("r", 15);
+  //   // prev.attr("r", 25);
+  //   prev.attr("r", 15);
+  //   // d3.select(dots._groups[0][week - 1]).attr("r", 3); // current
+  //   // d3.select(dots._groups[0][week + 1]).attr("r", 3); // current
+  //   // d3.select(dots._groups[0][week]).attr("r", 10); // current
+
+  //   // if (next) next.attr
+  //   // current.attr("r", 10);
+  // }
 
   return {
     drawGraph: drawGraph,
-    moveLine: moveLine
+    moveLine: moveLine,
+    drawCircles: drawCircles
   };
 };
