@@ -1,5 +1,3 @@
-// import { colors } from "./helpers";
-// import * as d3 from "d3";
 import {
   timeFormat,
   scaleTime,
@@ -350,13 +348,18 @@ export const Chart = function(svg, riskObj) {
         .attr("cy", d => y(d.risk));
     }
 
+    let initialMarkerPlace = x2(
+      riskObj[document.querySelector("#pickDate").value].date
+    );
+    console.log(initialMarkerPlace);
+
     const marker = select("#context")
       .append("line")
       .attr("id", "marker")
       .attr("y1", 0)
       .attr("y2", height2)
-      .attr("x1", 50)
-      .attr("x2", 50);
+      .attr("x1", initialMarkerPlace)
+      .attr("x2", initialMarkerPlace);
 
     // animateLine(path, 3000);
   }
@@ -367,6 +370,8 @@ export const Chart = function(svg, riskObj) {
       .attr("x1", newSpot)
       .attr("x2", newSpot);
   }
+
+  function adjustBrush() {}
 
   function drawCircles(riskObj, week) {
     select(".dots").remove();

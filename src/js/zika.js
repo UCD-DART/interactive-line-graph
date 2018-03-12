@@ -8,7 +8,7 @@ import { Slider } from "./slider";
 import { Chart } from "./chart";
 
 let currentCity;
-let week = 10;
+let week = 25;
 let riskObj;
 
 //MAP BEHAVIOR
@@ -16,7 +16,6 @@ const map = new google.maps.Map(document.getElementById("map"), mapOptions);
 const zikaMap = Map(map);
 zikaMap.drawMap(data);
 map.data.addListener("click", function(e) {
-  // console.log(e.feature.getProperty("city") + " is listening to clicks too");
   currentCity = e.feature.getProperty("city");
   fetchData(currentCity);
 });
@@ -55,7 +54,6 @@ document.querySelector("#pickDate").oninput = e => changeDate(e.target.value);
 const formatDate = timeFormat("%b %d, %Y");
 function changeDate(idx) {
   week = idx;
-  // let idx = e.target.value;
   zikaMap.setWeek(week);
   const selectedDay = new Date(data.features[0].properties.risk[week].date);
   document.getElementById("selected-date").innerHTML = formatDate(selectedDay);
