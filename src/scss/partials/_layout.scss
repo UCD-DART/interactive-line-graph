@@ -1,22 +1,42 @@
 body {
-  background: #eee;
+  background: $background;
   margin: 0 auto;
   font-family: "Roboto", sans-serif;
 }
 
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px red dotted;
+  margin: 50px auto;
+  width: 95%;
+}
+
+@media (max-width: 600px) {
+  #map {
+    display: block;
+    width: 100%;
+  }
+
+  .city-data {
+    display: block;
+    width: 100%;
+  }
+}
+
 .visualizations {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: 1fr 1fr;
 }
 
 #map {
-  margin: 10px auto;
+  margin: 0px auto;
   text-align: center;
   border-radius: 10px;
-  height: 650px;
-  width: 500px;
+  height: 680px;
+  width: 550px;
   overflow: hidden;
-  border: 4px gray solid;
+  border: 4px $water solid;
 }
 
 #instruction {
@@ -41,11 +61,11 @@ body {
   text-align: center;
   border-radius: 2px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  cursor: move;
+  // cursor: move;
 }
 
 .city {
   width: $city-width;
   padding: 0px;
-  height: 200px;
+  // height: 200px;
 }

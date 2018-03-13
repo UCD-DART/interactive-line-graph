@@ -26,13 +26,30 @@
             </div>
 
             <div class='city-data'>
+
+
+
+                <div class='card sliderContainer'>
+                    <div id='currentCity'></div>
+                    <div id="slider"></div>
+                    <label class='label' id='selected-date'>Drag to select Date</label>
+                </div>
+                <div id='chart'></div>
+
+                <div class='legend'>
+                    <div class='legend__risk legend__risk--xLow'>Extremely Low Risk</div>
+                    <div class='legend__risk legend__risk--low'>Low Risk</div>
+                    <div class='legend__risk legend__risk--moderate'>Moderate Risk</div>
+                    <div class='legend__risk legend__risk--high'>High Risk</div>
+                </div>
+
                 <div class='card city'>
-                    <div class='row'>
+                    <!-- <div class='row'>
                         <div id="currentCity">Select a city for Zika Risk Data</div>
                         <div class='card__date'> Week of:
                             <span id='selected-date' class='card__date card__date--value'>July 2, 2016</span>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="row">
                         <div id="temp">
                             <div class='temp'>
@@ -69,22 +86,10 @@
                     </div>
                 </div>
 
-                <div id='chart'></div>
-
-                <div class='legend'>
-                    <div class='legend__risk legend__risk--xLow'>Extremely Low Risk</div>
-                    <div class='legend__risk legend__risk--low'>Low Risk</div>
-                    <div class='legend__risk legend__risk--moderate'>Moderate Risk</div>
-                    <div class='legend__risk legend__risk--high'>High Risk</div>
-                </div>
-
             </div>
 
         </div>
-        <div class='sliderContainer'>
 
-            <div id="slider"></div>
-        </div>
 
     </div>
 

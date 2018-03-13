@@ -8,12 +8,6 @@
   }
 }
 
-#currentCity {
-  font-size: 28px;
-  // font-weight: bold;
-  text-transform: uppercase;
-}
-
 .row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -24,7 +18,8 @@
   display: grid;
   grid-template-columns: repeat(4, 120px);
   justify-content: space-around;
-  margin-top: 5px;
+  margin: 5px 0;
+  padding-bottom: 15px;
 }
 
 .label {

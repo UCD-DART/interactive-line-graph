@@ -1,15 +1,20 @@
 .legend {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
   width: $city-width;
   margin: 0 auto;
   text-align: center;
 }
 
 .legend__risk {
-  padding: 10px;
+  padding: 4px;
   font-weight: bold;
   font-style: italic;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  // margin: 0 auto;
 }
 
 .legend__risk--xLow {
