@@ -126,8 +126,6 @@ export const Chart = function(svg, riskObj) {
       brushEnd = event.selection[1];
     }
 
-    console.log("new brush values are " + [brushStart, brushEnd]);
-
     if (event.sourceEvent && event.sourceEvent.type === "zoom") return; // ignore brush-by-zoom
     const s = event.selection || x2.range();
     x.domain(s.map(x2.invert, x2));
@@ -196,8 +194,6 @@ export const Chart = function(svg, riskObj) {
 
   function drawGraph(data) {
     select("#chartContainer").remove();
-    // brushStart = x(new Date(new Date().getFullYear() - 2, 4, 15));
-    // brushEnd = x(new Date(new Date().getFullYear() - 2, 9, 15));
 
     //make only the needed SVG visible
     const clip = svg
@@ -385,11 +381,11 @@ export const Chart = function(svg, riskObj) {
     const newSpot = x2(dateObj);
     if (newSpot > brushEnd) {
       brushStart = newSpot;
-      brushEnd = newSpot + 90;
+      brushEnd = newSpot + 102;
       setBrush();
     } else if (newSpot < brushStart) {
       brushEnd = newSpot;
-      brushStart = newSpot - 90;
+      brushStart = newSpot - 102;
       setBrush();
     }
     select("#marker")
@@ -429,8 +425,8 @@ export const Chart = function(svg, riskObj) {
   // console.log("original values are " + brushStart + "and " + brushEnd);
 
   function setBrush() {
-    console.log("set brush was called");
-    console.log("values are " + brushStart + " and " + brushEnd);
+    // console.log("set brush was called");
+    // console.log("values are " + brushStart + " and " + brushEnd);
     select(".brush").call(brush.move, [brushStart, brushEnd]);
   }
 
