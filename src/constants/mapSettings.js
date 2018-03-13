@@ -4,7 +4,7 @@ export const myMapStyles = [
     elementType: "geometry",
     stylers: [
       {
-        color: "#e9e9e9"
+        color: "#78909c"
       },
       {
         lightness: 17
@@ -16,7 +16,7 @@ export const myMapStyles = [
     elementType: "geometry",
     stylers: [
       {
-        color: "#f5f5f5"
+        color: "a7c0cd"
       },
       {
         lightness: 20
@@ -40,13 +40,13 @@ export const myMapStyles = [
     elementType: "geometry.stroke",
     stylers: [
       {
-        color: "#ffffff"
+        color: "#fff"
       },
       {
         lightness: 29
       },
       {
-        weight: 0.2
+        weight: 0
       }
     ]
   },
@@ -176,7 +176,7 @@ export const myMapStyles = [
 ];
 
 export const mapOptions = {
-  center: { lat: 35.87, lng: -119.5 },
+  center: { lat: 35.97, lng: -119.2 },
   zoom: 7,
   mapTypeControl: false,
   scrollwheel: false,
