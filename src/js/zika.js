@@ -56,7 +56,8 @@ function changeDate(idx) {
   week = idx;
   zikaMap.setWeek(week);
   const selectedDay = new Date(data.features[0].properties.risk[week].date);
-  document.getElementById("selected-date").innerHTML = formatDate(selectedDay);
+  document.getElementById("selected-date").innerHTML =
+    "Week of " + formatDate(selectedDay);
   let riskValue = riskObj[week].risk === 0 ? "<0.001" : riskObj[week].risk;
   document.getElementById("riskValue").innerHTML = riskValue;
   riskGraph.moveLine(selectedDay);

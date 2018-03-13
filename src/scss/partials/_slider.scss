@@ -1,25 +1,31 @@
 .sliderContainer {
   text-align: center;
-  margin-top: -10px;
+  margin-top: 0px;
+  width: $city-width;
+
+  .label {
+    text-align: center;
+    font-size: 14px;
+  }
 }
 
 .slider {
   text-align: center;
-  margin: 0 auto;
+  margin: 25px auto;
   -webkit-appearance: none; /* Override default CSS styles */
   margin-top: 20px;
   appearance: none;
-  width: 90%; /* Full-width */
-  height: 25px; /* Specified height */
-  background: #d3d3d3; /* Grey background */
-  outline: none; /* Remove outline */
+  width: 470px; /* width of context scale */
+  height: 5px;
+  background: $background;
+  outline: none;
   opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
   -webkit-transition: 0.2s; /* 0.2 seconds transition on hover */
   transition: opacity 0.2s;
 }
 
 .slider:hover {
-  opacity: 1; /* Fully shown on mouse-over */
+  opacity: 1;
 }
 
 /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
@@ -28,13 +34,45 @@
   appearance: none;
   width: 25px; /* Set a specific slider handle width */
   height: 25px; /* Slider handle height */
-  background: blue; /* Green background */
-  cursor: move; /* Cursor on hover */
+  background: $dark-red; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+  border-radius: 50px;
+  transition: all 0.5s ease;
+
+  &:active {
+    height: 35px;
+    width: 35px;
+    border: 8px solid $light-red;
+  }
 }
 
 .slider::-moz-range-thumb {
   width: 25px; /* Set a specific slider handle width */
   height: 25px; /* Slider handle height */
-  background: black; /* Green background */
-  cursor: move; /* Cursor on hover */
+  background: $dark-red; /* Green background */
+  border-radius: 50px;
+  -moz-appearance: none;
+  stroke: none;
+  appearance: none;
+  cursor: pointer; /* Cursor on hover */
+  transition: all 0.5s ease;
+
+  &:active {
+    height: 35px;
+    width: 35px;
+    // border: 2px solid yellow;
+  }
+}
+
+.slider::-moz-range-track {
+  background-color: white;
+}
+
+#currentCity {
+  font-size: 28px;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: left;
+  margin-left: 15px;
+  color: $water;
 }
