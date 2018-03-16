@@ -8,7 +8,7 @@ import { Slider } from "./slider";
 import { Chart } from "./chart";
 
 let currentCity;
-let week = 25;
+let week = 22;
 let riskObj;
 
 //MAP BEHAVIOR
@@ -66,12 +66,25 @@ function changeDate(idx) {
 }
 
 // DRAW GRAPH
-const svg = select("#chart")
+
+let width = document.getElementById("chart").clientWidth;
+console.log(width);
+// console.log("initial width is " + width);
+let svg = select("#chart")
   .append("svg")
   .attr("height", 400)
-  .attr("width", 600)
-  .attr("class", "card");
+  .attr("width", width)
+  .attr("class", "card")
+  .attr("viewbox", `0 0 ${width} 400`)
+  .attr("preserveAspectRatio", "xMinYMid");
 
+window.addEventListener("resize", function() {
+  width = document.querySelector("#chart").clientWidth;
+  svg.attr("width", width);
+  // console.log(width);
+  riskGraph = Chart(svg, riskObj);
+  riskGraph.drawGraph(riskObj);
+});
 let riskGraph;
 
 function fetchData(city) {
@@ -90,18 +103,19 @@ function fetchData(city) {
 fetchData("Fresno");
 
 // TODO: get a list of cities that actually have data
-// let cities = [];
+let cities = [];
 
 // axios
 //   .get("http://maps.calsurv.org/zika/layer")
 //   .then(res => {
 //     // console.log(res.data);
 //     let geojson = res.data;
-
+//     console.log("finished going through layer");
 //     return geojson.features.map(city => city.properties.city);
 //   })
 //   .then(res => {
 //     let citiesWithData = [];
+//     console.log(res.length);
 //     res.forEach(city => {
 //       axios.get(`http://maps.calsurv.org/zika/risk/${city}`).then(res => {
 //         if (res.data.length) {
@@ -111,8 +125,12 @@ fetchData("Fresno");
 //         // if (res.data.length) citiesWithData.push(city);
 //       });
 //     });
+//     console.log("finished checking each city ");
 //     return citiesWithData;
 //   })
-//   .then(res => console.log(res));
+//   .then(res => {
+//     console.log("finished everything");
+//     console.log(res);
+//   });
 
 // console.log(cities);
