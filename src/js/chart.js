@@ -55,23 +55,27 @@ export const Chart = function(svg, riskObj) {
 
   let dots, graph;
 
-  //ADD TOOLTIP on hover
-  const tooltip = select("#chart")
-    .append("div")
-    .attr("class", "toolTip")
-    .style("opacity", 0);
+  function labelRisk(r) {
+    if (r < 0.5) {
+      return blue;
+    } else if (r < 1.0) {
+      return lightblue;
+    } else if (r < 2.0) {
+      return lightred;
+    } else return red;
+  }
 
   function tipMouseover(d) {
     let color = labelRisk(d.risk);
 
     const html = `
-                <div class='toolTip__risk' style='background:${color}'> 
-                <div class='toolTip__risk--title'> Risk Factor</div> 
-                <div class='toolTip__risk--value'> ${d.risk}
-                </div> 
-                </div>
-                <div class='toolTip__date'>${formatDate(d.date)}</div>
-            `;
+              <div class='toolTip__risk' style='background:${color}'> 
+              <div class='toolTip__risk--title'> Risk Factor</div> 
+              <div class='toolTip__risk--value'> ${d.risk}
+              </div> 
+              </div>
+              <div class='toolTip__date'>${formatDate(d.date)}</div>
+          `;
     tooltip
       .html(html)
       .style("left", event.pageX + 15 + "px")
@@ -86,16 +90,6 @@ export const Chart = function(svg, riskObj) {
       .transition()
       .duration(300)
       .style("opacity", 0);
-  }
-
-  function labelRisk(r) {
-    if (r < 0.5) {
-      return blue;
-    } else if (r < 1.0) {
-      return lightblue;
-    } else if (r < 2.0) {
-      return lightred;
-    } else return red;
   }
 
   // SET AXES, need 2 x's since the top one will change, but no second y axis on the bottom
@@ -195,8 +189,16 @@ export const Chart = function(svg, riskObj) {
   function drawGraph(data) {
     select("#chartContainer").remove();
 
+    const container = svg
+      .append("g")
+      .attr("class", "chartContainer")
+      .attr("id", "chartContainer")
+      .attr("height", +svg.attr("height"))
+      .attr("width", +svg.attr("width"));
+
     //make only the needed SVG visible
-    const clip = svg
+    //append the top clip path to the svg, give it the clip path attribute linked to the clip element above
+    const clip = container
       .append("defs")
       .append("svg:clipPath")
       .attr("id", "clip")
@@ -206,14 +208,16 @@ export const Chart = function(svg, riskObj) {
       .attr("x", 0)
       .attr("y", 0);
 
-    const container = svg
-      .append("g")
-      .attr("class", "chartContainer")
-      .attr("id", "chartContainer")
-      .attr("height", +svg.attr("height"))
-      .attr("width", +svg.attr("width"));
+    //ADD TOOLTIP on hover
+    if (document.querySelector(".toolTip")) {
+      select(".toolTip").remove();
+    }
 
-    //append the top clip path to the svg, give it the clip path attribute linked to the clip element above
+    const tooltip = select("#chart")
+      .append("div")
+      .attr("class", "toolTip")
+      .style("opacity", 0);
+
     graph = container
       .append("g")
       .attr("class", "graph")
@@ -379,13 +383,17 @@ export const Chart = function(svg, riskObj) {
 
   function moveLine(dateObj) {
     const newSpot = x2(dateObj);
+    let sixMonths = x2(new Date(dateObj.setMonth(dateObj.getMonth() + 6)));
+    //convert that time into a distance from the new spot to adjust the brush with
+    sixMonths = sixMonths - newSpot;
+
     if (newSpot > brushEnd) {
       brushStart = newSpot;
-      brushEnd = newSpot + 102;
+      brushEnd = newSpot + sixMonths;
       setBrush();
     } else if (newSpot < brushStart) {
       brushEnd = newSpot;
-      brushStart = newSpot - 102;
+      brushStart = newSpot - sixMonths;
       setBrush();
     }
     select("#marker")
@@ -419,8 +427,8 @@ export const Chart = function(svg, riskObj) {
       .attr("stroke", d => labelRisk(d.risk));
   }
 
-  brushStart = x(new Date(new Date().getFullYear() - 2, 4, 15));
-  brushEnd = x(new Date(new Date().getFullYear() - 2, 9, 15));
+  brushStart = x(new Date(new Date().getFullYear() - 2, 4, 1));
+  brushEnd = x(new Date(new Date().getFullYear() - 2, 10, 1));
 
   // console.log("original values are " + brushStart + "and " + brushEnd);
 
