@@ -5,36 +5,33 @@ body {
 }
 
 .container {
-  display: flex;
-  flex-wrap: wrap;
-  border: 1px red dotted;
-  margin: 50px auto;
-  width: 95%;
-}
-
-@media (max-width: 600px) {
-  #map {
-    display: block;
-    width: 100%;
-  }
-
-  .city-data {
-    display: block;
-    width: 100%;
-  }
+  // display: inline;
+  border: 5px red solid;
+  // margin: 50px auto;
+  // width: 100%;
+  height: 100vh;
 }
 
 .visualizations {
+  margin: 5px auto;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 2fr 1fr;
+  grid-gap: 20px;
+  // flex-wrap: wrap;
+  // flex-direction: row;
+  justify-content: space-around;
+}
+
+.map {
+  height: 90vh;
 }
 
 #map {
   margin: 0px auto;
   text-align: center;
   border-radius: 10px;
-  height: 680px;
-  width: 550px;
+  height: inherit;
+  // width: 550px;
   overflow: hidden;
   border: 4px $water solid;
 }
@@ -51,12 +48,19 @@ body {
 }
 
 .city-data {
-  // border: 2px red solid;
+  // border: 5px green solid;
+  // width: $city-width;
+  margin-right: 20px;
+
+  #chart {
+    text-align: center;
+    margin: 0 auto;
+  }
 }
 
 .card {
   margin: 10px auto;
-  display: block;
+  // display: block;
   background: #fff;
   text-align: center;
   border-radius: 2px;
@@ -68,4 +72,69 @@ body {
   width: $city-width;
   padding: 0px;
   // height: 200px;
+}
+
+/* MEDIA QUERIES */
+
+// FOR SMALLER SCREENS
+@media (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) {
+  .visualizations {
+    grid-template-columns: 1fr;
+  }
+
+  .map {
+    height: 50vh;
+  }
+
+  .city-data {
+    border: 5px yellow solid;
+  }
+}
+
+// @media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) {
+// }
+
+// FOR EXTRA LARGE DISPLAYS
+@media (min-width: 1400px) {
+  .slider::-webkit-slider-thumb {
+    width: 50px;
+    height: 50px;
+    background: yellow;
+  }
+
+  .legend {
+    div {
+      padding: 10px;
+    }
+  }
+  .city-data {
+    .label {
+      font-size: 18px;
+    }
+
+    .temp,
+    #riskValue {
+      font-size: 48px;
+    }
+
+    .value {
+      font-size: 28px;
+    }
+    .row {
+      // background: green;
+      display: block;
+      div {
+        padding-top: 20px;
+      }
+      // grid-template-columns: 1fr;
+    }
+
+    .row4 {
+      grid-template-columns: 1fr 1fr;
+
+      div {
+        padding-top: 20px;
+      }
+    }
+  }
 }
