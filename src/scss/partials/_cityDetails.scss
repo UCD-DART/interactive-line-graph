@@ -1,11 +1,15 @@
-.card__date {
-  width: 350px;
-  // text-align: left;
-  padding: 0px;
+// .card__date {
+//   width: 100%;
+//   // text-align: left;
+//   padding: 0px;
 
-  @at-root #{&}--value {
-    font-weight: bold;
-  }
+//   @at-root #{&}--value {
+//     font-weight: bold;
+//   }
+// }
+
+.city {
+  width: 100%;
 }
 
 .row {
