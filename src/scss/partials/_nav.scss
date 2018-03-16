@@ -18,6 +18,12 @@ nav {
       padding-left: 50px;
       // border: 1px yellow solid;
     }
+    .active {
+      // background: $dark-blue;
+      color: $light-blue;
+      font-weight: bold;
+      font-size: 18px;
+    }
   }
 }
 
