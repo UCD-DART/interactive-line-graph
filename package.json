@@ -1,11 +1,12 @@
 {
   "name": "d3-zika",
   "version": "1.0.0",
-  "description": "Just a repo to keep progress of getting the line graph to work right.  Different files acting as different branches to be able to incorporate other blocks",
+  "description":
+    "Just a repo to keep progress of getting the line graph to work right.  Different files acting as different branches to be able to incorporate other blocks",
   "main": "proxy.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack",
+    "build": "webpack --config webpack.prod.js",
     "start": "webpack-dev-server",
     "watch": "webpack --watch",
     "prettier-watch": "onchange '**/*.js -- prettier --write {{changed}}"
