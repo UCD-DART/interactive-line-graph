@@ -4,23 +4,13 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
-// .container {
-//   border: 5px red solid;
-//   // margin: 50px auto;
-//   // width: 100%;
-//   height: 100vh;
-// }
-
 .visualizations {
   margin: 5px auto;
   display: grid;
   grid-template-columns: 3fr 2fr;
-  // background: yellow;
-  // grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
   grid-gap: 20px;
-  // flex-wrap: wrap;
-  // flex-direction: row;
   justify-content: space-around;
+  width: 100vw;
 }
 
 .map {
@@ -41,42 +31,23 @@ body {
   overflow: hidden;
   border: 3px $water solid;
 }
-
-// #instruction {
-//   height: 50px;
-//   width: 500px;
-//   font-size: 14px;
-//   text-align: left;
-
-//   p {
-//     margin-left: 10px;
-//   }
-// }
-
 .city-data {
-  // border: 5px green solid;
-  // width: $city-width;
   margin-right: 10px;
   display: inline-block;
-  // display: grid;
-  // grid-template-rows: repeat(auto-fit, 1fr);
-  // grid-template-columns: 1fr;
 
   #chart {
     text-align: center;
-    margin: 0 auto;
+    margin: -10px auto 0px auto;
   }
 }
 
 .card {
   margin: 10px auto;
   box-sizing: border-box;
-  // display: block;
   background: #fff;
   text-align: center;
   border-radius: 2px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  // cursor: move;
 }
 
 .city {
@@ -99,6 +70,9 @@ body {
 
   .city-data {
     // border: 5px yellow solid;
+  }
+  .legend {
+    height: 60px;
   }
 }
 
