@@ -21,8 +21,8 @@ import {
 const formatDate = timeFormat("%b %d, %Y");
 
 export const Chart = function(svg, riskObj) {
-  const margin = { top: 20, right: 50, bottom: 110, left: 80 },
-    margin2 = { top: 320, right: 50, bottom: 40, left: 80 },
+  const margin = { top: 20, right: 50, bottom: 110, left: 80 }, // for main graph
+    margin2 = { top: 320, right: 50, bottom: 40, left: 80 }, //for context
     height = +svg.attr("height") - margin.top - margin.bottom,
     width = +svg.attr("width") - margin.left - margin.right,
     height2 = +svg.attr("height") - margin2.top - margin2.bottom,
@@ -41,6 +41,7 @@ export const Chart = function(svg, riskObj) {
     y2 = scaleLinear().range([height2, 0]);
 
   riskObj.forEach(d => {
+    if (d.risk === null) d.risk = 0;
     (d.date = new Date(d.date)), (d.risk = +d.risk.toFixed(3));
   });
 
@@ -186,7 +187,7 @@ export const Chart = function(svg, riskObj) {
       .attr("stroke-dashoffset", 0);
   }
 
-  function drawGraph(data) {
+  function drawGraph() {
     select("#chartContainer").remove();
 
     const container = svg
@@ -313,7 +314,7 @@ export const Chart = function(svg, riskObj) {
     // append the path with its data to the clipPath container
     let path = graph
       .append("path")
-      .datum(data)
+      .datum(riskObj)
       .attr("class", "line")
       .attr("d", line);
 
@@ -322,7 +323,7 @@ export const Chart = function(svg, riskObj) {
       .append("g")
       .attr("class", "dots")
       .selectAll(".dots")
-      .data(data)
+      .data(riskObj)
       .enter()
       .append("circle")
       .attr("cx", d => x(d.date))
@@ -337,7 +338,7 @@ export const Chart = function(svg, riskObj) {
     // bottom chart gets same path
     let mini = context
       .append("path")
-      .datum(data)
+      .datum(riskObj)
       .attr("class", "context-line line")
       .attr("d", line2);
 
