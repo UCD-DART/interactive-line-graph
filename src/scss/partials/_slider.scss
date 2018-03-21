@@ -3,6 +3,7 @@
   margin-top: 0px;
   width: 100%;
   padding-bottom: 10px;
+  height: 100px;
 
   .label {
     text-align: center;
@@ -69,7 +70,6 @@
 .slider::-moz-range-track {
   background-color: white;
 }
-
 #currentCity {
   font-size: 28px;
   font-weight: bold;
