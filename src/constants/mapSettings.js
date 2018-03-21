@@ -43,7 +43,7 @@ export const myMapStyles = [
         color: "#fff"
       },
       {
-        lightness: 29
+        lightness: 50
       },
       {
         weight: 0
@@ -55,10 +55,13 @@ export const myMapStyles = [
     elementType: "geometry",
     stylers: [
       {
-        color: "#ffffff"
+        color: "#00000"
       },
       {
         lightness: 18
+      },
+      {
+        visibility: "on"
       }
     ]
   },
@@ -71,6 +74,9 @@ export const myMapStyles = [
       },
       {
         lightness: 16
+      },
+      {
+        visibility: "off"
       }
     ]
   },
@@ -102,7 +108,7 @@ export const myMapStyles = [
     elementType: "labels.text.stroke",
     stylers: [
       {
-        visibility: "on"
+        visibility: "off"
       },
       {
         color: "#ffffff"
@@ -119,10 +125,13 @@ export const myMapStyles = [
         saturation: 36
       },
       {
-        color: "#333333"
+        color: "#000000"
       },
       {
-        lightness: 40
+        lightness: 10
+      },
+      {
+        zIndex: 99999999
       }
     ]
   },
@@ -172,6 +181,10 @@ export const myMapStyles = [
         weight: 1.2
       }
     ]
+  },
+  {
+    featureType: "all",
+    stylers: [{ visibility: "simplified" }]
   }
 ];
 
