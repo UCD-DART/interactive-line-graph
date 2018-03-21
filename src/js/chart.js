@@ -65,7 +65,7 @@ export const Chart = function(svg, riskObj) {
     } else return red;
   }
 
-  function tipMouseover(d) {
+  function tipMouseover(d, tooltip) {
     let color = labelRisk(d.risk);
 
     const html = `
@@ -85,7 +85,7 @@ export const Chart = function(svg, riskObj) {
       .style("opacity", 0.9);
   }
 
-  function tipMouseout() {
+  function tipMouseout(tooltip) {
     tooltip
       .transition()
       .duration(300)
@@ -328,8 +328,8 @@ export const Chart = function(svg, riskObj) {
       .attr("cx", d => x(d.date))
       .attr("cy", d => y(d.risk))
       .attr("r", 5)
-      .on("mouseover", tipMouseover)
-      .on("mouseout", tipMouseout)
+      .on("mouseover", d => tipMouseover(d, tooltip))
+      .on("mouseout", d => tipMouseout(tooltip))
       .style("cursor", "pointer")
       .attr("fill", d => labelRisk(d.risk))
       .attr("stroke", d => labelRisk(d.risk));
@@ -433,8 +433,6 @@ export const Chart = function(svg, riskObj) {
   // console.log("original values are " + brushStart + "and " + brushEnd);
 
   function setBrush() {
-    // console.log("set brush was called");
-    // console.log("values are " + brushStart + " and " + brushEnd);
     select(".brush").call(brush.move, [brushStart, brushEnd]);
   }
 
