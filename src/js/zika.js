@@ -1,34 +1,27 @@
-// import axios from "axios";
-import { timeFormat, select } from "d3";
 import "../scss/zika.scss";
-// import { data } from "../constants/geojson.js";
+import { timeFormat, select } from "d3";
 import { mapOptions } from "../constants/mapSettings";
 import { Map } from "./map";
 import { Slider } from "./slider";
 import { Chart } from "./chart";
-// import "babel-polyfill";
-// import { geojson as data } from "./risk.js";
 import * as data from "./risk.json";
-
-// console.log(data);
-// console.log(geojson);
 
 let currentCity;
 let week = 22;
 let riskObj;
 
-//MAP BEHAVIOR
+// MAP BEHAVIOR
 const map = new google.maps.Map(document.getElementById("map"), mapOptions);
 const zikaMap = Map(map);
 zikaMap.drawMap(data);
 map.data.addListener("click", function(e) {
   currentCity = e.feature.getProperty("city");
   zikaMap.setCity(currentCity);
-  fetchData(currentCity);
+  setCity(currentCity);
 });
 
 // SLIDER BEHAVIOR
-// INIT FAKE DATA FIRST
+// INIT FAKE DATA FIRST -- all of this should actually be a axios req
 let fakeData = [];
 for (let i = 0; i < 111; i++) {
   let obj = {};
@@ -94,50 +87,23 @@ window.addEventListener("resize", function() {
 });
 let riskGraph;
 
-function fetchData(city) {
-  // console.log(city);
+function setCity(city) {
+  // Go through our static data, set current risk Object to the matching city
   data.features.forEach(d => {
     if (d.properties.city === city) {
       riskObj = d.properties.risk;
+      return;
     }
   });
-  document.getElementById("currentCity").innerHTML = city;
+  const oldCity = document.getElementById("currentCity");
+  let newCity = oldCity.cloneNode(true);
+  newCity.innerHTML = city;
+  oldCity.parentNode.replaceChild(newCity, oldCity);
+  // document.getElementById("currentCity").innerHTML = city;
+
+  // Assign the Chart the new riskObj
   riskGraph = Chart(svg, riskObj);
-  riskGraph.drawGraph(riskObj);
-  riskGraph.setBrush();
+  riskGraph.drawGraph();
 }
 
-fetchData("Fresno");
-
-// TODO: get a list of cities that actually have data
-// let cities = [];
-
-// axios
-//   .get("http://maps.calsurv.org/zika/layer")
-//   .then(res => {
-//     // console.log(res.data);
-// let geojson = res.data;
-// console.log("finished going through layer");
-// return geojson.features.map(city => city.properties.city);
-//   })
-//   .then(res => {
-//     let citiesWithData = [];
-//     console.log(res.length);
-//     res.forEach(city => {
-//       axios.get(`http://maps.calsurv.org/zika/risk/${city}`).then(res => {
-//         if (res.data.length) {
-//           console.log(city);
-//           citiesWithData.push(city);
-//         }
-//         // if (res.data.length) citiesWithData.push(city);
-//       });
-//     });
-//     console.log("finished checking each city ");
-//     return citiesWithData;
-//   })
-//   .then(res => {
-//     console.log("finished everything");
-//     console.log(res);
-//   });
-
-// console.log(cities);
+setCity("Fresno");
