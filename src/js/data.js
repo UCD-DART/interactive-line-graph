@@ -2,8 +2,8 @@ var axios = require("axios");
 // import { timeFormat } from "d3";
 var d3 = require("d3");
 var fs = require("fs");
-require("ssl-root-cas").inject();
-
+// require("ssl-root-cas").inject();
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 let geoJson;
 
 const service = {
@@ -14,8 +14,7 @@ const service = {
       validateStatus: function(status) {
         return status < 500;
       }
-    }),
-  logData: () => console.log(finalFeatures)
+    })
 };
 
 async function getData() {
@@ -30,14 +29,15 @@ async function getData() {
       let cityData = await service.getData(city);
 
       if (cityData.data.length > 1 && cityData.status === 200) {
-        console.log(cityData.data);
+        // console.log(cityData.data);
+        //format the risk: an array of objects { date: dateObj, risk: value}
         feature.properties.risk = formatData(cityData.data);
         finalFeatures.push(feature);
-        console.log("pushed feature is ");
-        console.log(feature);
+        // console.log("pushed feature is ");
+        // console.log(feature);
       }
     }
-    console.log(finalFeatures);
+    // console.log(finalFeatures);
     geoJson = {
       type: "FeatureCollection",
       features: finalFeatures
@@ -45,13 +45,15 @@ async function getData() {
     fs.writeFile("./risk.json", JSON.stringify(geoJson), function(err) {
       if (err) console.log("writing to the disk did not work");
     });
+    console.log(
+      "💣🚀🚀 FINISHED " + finalFeatures.length + " 🏙️ 🏛️ 🏠   cities in json"
+    );
   } catch (err) {
-    console.log("here is the error " + err);
+    console.log("getData() error: " + err);
   }
 }
 
 getData();
-service.logData();
 
 var format = d3.timeFormat("%Y-%m-%d");
 
@@ -73,19 +75,23 @@ function formatData(city) {
       final[bucket][1].push(+city[i][1]);
     } else {
       // MORE THAN 7 DAYS
-
-      //sum up the current bucket
-      final[bucket][1] =
-        final[bucket][1].reduce(function(a, b) {
-          return a + b;
-        }, 0) / final[bucket][1].length;
       //Assign new bucket date, create new bucket with it and its first value is the current city value
       bucketDate = bucketDate.addDays(7);
       bucket++;
       final.push([format(bucketDate), [+city[i][1]]]);
     }
   }
-
+  //calculate the avg risk for each bucket, format as object for API
+  final = final.map(week => {
+    let obj = {};
+    const avg =
+      week[1].reduce(function(a, b) {
+        return a + b;
+      }, 0) / week[1].length;
+    obj["date"] = new Date(week[0]);
+    obj["risk"] = +avg.toFixed(3);
+    return obj;
+  });
   return final;
 }
 
