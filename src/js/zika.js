@@ -1,11 +1,17 @@
-import axios from "axios";
+// import axios from "axios";
 import { timeFormat, select } from "d3";
 import "../scss/zika.scss";
-import { data } from "../constants/geojson.js";
+// import { data } from "../constants/geojson.js";
 import { mapOptions } from "../constants/mapSettings";
 import { Map } from "./map";
 import { Slider } from "./slider";
 import { Chart } from "./chart";
+// import "babel-polyfill";
+// import { geojson as data } from "./risk.js";
+import * as data from "./risk.json";
+
+// console.log(data);
+// console.log(geojson);
 
 let currentCity;
 let week = 22;
@@ -17,6 +23,7 @@ const zikaMap = Map(map);
 zikaMap.drawMap(data);
 map.data.addListener("click", function(e) {
   currentCity = e.feature.getProperty("city");
+  zikaMap.setCity(currentCity);
   fetchData(currentCity);
 });
 
@@ -68,7 +75,7 @@ function changeDate(idx) {
 // DRAW GRAPH
 
 let width = document.getElementById("chart").clientWidth;
-console.log(width);
+// console.log(width);
 // console.log("initial width is " + width);
 let svg = select("#chart")
   .append("svg")
@@ -103,15 +110,15 @@ function fetchData(city) {
 fetchData("Fresno");
 
 // TODO: get a list of cities that actually have data
-let cities = [];
+// let cities = [];
 
 // axios
 //   .get("http://maps.calsurv.org/zika/layer")
 //   .then(res => {
 //     // console.log(res.data);
-//     let geojson = res.data;
-//     console.log("finished going through layer");
-//     return geojson.features.map(city => city.properties.city);
+// let geojson = res.data;
+// console.log("finished going through layer");
+// return geojson.features.map(city => city.properties.city);
 //   })
 //   .then(res => {
 //     let citiesWithData = [];
