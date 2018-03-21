@@ -2,8 +2,10 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   width: inherit;
-  margin: 0 auto;
+  margin: 0px auto 10px auto;
   text-align: center;
+  height: 40px;
+  // padding: 5px;
 }
 
 .legend__risk {
@@ -29,4 +31,12 @@
 }
 .legend__risk--high {
   background: #f44336;
+}
+
+@media (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) {
+  .legend__risk {
+    padding: 10px 0px;
+    font-size: 24px;
+    // margin: 10px;
+  }
 }
