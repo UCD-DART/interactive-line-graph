@@ -4,29 +4,46 @@ import { colors } from "./helpers";
 export const Map = function(mapObj) {
   // let geoJson = data;
   let map = mapObj;
+  let currentCity = "Fresno";
   let week = 25; // just a random number picked to stylet he map
 
   const riskColor = function(feature) {
     let risk = feature.getProperty("risk");
     let color;
-    let current = risk[week].risk;
+    let currentRisk = risk[week].risk;
 
-    if (current > 2.0) {
+    if (currentRisk > 2.0) {
       color = colors["dark-red"];
-    } else if (current > 1.0) {
+    } else if (currentRisk > 1.0) {
       color = colors["light-red"];
-    } else if (current > 0.5) {
+    } else if (currentRisk > 0.5) {
       color = colors["light-blue"];
     } else {
       color = colors["dark-blue"];
+    }
+
+    if (currentCity === feature.getProperty("city")) {
+      return {
+        fillColor: color,
+        fillOpacity: 1,
+        strokeWeight: 3,
+        strokeColor: "#000000",
+        zindex: 10
+      };
     }
 
     return {
       fillColor: color,
       fillOpacity: 0.5,
       strokeWeight: 2,
-      strokeColor: color
+      strokeColor: color,
+      zindex: 0
     };
+  };
+
+  const setCity = function(city) {
+    currentCity = city;
+    map.data.setStyle(riskColor);
   };
 
   const depthOf = function(object) {
@@ -79,7 +96,6 @@ export const Map = function(mapObj) {
   };
 
   const drawMap = function(geoJson) {
-    // console.log(geoJson);
     geoJson.features.forEach(feature => {
       let geo = feature.geometry;
       feature.geometry = decodeGeometry(geo);
@@ -90,6 +106,7 @@ export const Map = function(mapObj) {
 
   return {
     drawMap: drawMap,
-    setWeek: setWeek
+    setWeek: setWeek,
+    setCity: setCity
   };
 };
