@@ -5,7 +5,9 @@
     <meta charset="utf-8">
     <title> Zika Risk Map </title>
     <script src="https://maps.googleapis.com/maps/api/js?libraries=geometry&key=AIzaSyBf9C1QEaoX_bJbPjECtwo7iS82IQxJzX8"></script>
-
+    <!-- StyleSheet for production -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"> -->
 
 </head>
 
@@ -31,15 +33,8 @@
             </a>
         </ul>
     </nav>
-    <!-- <div id='modal'>
-            <div class='card' id='instruction'>
-                <span class='close'>&times</span>
-                <p>click on a city to see its details to the right</p>
-                <p>move the slider at bottom to see changes over time</p>
-            </div>
-        </div> -->
-    <div class='visualizations'>
 
+    <div class='visualizations'>
 
         <div class='map'>
             <div id="map"></div>
@@ -47,29 +42,21 @@
 
         <div class='city-data'>
 
-
-
-            <div class='card sliderContainer'>
-                <div id='currentCity'></div>
-                <div id="slider"></div>
-                <label class='label' id='selected-date'>Drag to select Date</label>
-            </div>
-            <div id='chart'></div>
-
             <div class='legend'>
                 <div class='legend__risk legend__risk--xLow'>Extremely Low Risk</div>
                 <div class='legend__risk legend__risk--low'>Low Risk</div>
                 <div class='legend__risk legend__risk--moderate'>Moderate Risk</div>
                 <div class='legend__risk legend__risk--high'>High Risk</div>
             </div>
+            <div id='chart'></div>
+
+            <div class='card sliderContainer'>
+                <div id='currentCity' class='animated fadeIn'></div>
+                <div id="slider"></div>
+                <label class='label' id='selected-date'>Drag to select Date</label>
+            </div>
 
             <div class='card city'>
-                <!-- <div class='row'>
-                        <div id="currentCity">Select a city for Zika Risk Data</div>
-                        <div class='card__date'> Week of:
-                            <span id='selected-date' class='card__date card__date--value'>July 2, 2016</span>
-                        </div>
-                    </div> -->
                 <div class="row">
                     <div id="temp">
                         <div class='temp'>
