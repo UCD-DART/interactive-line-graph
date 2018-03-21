@@ -1,7 +1,8 @@
 {
   "name": "d3-zika",
   "version": "1.0.0",
-  "description": "Just a repo to keep progress of getting the line graph to work right.  Different files acting as different branches to be able to incorporate other blocks",
+  "description":
+    "Just a repo to keep progress of getting the line graph to work right.  Different files acting as different branches to be able to incorporate other blocks",
   "main": "proxy.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -14,7 +15,6 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.17.1",
-    "babel-polyfill": "^6.26.0",
     "d3": "^4.13.0"
   },
   "devDependencies": {
