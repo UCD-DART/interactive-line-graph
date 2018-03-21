@@ -12,7 +12,11 @@ module.exports = {
     rules: [
       {
         test: /\.(s*)css$/,
-        use: ["style-loader", "css-loader", "sass-loader"]
+        // use: ["style-loader", "css-loader", "sass-loader"]
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: ["css-loader", "sass-loader"]
+        })
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
@@ -23,9 +27,6 @@ module.exports = {
         use: ["babel-loader"]
       }
     ]
-  },
-  devServer: {
-    contentBase: "./dist"
   },
   plugins: [new UglifyJSPlugin(), new ExtractTextPlugin("styles.css")]
 };
