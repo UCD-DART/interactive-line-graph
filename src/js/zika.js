@@ -70,20 +70,41 @@ function changeDate(idx) {
 let width = document.getElementById("chart").clientWidth;
 // console.log(width);
 // console.log("initial width is " + width);
+
 let svg = select("#chart")
   .append("svg")
   .attr("height", 400)
   .attr("width", width)
   .attr("class", "card")
-  .attr("viewbox", `0 0 ${width} 400`)
+  .attr("id", "svg")
+  .attr("viewbox", `0 0 600 400`)
   .attr("preserveAspectRatio", "xMinYMid");
 
+// window.addEventListener("resize", function() {
+//   let chart = document.getElementById("svg");
+//   let posInfo = chart.getBoundingClientRect();
+//   let height = posInfo.height;
+//   let width = posInfo.width;
+//   let aspect = width / height;
+//   // let containerWidth =
+
+//   console.log(aspect);
+// });
 window.addEventListener("resize", function() {
   width = document.querySelector("#chart").clientWidth;
-  svg.attr("width", width);
+  let mapWidth = document.querySelector(".map").clientWidth;
+  let cityDataWidth = document.querySelector(".city-data").clientWidth;
+  let vizWidth = document.querySelector(".visualizations").clientWidth;
+
+  console.log("Visualizations is " + vizWidth + "px");
+  console.log("Map width is " + mapWidth + "px");
+  console.log("City width is " + cityDataWidth + "px");
+  console.log("The svg width is " + width + "px");
+
+  svg.attr("width", cityDataWidth);
   // console.log(width);
   riskGraph = Chart(svg, riskObj);
-  riskGraph.drawGraph(riskObj);
+  riskGraph.drawGraph();
 });
 let riskGraph;
 
