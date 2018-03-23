@@ -20,7 +20,19 @@ import {
 
 const formatDate = timeFormat("%b %d, %Y");
 
-export const Chart = function(svg, riskObj) {
+export const Chart = function(divId, riskObj, divWidth) {
+  //remove an SVG if already present
+
+  if (document.getElementById("svg")) {
+    document.getElementById("svg").remove();
+  }
+  let svg = select("#chart")
+    .append("svg")
+    .attr("height", 400)
+    .attr("width", divWidth)
+    .attr("class", "card")
+    .attr("id", "svg");
+
   const margin = { top: 20, right: 50, bottom: 110, left: 80 }, // for main graph
     margin2 = { top: 320, right: 50, bottom: 40, left: 80 }, //for context
     height = +svg.attr("height") - margin.top - margin.bottom,
@@ -188,7 +200,7 @@ export const Chart = function(svg, riskObj) {
   }
 
   function drawGraph() {
-    select("#chartContainer").remove();
+    // select("#chartContainer").remove();
 
     const container = svg
       .append("g")

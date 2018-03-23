@@ -68,42 +68,11 @@ function changeDate(idx) {
 // DRAW GRAPH
 
 let width = document.getElementById("chart").clientWidth;
-// console.log(width);
-// console.log("initial width is " + width);
 
-let svg = select("#chart")
-  .append("svg")
-  .attr("height", 400)
-  .attr("width", width)
-  .attr("class", "card")
-  .attr("id", "svg")
-  .attr("viewbox", `0 0 600 400`)
-  .attr("preserveAspectRatio", "xMinYMid");
-
-// window.addEventListener("resize", function() {
-//   let chart = document.getElementById("svg");
-//   let posInfo = chart.getBoundingClientRect();
-//   let height = posInfo.height;
-//   let width = posInfo.width;
-//   let aspect = width / height;
-//   // let containerWidth =
-
-//   console.log(aspect);
-// });
 window.addEventListener("resize", function() {
+  document.getElementById("chart").innerHTML = "";
   width = document.querySelector("#chart").clientWidth;
-  let mapWidth = document.querySelector(".map").clientWidth;
-  let cityDataWidth = document.querySelector(".city-data").clientWidth;
-  let vizWidth = document.querySelector(".visualizations").clientWidth;
-
-  console.log("Visualizations is " + vizWidth + "px");
-  console.log("Map width is " + mapWidth + "px");
-  console.log("City width is " + cityDataWidth + "px");
-  console.log("The svg width is " + width + "px");
-
-  svg.attr("width", cityDataWidth);
-  // console.log(width);
-  riskGraph = Chart(svg, riskObj);
+  riskGraph = Chart("chart", riskObj, width);
   riskGraph.drawGraph();
 });
 let riskGraph;
@@ -116,14 +85,12 @@ function setCity(city) {
       return;
     }
   });
+  //to animate city name, need to remove old node, insert new node
   const oldCity = document.getElementById("currentCity");
   let newCity = oldCity.cloneNode(true);
   newCity.innerHTML = city;
   oldCity.parentNode.replaceChild(newCity, oldCity);
-  // document.getElementById("currentCity").innerHTML = city;
-
-  // Assign the Chart the new riskObj
-  riskGraph = Chart(svg, riskObj);
+  riskGraph = Chart("chart", riskObj, width);
   riskGraph.drawGraph();
 }
 
