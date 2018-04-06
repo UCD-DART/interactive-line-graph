@@ -5,46 +5,55 @@ import { Map } from "./map";
 import { Slider } from "./slider";
 import { Chart } from "./chart";
 import * as data from "./risk.json";
+import axios from "axios";
 
-let currentCity;
+let currentCity = "Fresno";
+let cityId = 13832;
 let week = 22;
-let riskObj;
+let riskObj = {};
+let cityDetails = [];
 
 // MAP BEHAVIOR
 const map = new google.maps.Map(document.getElementById("map"), mapOptions);
 const zikaMap = Map(map);
 zikaMap.drawMap(data);
 map.data.addListener("click", function(e) {
+  const cityId = e.feature.getId();
   currentCity = e.feature.getProperty("city");
   zikaMap.setCity(currentCity);
   setCity(currentCity);
+  getCityDetails(cityId);
 });
 
 // SLIDER BEHAVIOR
 // INIT FAKE DATA FIRST -- all of this should actually be a axios req
-let fakeData = [];
-for (let i = 0; i < 111; i++) {
-  let obj = {};
-
-  obj["tempMin"] = +(Math.random() * 20).toFixed(0);
-  obj["tempMax"] = +(Math.random() * 20 + obj["tempMin"]).toFixed(0);
-  obj["bites"] = +(Math.random() * 50).toFixed(1);
-  obj["survival"] = +(Math.random() * 50 + 25).toFixed(0);
-  obj["mosqPer"] = +(Math.random() * 7 + 1).toFixed(1);
-  obj["days"] = +(Math.random() * 7 + 1).toFixed(2);
-  obj["incubation"] = +(Math.random() * 40 + 100).toFixed(1);
-
-  fakeData.push(obj);
+function getCityDetails(id) {
+  console.log(cityDetails);
+  axios.get(`https://calsurv.herokuapp.com/api/zika/${id}`).then(res => {
+    cityDetails = res.data;
+    // console.log(cityDetails);
+    changeDetails(week);
+    // console.log(res.data);
+  });
 }
 
-function changeData(i) {
-  let data = fakeData[i];
-  document.querySelector("#minTemp").innerHTML = data.tempMin;
-  document.querySelector("#maxTemp").innerHTML = data.tempMax;
-  document.querySelector("#mosqValue").innerHTML = data.mosqPer;
-  document.querySelector("#bitesValue").innerHTML = data.bites;
-  document.querySelector("#survivalValue").innerHTML = data.survival;
-  document.querySelector("#incubationValue").innerHTML = data.incubation;
+function changeDetails(week) {
+  let data = cityDetails[week];
+  document.querySelector("#minTemp").innerHTML = data.tmin.toFixed(0);
+  document.querySelector("#maxTemp").innerHTML = data.tmax.toFixed(0);
+  document.querySelector("#mosqValue").innerHTML = data.mosqPerPerson.toFixed(
+    1
+  );
+  document.querySelector("#bitesValue").innerHTML = data.bites.toFixed(1);
+  document.querySelector("#survivalValue").innerHTML = data.survival.toFixed(0);
+  document.querySelector(
+    "#incubationValue"
+  ).innerHTML = data.incubationPeriod.toFixed(1);
+
+  console.log("change data was called");
+  document.querySelector("#riskValue").innerHTML = data.risk.toFixed(2);
+
+  // document.querySelector("riskValue");
 }
 
 // ALL SLIDER BEHAVIOR
@@ -59,10 +68,10 @@ function changeDate(idx) {
   document.getElementById("selected-date").innerHTML =
     "Week of " + formatDate(selectedDay);
   let riskValue = riskObj[week].risk === 0 ? "<0.001" : riskObj[week].risk;
-  document.getElementById("riskValue").innerHTML = riskValue;
+  // document.getElementById("riskValue").innerHTML = riskValue;
   riskGraph.moveLine(selectedDay);
   riskGraph.drawCircles(riskObj, week);
-  changeData(idx);
+  changeDetails(idx, cityDetails);
 }
 
 // DRAW GRAPH
@@ -85,6 +94,9 @@ function setCity(city) {
       return;
     }
   });
+
+  getCityDetails(cityId);
+
   //to animate city name, need to remove old node, insert new node
   const oldCity = document.getElementById("currentCity");
   let newCity = oldCity.cloneNode(true);
@@ -92,6 +104,9 @@ function setCity(city) {
   oldCity.parentNode.replaceChild(newCity, oldCity);
   riskGraph = Chart("chart", riskObj, width);
   riskGraph.drawGraph();
+
+  //get city details
 }
 
-setCity("Fresno");
+setCity(currentCity);
+changeDetails(week);

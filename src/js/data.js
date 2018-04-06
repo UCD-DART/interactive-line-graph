@@ -1,9 +1,8 @@
 var axios = require("axios");
-// import { timeFormat } from "d3";
 var d3 = require("d3");
 var fs = require("fs");
-// require("ssl-root-cas").inject();
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
 let geoJson;
 
 const service = {
