@@ -20,7 +20,7 @@ import {
 
 const formatDate = timeFormat("%b %d, %Y");
 
-export const Chart = function(divId, riskObj, divWidth) {
+export const Chart = function(divId, riskObj, divWidth, initDate) {
   //remove an SVG if already present
 
   if (document.getElementById("svg")) {
@@ -62,7 +62,7 @@ export const Chart = function(divId, riskObj, divWidth) {
       return d.date;
     })
   );
-  y.domain([0.1, 2.5]);
+  y.domain([0.1, 2.5]); // explicitly set the y axis scale to start at .1 and go up to 2.5
   x2.domain(x.domain());
   y2.domain(y.domain());
 
@@ -108,7 +108,7 @@ export const Chart = function(divId, riskObj, divWidth) {
   // SET AXES, need 2 x's since the top one will change, but no second y axis on the bottom
   const xAxis = axisBottom(x),
     xAxis2 = axisBottom(x2),
-    yAxis = axisLeft(y).tickValues([0, 0.1, 0.2, 0.5, 1.0, 2.0]);
+    yAxis = axisLeft(y).tickValues([0, 0.1, 0.25, 0.5, 1.0, 2.0]);
 
   // INIT ZOOM
   const zoom = d3zoom()
@@ -417,7 +417,8 @@ export const Chart = function(divId, riskObj, divWidth) {
   function drawCircles(riskObj, week) {
     select(".dots").remove();
 
-    const selectedDate = riskObj[week].date;
+    const selectedDate = riskObj[week].date || initDate;
+    console.log(selectedDate);
 
     dots = graph
       .append("g")
@@ -440,13 +441,28 @@ export const Chart = function(divId, riskObj, divWidth) {
       .attr("stroke", d => labelRisk(d.risk));
   }
 
-  brushStart = x(new Date(new Date().getFullYear() - 2, 4, 1));
-  brushEnd = x(new Date(new Date().getFullYear() - 2, 10, 1));
+  // brushStart = x(new Date(new Date().getFullYear() - 2, 4, 1));
+  // brushEnd = x(new Date(new Date().getFullYear() - 2, 10, 1));
+
+  brushStart = x(new Date(initDate.setMonth(initDate.getMonth() - 3)));
+  brushEnd = x(new Date(initDate.setMonth(initDate.getMonth() + 6)));
 
   // console.log("original values are " + brushStart + "and " + brushEnd);
 
   function setBrush() {
+    // if (dateObj) {
+    //   let currentPlace = x2(dateObj);
+    //   console.log("brushStart is " + brushStart);
+    //   console.log("marker is at " + currentPlace);
+    //   if (currentPlace < brushStart || currentPlace > brushEnd) {
+    //     let threeMonths = x(new Date(dateObj.setMonth(dateObj.getMonth() + 3))); //a px length of three months
+    //     brushStart = brushStart - threeMonths;
+    //     brushEnd = brushEnd - threeMonths;
+    //   }
+    // }
+
     select(".brush").call(brush.move, [brushStart, brushEnd]);
+    // console.log("at end of function, brushStart is " + brushStart);
   }
 
   setBrush();
