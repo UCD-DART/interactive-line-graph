@@ -13,6 +13,13 @@ const service = {
       validateStatus: function(status) {
         return status < 500;
       }
+    }),
+  getDataById: id =>
+    axios({
+      url: `https://calsurv.herokuapp.com/api/zika/${id}`,
+      validateStatus: function(status) {
+        return status < 500;
+      }
     })
 };
 
@@ -25,15 +32,14 @@ async function getData() {
     for (let i = 0; i < features.length; i++) {
       let feature = features[i];
       const city = feature.properties.city;
+      // const id = feature.id;
       let cityData = await service.getData(city);
 
       if (cityData.data.length > 1 && cityData.status === 200) {
-        // console.log(cityData.data);
-        //format the risk: an array of objects { date: dateObj, risk: value}
         feature.properties.risk = formatData(cityData.data);
         finalFeatures.push(feature);
         // console.log("pushed feature is ");
-        // console.log(feature);
+        console.log(city);
       }
     }
     // console.log(finalFeatures);
@@ -56,8 +62,17 @@ getData();
 
 var format = d3.timeFormat("%Y-%m-%d");
 
+// function formatData2(arr) { // for use with my calsurv api on heroku -- already has values averaged by week
+//   return arr.map(function(datum) {
+//     return {
+//       date: datum.date,
+//       risk: datum.risk
+//     };
+//   });
+// }
+
 function formatData(city) {
-  let bucketDate = new Date("2016-01-02");
+  let bucketDate = new Date("2016-01-01T00:00:00.000Z");
 
   Date.prototype.addDays = function(days) {
     const date = new Date(this.valueOf());
