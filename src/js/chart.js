@@ -18,6 +18,8 @@ import {
   zoomIdentity
 } from "d3";
 
+import { colors } from "./helpers";
+
 const formatDate = timeFormat("%b %d, %Y");
 
 export const Chart = function(divId, riskObj, divWidth, initDate) {
@@ -37,11 +39,7 @@ export const Chart = function(divId, riskObj, divWidth, initDate) {
     margin2 = { top: 320, right: 50, bottom: 40, left: 80 }, //for context
     height = +svg.attr("height") - margin.top - margin.bottom,
     width = +svg.attr("width") - margin.left - margin.right,
-    height2 = +svg.attr("height") - margin2.top - margin2.bottom,
-    red = "#f44336",
-    blue = "#1565c0",
-    lightblue = "#6ec6ff",
-    lightred = "#ef9a9a";
+    height2 = +svg.attr("height") - margin2.top - margin2.bottom;
 
   // SET SCALES for each graph.  same for each, just height is different on smaller graph
   const x = scaleTime().range([0, width]),
@@ -70,12 +68,12 @@ export const Chart = function(divId, riskObj, divWidth, initDate) {
 
   function labelRisk(r) {
     if (r < 0.5) {
-      return blue;
+      return colors["dark-blue"];
     } else if (r < 1.0) {
-      return lightblue;
+      return colors["light-blue"];
     } else if (r < 2.0) {
-      return lightred;
-    } else return red;
+      return colors["light-red"];
+    } else return colors["dark-red"];
   }
 
   function tipMouseover(d, tooltip) {
@@ -261,14 +259,14 @@ export const Chart = function(divId, riskObj, divWidth, initDate) {
       .attr("y2", y(3))
       .selectAll("stop")
       .data([
-        { offset: "0%", color: blue },
-        { offset: "50%", color: blue },
-        { offset: "50%", color: lightblue },
-        { offset: "72%", color: lightblue },
-        { offset: "72%", color: lightred },
-        { offset: "94%", color: lightred },
-        { offset: "94%", color: red },
-        { offset: "100%", color: red }
+        { offset: "0%", color: colors["dark-blue"] },
+        { offset: "50%", color: colors["dark-blue"] },
+        { offset: "50%", color: colors["light-blue"] },
+        { offset: "72%", color: colors["light-blue"] },
+        { offset: "72%", color: colors["light-red"] },
+        { offset: "94%", color: colors["light-red"] },
+        { offset: "94%", color: colors["dark-red"] },
+        { offset: "100%", color: colors["dark-red"] }
       ])
       .enter()
       .append("stop")
@@ -286,12 +284,12 @@ export const Chart = function(divId, riskObj, divWidth, initDate) {
       .attr("y2", y(3))
       .selectAll("stop")
       .data([
-        { offset: "0%", color: blue },
-        { offset: "90%", color: blue },
-        { offset: "90%", color: lightblue },
-        { offset: "92%", color: lightblue },
-        { offset: "92%", color: red },
-        { offset: "100%", color: red }
+        { offset: "0%", color: colors["dark-blue"] },
+        { offset: "90%", color: colors["dark-blue"] },
+        { offset: "90%", color: colors["light-blue"] },
+        { offset: "92%", color: colors["light-colors['dark-blue']"] },
+        { offset: "92%", color: colors["dark-red"] },
+        { offset: "100%", color: colors["dark-red"] }
       ])
       .enter()
       .append("stop")
@@ -418,7 +416,6 @@ export const Chart = function(divId, riskObj, divWidth, initDate) {
     select(".dots").remove();
 
     const selectedDate = riskObj[week].date || initDate;
-    console.log(selectedDate);
 
     dots = graph
       .append("g")
@@ -441,28 +438,13 @@ export const Chart = function(divId, riskObj, divWidth, initDate) {
       .attr("stroke", d => labelRisk(d.risk));
   }
 
-  // brushStart = x(new Date(new Date().getFullYear() - 2, 4, 1));
-  // brushEnd = x(new Date(new Date().getFullYear() - 2, 10, 1));
-
   brushStart = x(new Date(initDate.setMonth(initDate.getMonth() - 3)));
   brushEnd = x(new Date(initDate.setMonth(initDate.getMonth() + 6)));
 
   // console.log("original values are " + brushStart + "and " + brushEnd);
 
   function setBrush() {
-    // if (dateObj) {
-    //   let currentPlace = x2(dateObj);
-    //   console.log("brushStart is " + brushStart);
-    //   console.log("marker is at " + currentPlace);
-    //   if (currentPlace < brushStart || currentPlace > brushEnd) {
-    //     let threeMonths = x(new Date(dateObj.setMonth(dateObj.getMonth() + 3))); //a px length of three months
-    //     brushStart = brushStart - threeMonths;
-    //     brushEnd = brushEnd - threeMonths;
-    //   }
-    // }
-
     select(".brush").call(brush.move, [brushStart, brushEnd]);
-    // console.log("at end of function, brushStart is " + brushStart);
   }
 
   setBrush();
