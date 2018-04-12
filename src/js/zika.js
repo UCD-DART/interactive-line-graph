@@ -6,6 +6,7 @@ import { Slider } from "./slider";
 import { Chart } from "./chart";
 import * as data from "./risk.json";
 import axios from "axios";
+import { colors } from "./helpers";
 
 let currentCity = "Fresno";
 let cityId = 13832;
@@ -50,7 +51,17 @@ function changeDetails(week) {
     "#incubationValue"
   ).innerHTML = data.incubationPeriod.toFixed(1);
 
-  document.querySelector("#riskValue").innerHTML = data.risk.toFixed(2);
+  //risk value is dynamically styled depending on its value
+  const riskValue = data.risk.toFixed(2);
+  const riskElement = document.getElementById("riskValue");
+  riskElement.innerHTML = riskValue;
+  if (riskValue >= 2) {
+    riskElement.style.color = colors["dark-red"];
+  } else if (riskValue >= 1) {
+    riskElement.style.color = colors["light-red"];
+  } else if (riskValue >= 0.5) {
+    riskElement.style.color = colors["light-blue"];
+  } else riskElement.style.color = colors["dark-blue"];
 
   // document.querySelector("riskValue");
 }
@@ -104,9 +115,9 @@ function setCity(city) {
   const markerDate = new Date(riskObj[week].date);
   riskGraph = Chart("chart", riskObj, width, markerDate);
   riskGraph.drawGraph();
+  getCityDetails(cityId);
 
   // riskGraph.setBrush(markerDate);
 }
 
 setCity(currentCity);
-changeDetails(week);
