@@ -32,7 +32,7 @@ map.data.addListener("click", function(e) {
 // SLIDER BEHAVIOR
 // INIT FAKE DATA FIRST -- all of this should actually be a axios req
 function getCityDetails(id) {
-  axios.get(`https://calsurv.herokuapp.com/api/zika/${id}`).then(res => {
+  axios.get(`http://mathew.calsurv.org/api/zika/${id}`).then(res => {
     cityDetails = res.data;
     changeDetails(week);
   });
