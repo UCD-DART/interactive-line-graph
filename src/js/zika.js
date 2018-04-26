@@ -4,7 +4,7 @@ import { mapOptions } from "../constants/mapSettings";
 import { Map } from "./map";
 import { Slider } from "./slider";
 import { Chart } from "./chart";
-import * as data from "./risk.json";
+import * as data from "./risk2.json";
 import axios from "axios";
 import { colors } from "./helpers";
 
@@ -116,8 +116,6 @@ function setCity(city) {
   riskGraph = Chart("chart", riskObj, width, markerDate);
   riskGraph.drawGraph();
   getCityDetails(cityId);
-
-  // riskGraph.setBrush(markerDate);
 }
 
 setCity(currentCity);
