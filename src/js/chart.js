@@ -24,14 +24,13 @@ const formatDate = timeFormat("%b %d, %Y");
 
 export const Chart = function(divId, riskObj, divWidth, initDate) {
   //remove an SVG if already present
-
   if (document.getElementById("svg")) {
     document.getElementById("svg").remove();
   }
   let svg = select("#chart")
     .append("svg")
-    .attr("height", 400)
-    .attr("width", divWidth)
+    .attr("height", 400) // height should stay constant or else the axes get difficult to work with
+    .attr("width", divWidth) //chart width depends on
     .attr("class", "card")
     .attr("id", "svg");
 
