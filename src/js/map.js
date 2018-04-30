@@ -1,5 +1,5 @@
 import { mapOptions } from "../constants/mapSettings.js";
-import { colors } from "./helpers";
+import { colors, labelZikaRisk } from "./helpers";
 
 export const Map = function(mapObj) {
   // let geoJson = data;
@@ -9,18 +9,8 @@ export const Map = function(mapObj) {
 
   const riskColor = function(feature) {
     let risk = feature.getProperty("risk");
-    let color;
     let currentRisk = risk[week].risk;
-
-    if (currentRisk > 2.0) {
-      color = colors["dark-red"];
-    } else if (currentRisk > 1.0) {
-      color = colors["light-red"];
-    } else if (currentRisk > 0.5) {
-      color = colors["light-blue"];
-    } else {
-      color = colors["dark-blue"];
-    }
+    let color = labelZikaRisk(currentRisk);
 
     if (currentCity === feature.getProperty("city")) {
       return {

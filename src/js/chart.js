@@ -18,7 +18,7 @@ import {
   zoomIdentity
 } from "d3";
 
-import { colors } from "./helpers";
+import { colors, labelZikaRisk } from "./helpers";
 
 const formatDate = timeFormat("%b %d, %Y");
 
@@ -65,18 +65,8 @@ export const Chart = function(divId, riskObj, divWidth, initDate) {
 
   let dots, graph;
 
-  function labelRisk(r) {
-    if (r < 0.5) {
-      return colors["dark-blue"];
-    } else if (r < 1.0) {
-      return colors["light-blue"];
-    } else if (r < 2.0) {
-      return colors["light-red"];
-    } else return colors["dark-red"];
-  }
-
   function tipMouseover(d, tooltip) {
-    let color = labelRisk(d.risk);
+    let color = labelZikaRisk(d.risk);
 
     const html = `
               <div class='toolTip__risk' style='background:${color}'> 
@@ -341,8 +331,8 @@ export const Chart = function(divId, riskObj, divWidth, initDate) {
       .on("mouseover", d => tipMouseover(d, tooltip))
       .on("mouseout", d => tipMouseout(tooltip))
       .style("cursor", "pointer")
-      .attr("fill", d => labelRisk(d.risk))
-      .attr("stroke", d => labelRisk(d.risk));
+      .attr("fill", d => labelZikaRisk(d.risk))
+      .attr("stroke", d => labelZikaRisk(d.risk));
 
     // bottom chart gets same path
     let mini = context
@@ -433,8 +423,8 @@ export const Chart = function(divId, riskObj, divWidth, initDate) {
       .on("mouseover", tipMouseover)
       .on("mouseout", tipMouseout)
       .style("cursor", "pointer")
-      .attr("fill", d => labelRisk(d.risk))
-      .attr("stroke", d => labelRisk(d.risk));
+      .attr("fill", d => labelZikaRisk(d.risk))
+      .attr("stroke", d => labelZikaRisk(d.risk));
   }
 
   brushStart = x(new Date(initDate.setMonth(initDate.getMonth() - 3)));

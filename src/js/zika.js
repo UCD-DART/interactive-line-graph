@@ -1,12 +1,13 @@
 import "../scss/zika.scss";
-import { timeFormat, select } from "d3";
+import axios from "axios";
+import { timeFormat } from "d3-time-format";
+import { select } from "d3-selection";
 import { mapOptions } from "../constants/mapSettings";
 import { Map } from "./map";
 import { Slider } from "./slider";
 import { Chart } from "./chart";
 import * as data from "./risk2.json";
-import axios from "axios";
-import { colors } from "./helpers";
+import { colors, labelZikaRisk } from "./helpers";
 
 let currentCity = "Fresno";
 let cityId = 13832;
@@ -55,15 +56,7 @@ function changeDetails(week) {
   const riskValue = data.risk.toFixed(2);
   const riskElement = document.getElementById("riskValue");
   riskElement.innerHTML = riskValue;
-  if (riskValue >= 2) {
-    riskElement.style.color = colors["dark-red"];
-  } else if (riskValue >= 1) {
-    riskElement.style.color = colors["light-red"];
-  } else if (riskValue >= 0.5) {
-    riskElement.style.color = colors["light-blue"];
-  } else riskElement.style.color = colors["dark-blue"];
-
-  // document.querySelector("riskValue");
+  riskElement.style.color = labelZikaRisk(riskValue);
 }
 
 // ALL SLIDER BEHAVIOR
