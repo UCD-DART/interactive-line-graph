@@ -64,6 +64,7 @@ Slider("slider", data.features[0].properties.risk.length);
 document.querySelector("#pickDate").oninput = e => changeDate(e.target.value);
 
 const formatDate = timeFormat("%b %d, %Y");
+
 function changeDate(idx) {
   week = idx;
   zikaMap.setWeek(week);

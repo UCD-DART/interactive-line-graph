@@ -63,9 +63,10 @@ export const Chart = function(divId, riskObj, divWidth, initDate) {
   x2.domain(x.domain());
   y2.domain(y.domain());
 
-  let dots, graph;
+  let dots, graph, tooltip;
 
-  function tipMouseover(d, tooltip) {
+  function tipMouseover(d) {
+    redrawTooltip();
     let color = labelZikaRisk(d.risk);
 
     const html = `
@@ -213,11 +214,6 @@ export const Chart = function(divId, riskObj, divWidth, initDate) {
       select(".toolTip").remove();
     }
 
-    const tooltip = select("#chart")
-      .append("div")
-      .attr("class", "toolTip")
-      .style("opacity", 0);
-
     graph = container
       .append("g")
       .attr("class", "graph")
@@ -328,7 +324,7 @@ export const Chart = function(divId, riskObj, divWidth, initDate) {
       .attr("cx", d => x(d.date))
       .attr("cy", d => y(d.risk))
       .attr("r", 5)
-      .on("mouseover", d => tipMouseover(d, tooltip))
+      .on("mouseover", d => tipMouseover(d))
       .on("mouseout", d => tipMouseout(tooltip))
       .style("cursor", "pointer")
       .attr("fill", d => labelZikaRisk(d.risk))
@@ -425,6 +421,17 @@ export const Chart = function(divId, riskObj, divWidth, initDate) {
       .style("cursor", "pointer")
       .attr("fill", d => labelZikaRisk(d.risk))
       .attr("stroke", d => labelZikaRisk(d.risk));
+  }
+
+  function redrawTooltip() {
+    if (document.querySelector(".toolTip")) {
+      select(".toolTip").remove();
+    }
+
+    tooltip = select("#chart")
+      .append("div")
+      .attr("class", "toolTip")
+      .style("opacity", 0);
   }
 
   brushStart = x(new Date(initDate.setMonth(initDate.getMonth() - 3)));
