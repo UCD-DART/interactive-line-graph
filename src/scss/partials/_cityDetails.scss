@@ -40,3 +40,42 @@
 .smallItem {
   // width: 100px;
 }
+
+.invasive {
+  height: auto;
+  .title {
+    padding: 15px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  #aegypti-text {
+    color: $red;
+    font-weight: bold;
+    font-size: 48px;
+  }
+
+  #albopictus-text {
+    color: $blue;
+    font-weight: bold;
+    font-size: 48px;
+  }
+  .row {
+    font-size: 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .date-data {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 25px;
+    .dateItem {
+    }
+  }
+  div {
+    padding: 2px 10px;
+  }
+  .agency-info {
+    margin-top: 10px;
+  }
+}

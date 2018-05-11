@@ -197,3 +197,13 @@ export const mapOptions = {
   streetViewControl: false,
   styles: myMapStyles
 };
+
+export const invasiveMapOptions = {
+  center: { lat: 33.8146995, lng: -118.4412634 },
+  zoom: 8,
+  mapTypeControl: false,
+  scrollwheel: false,
+  fullscreenControl: false,
+  streetViewControl: false,
+  styles: myMapStyles
+};

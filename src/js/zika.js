@@ -15,6 +15,8 @@ let week = 28;
 let riskObj = {};
 let cityDetails = [];
 
+console.log("yipeeee!");
+
 // MAP BEHAVIOR
 const map = new google.maps.Map(document.getElementById("map"), mapOptions);
 const zikaMap = Map(map);
@@ -30,8 +32,6 @@ map.data.addListener("click", function(e) {
   getCityDetails(cityId);
 });
 
-// SLIDER BEHAVIOR
-// INIT FAKE DATA FIRST -- all of this should actually be a axios req
 function getCityDetails(id) {
   axios.get(`http://mathew.calsurv.org/api/zika/${id}`).then(res => {
     cityDetails = res.data;
