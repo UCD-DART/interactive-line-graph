@@ -11,4 +11,6 @@ All logic is inside src/js/invasive.his module uses the map module pretty heavil
 npm start will start a dev server that will serve out of localhost:8080
 npm run build will build a production build out of dist/ with a styles.css + index.html + invasive.js
 
-When editing, always edit within the src/ directory. Edit the SCSS files (can use same CSS rules as always, SCSS just gives you more flexibility).
+When editing, always edit within the src/ directory. Edit the SCSS files for styling (can use same CSS rules as always, SCSS just gives you more flexibility).
+
+**_NVM when i finished this readme, all appropriate files were in the dist folder. but still edit the SRC directory to make changes_**
