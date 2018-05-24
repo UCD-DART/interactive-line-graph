@@ -1,10 +1,10 @@
 import "../scss/zika.scss";
 import { mapOptions, invasiveMapOptions } from "../constants/mapSettings";
 import * as data from "../constants/invasiveGeo";
+import clovisData from "../constants/clovisInvasive";
 import { colors } from "./helpers";
 import { Map } from "./map";
-
-console.log(data);
+import { InvasiveGraph } from "./invasiveChart";
 
 const map = new google.maps.Map(
   document.getElementById("map"),
@@ -44,7 +44,6 @@ function changeMosquito(mosquito) {
 }
 
 function showCityDetails(props) {
-  console.log(props);
   document.getElementById("cityName").innerHTML = props.city;
   document.getElementById("aegypti-text").innerHTML = props.aegypti_detections;
   document.getElementById("albopictus-text").innerHTML =
@@ -60,3 +59,8 @@ function showCityDetails(props) {
   document.getElementById("agency").innerHTML = props.agency;
   document.getElementById("website").innerHTML = props.website || "N/A";
 }
+
+//DRAW THE CHART
+let invasiveGraph;
+let width = document.getElementById("chart--invasive").clientWidth;
+invasiveGraph = InvasiveGraph("chart--invasive", clovisData, width);
