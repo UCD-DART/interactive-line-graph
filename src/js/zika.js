@@ -81,6 +81,7 @@ function changeDate(idx) {
 // DRAW GRAPH
 
 let width = document.getElementById("chart").clientWidth;
+let riskGraph;
 
 window.addEventListener("resize", function() {
   document.getElementById("chart").innerHTML = "";
@@ -88,7 +89,6 @@ window.addEventListener("resize", function() {
   riskGraph = Chart("chart", riskObj, width, riskObj[week].date);
   riskGraph.drawGraph();
 });
-let riskGraph;
 
 function setCity(city) {
   // Go through our static data, set current risk Object to the matching city
