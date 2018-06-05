@@ -21,6 +21,16 @@
   // fill: $light-blue;
 }
 
+.collections--label {
+  font: bold 19px sans-serif;
+  fill: $light-blue;
+}
+
+.areaHighlighted {
+  // fill: $dark-blue;
+  opacity: 1;
+}
+
 .axis-label {
   font-size: 18px;
   stroke: #2196f3;
