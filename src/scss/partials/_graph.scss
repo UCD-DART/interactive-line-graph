@@ -16,6 +16,20 @@
   font-size: 14px;
   text-align: left;
 }
+#growth-label {
+  font: bold 18px sans-serif;
+  // fill: $light-blue;
+}
+
+.collections--label {
+  font: bold 19px sans-serif;
+  fill: $light-blue;
+}
+
+.areaHighlighted {
+  // fill: $dark-blue;
+  opacity: 1;
+}
 
 .axis-label {
   font-size: 18px;

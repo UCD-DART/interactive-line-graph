@@ -2,7 +2,14 @@ export const colors = {
   "dark-red": "#f44336", // > 2
   "light-red": "#ef9a9a", // > 1
   "light-blue": "#6ec6ff", // > 0.5
-  "dark-blue": "#1565c0" // < 0.5
+  "dark-blue": "#1565c0", // < 0.5
+  red: "#f44336", // aegypti
+  green: "#4caf50", // surveillance
+  blue: "#2196f3", //albopictus
+  orange: "#ff9800",
+  gray: "#9e9e9e",
+  yellow: "#ffeb3b",
+  cyan: "#62efff"
 };
 
 export const labelZikaRisk = num => {

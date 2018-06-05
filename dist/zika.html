@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title> Zika Risk Map </title>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=geometry&key=AIzaSyBf9C1QEaoX_bJbPjECtwo7iS82IQxJzX8"></script>
+    <!-- StyleSheet for production -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"> -->
+
+</head>
+
+<body>
+
+    <!-- <div class='container'> -->
+    <nav>
+        <ul>
+            <a href="">
+                <li>California Maps</li>
+            </a>
+            <a href="">
+                <li>West Nile</li>
+            </a>
+            <a href="">
+                <li>SLEV</li>
+            </a>
+            <a href="" class='active'>
+                <li>Zika</li>
+            </a>
+            <a href="/">
+                <li>Invasive Species</li>
+            </a>
+        </ul>
+    </nav>
+
+    <div class='visualizations'>
+
+        <div class='map'>
+            <div id="map"></div>
+        </div>
+
+        <div class='city-data'>
+
+            <div class='legend'>
+                <div class='legend__item legend__item--xLow'>Extremely Low Risk</div>
+                <div class='legend__item legend__item--low'>Low Risk</div>
+                <div class='legend__item legend__item--moderate'>Moderate Risk</div>
+                <div class='legend__item legend__item--high'>High Risk</div>
+            </div>
+            <div id='chart'></div>
+
+            <div class='card sliderContainer'>
+                <div id='currentCity' class='animated fadeIn'></div>
+                <div id="slider"></div>
+                <label class='label' id='selected-date'>Drag to select Date</label>
+            </div>
+
+            <div class='card city'>
+                <div class="row">
+                    <div id="temp">
+                        <div class='temp'>
+                            <span id="minTemp" class='temp'>...</span> -
+                            <span id="maxTemp" class='temp'>...</span> &deg;C
+                        </div>
+                        <div class='label'>Temp range</div>
+                    </div>
+                    <div id="riskIdx">
+                        <div id="riskValue">...</div>
+                        <div class='label'>Zika Risk Index</div>
+                    </div>
+                </div>
+                <div class="row4">
+                    <div id="mosqPerPerson" class='smallItem'>
+                        <div id="mosqValue" class='value'>..</div>
+                        <div class='label'> Mosquitoes per person</div>
+                    </div>
+                    <div id="daysBetwweenBites" class='smallItem'>
+                        <div id="bitesValue" class='value'>..</div>
+                        <div class='label'> Days between bites</div>
+                    </div>
+                    <div id="dailySurvival" class='smallItem'>
+                        <div class='value'>
+                            <span id="survivalValue">..</span> %</div>
+                        <div class="label">Daily Survival of Mosquitoes</div>
+                    </div>
+                    <div id="incubation" class='smallItem'>
+                        <div class='value'>
+                            <span id="incubationValue">..</span>
+                        </div>
+                        <div class="label">Zika Virus Incubation Period</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    </div>
+
+    <script src='zika.js'></script>
+
+</body>
+
+</html>

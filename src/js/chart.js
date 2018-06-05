@@ -7,6 +7,7 @@ import {
   select,
   axisBottom,
   axisLeft,
+  axisRight,
   brushX,
   zoom as d3zoom,
   line as d3line,
@@ -17,6 +18,7 @@ import {
   event,
   zoomIdentity
 } from "d3";
+import * as d3 from "d3";
 
 import { colors, labelZikaRisk } from "./helpers";
 
@@ -416,8 +418,8 @@ export const Chart = function(divId, riskObj, divWidth, initDate) {
           return 10;
         } else return 5;
       })
-      .on("mouseover", tipMouseover)
-      .on("mouseout", tipMouseout)
+      .on("mouseover", d => tipMouseover(d))
+      .on("mouseout", d => tipMouseout(d))
       .style("cursor", "pointer")
       .attr("fill", d => labelZikaRisk(d.risk))
       .attr("stroke", d => labelZikaRisk(d.risk));
