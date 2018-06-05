@@ -7,7 +7,9 @@ export const colors = {
   green: "#4caf50", // surveillance
   blue: "#2196f3", //albopictus
   orange: "#ff9800",
-  gray: "#9e9e9e"
+  gray: "#9e9e9e",
+  yellow: "#ffeb3b",
+  cyan: "#62efff"
 };
 
 export const labelZikaRisk = num => {
