@@ -1,21 +1,63 @@
 import "../scss/zika.scss";
 import { mapOptions, invasiveMapOptions } from "../constants/mapSettings";
 import * as data from "../constants/invasiveGeo";
-import clovisData from "../constants/clovisInvasive";
+import {
+  clovisData,
+  delanoData,
+  sdAegypti,
+  sdAlbopictus
+} from "../constants/clovisInvasive";
 import { colors } from "./helpers";
 import { Map } from "./map";
 import { InvasiveGraph } from "./invasiveChart";
+import axios from "axios";
+
+console.log(sdAegypti);
+console.log(sdAlbopictus);
 
 const map = new google.maps.Map(
   document.getElementById("map"),
   invasiveMapOptions
 );
 
+//set up some state variables
+let city = "Clovis";
+let species = "aegypti";
+
+document.cookie = "authtoken=51b6a36d08509e71b9f8f3a4ddd9f0d8f0684cad";
+
 const invasiveMap = Map(map);
 invasiveMap.drawInvasiveMap(data);
 map.data.addListener("click", function(e) {
   showCityDetails(e.feature.f);
+  const f = e.feature.f;
+  const url = `https://maps.calsurv.org/invasive/data/${f.agency}/${
+    f.city
+  }/${species}`;
+  console.log(url);
+
+  console.log(document.cookie);
+  // const request = axios.create({
+  //   timeout: 10000,
+  //   withCredentials: true,
+  //   headers: {
+  //     // authtoken: "51b6a36d08509e71b9f8f3a4ddd9f0d8f0684cad",
+  //     // SESS4137c6466818b9e352b9c64faf0008b9: "93vafh9ocasasttn2lpeho9qg7"
+  //   }
+  // });
+  axios
+    .get(
+      // "https://maps.calsurv.org/invasive/data/San%20Diego%20Co%20VCP/San%20Diego/aegypti"
+      url
+    )
+    .then(res => {
+      console.log(res);
+      invasiveGraph = InvasiveGraph("chart--invasive", res.data, width);
+    })
+    .catch(err => console.log(err));
 });
+
+// const tokenStr = "51b6a36d08509e71b9f8f3a4ddd9f0d8f0684cad";
 
 let selectors = document.getElementsByClassName("selector__mosquito--toggle");
 
