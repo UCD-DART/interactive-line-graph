@@ -1,7 +1,6 @@
 import {
   timeFormat,
   scaleTime,
-  scaleLog,
   scaleLinear,
   extent,
   select,
@@ -11,20 +10,16 @@ import {
   axisRight,
   brushX,
   zoom as d3zoom,
-  line as d3line,
-  curveCardinal,
-  curveCatmullRom,
   transition,
-  easeLinear,
   event,
   zoomIdentity
 } from "d3";
 import * as d3 from "d3";
 import { colors } from "./helpers";
 
-const formatDate = timeFormat("%b %d, %Y");
+// const formatDate = timeFormat("%b %d, %Y");
 
-export const InvasiveGraph = function(divId, dataObj, divWidth) {
+export const InvasiveGraph = function(divId, dataObj, divWidth, species) {
   if (document.getElementById("svg")) {
     document.getElementById("svg").remove();
   }
@@ -52,10 +47,10 @@ export const InvasiveGraph = function(divId, dataObj, divWidth) {
     obj.growth =
       d["Ae. aegypti daily population growth"] > 0
         ? +d["Ae. aegypti daily population growth"]
-        : 1;
-    obj.aegypti = d["Ae. aegypti"];
-    obj.collections = d["Total collections"];
-    if (d.year >= 2016) data.push(obj);
+        : 0;
+    obj.aegypti = d["Ae. aegypti"] || 0;
+    obj.collections = d["Total collections"] || 0;
+    data.push(obj);
   });
 
   // console.log(data);
@@ -113,7 +108,15 @@ export const InvasiveGraph = function(divId, dataObj, divWidth) {
     .curve(d3.curveMonotoneX)
     .x(d => x2(d.date))
     .y1(d => y2(d.growth))
+    // .y1(height2)
     .y0(height2);
+
+  const startingArea = data.map(d => {
+    return {
+      date: d.date,
+      growth: 5
+    };
+  });
 
   // INIT ZOOM
   const zoom = d3zoom()
@@ -133,8 +136,10 @@ export const InvasiveGraph = function(divId, dataObj, divWidth) {
     const s = event.selection || x2.range();
     x.domain(s.map(x2.invert, x2));
     select(".graph")
+      .datum(data)
       .select(".area")
       .attr("d", area);
+    // console.log(area);
 
     d3
       .selectAll(".collectionBar")
@@ -220,6 +225,7 @@ export const InvasiveGraph = function(divId, dataObj, divWidth) {
     .append("g")
     .call(axisRight(y))
     .attr("transform", `translate( ${chartWidth}, 0)`)
+    .attr("class", "axis axis--growth")
     .append("text")
     .attr("id", "growth-label")
     .attr("fill", colors["cyan"])
@@ -231,12 +237,20 @@ export const InvasiveGraph = function(divId, dataObj, divWidth) {
 
   let mini = context
     .append("path")
-    .datum(data)
+    .datum(startingArea)
     .attr("class", "area context-area")
     .attr("fill", colors["cyan"])
-    .attr("d", area2);
+    .attr("d", area)
+    .transition()
+    .duration(2500)
+    .attrTween("d", function() {
+      const interpolator = d3.interpolateArray(startingArea, data);
+      return function(t) {
+        return area2(interpolator(t));
+      };
+    });
 
-  // mini
+  // context
   //   .selectAll(".series")
   //   .data(dataStack)
   //   .enter()
@@ -283,43 +297,43 @@ export const InvasiveGraph = function(divId, dataObj, divWidth) {
   //append the area element
   let growthArea = graph
     .append("path")
-    .datum(data)
+    .datum(startingArea)
     .attr("class", "area focus-area")
-    .attr("id", "one")
     .attr("fill", colors["cyan"])
-    // .attr("stroke", "black")
     .attr("d", area)
-    // .attr("opacity", "0")
-    .on("mouseover", function() {
-      select(".focus-area")
-        .moveToFront()
-        .attr("stroke", "black");
-    })
-    .on("mouseout", function() {
-      select(".focus-area")
-        .moveToBack()
-        .attr("stroke", "none");
+    .transition()
+    .duration(2500)
+    .attrTween("d", function() {
+      const interpolator = d3.interpolateArray(startingArea, data);
+      return function(t) {
+        return area(interpolator(t));
+      };
     });
 
+  //add hover events for the area graph to make it easier to see
+  select(".focus-area")
+    .on("mouseover", highlightArea)
+    .on("mouseout", resetArea);
+
   function highlightArea(d) {
-    select("#growth-label")
-      .attr("fill", colors["yellow"])
-      .attr("stroke", "black");
+    select(".focus-area").moveToFront();
     select(".area").classed("areaHighlighted", true);
     select(".context-area").classed("areaHighlighted", true);
+    select("#growth-label")
+      .attr("fill", colors["dark-blue"])
+      .attr("stroke-width", 4);
   }
 
   function resetArea(d, i) {
-    // d3.select(this).attr("fill", colors["light-blue"]);
-    select("#growth-label").attr("fill", colors["light-blue"]);
-    select(this).classed("areaHighlighted", false);
+    select(".focus-area").moveToBack();
+    select(".area").classed("areaHighlighted", false);
     select(".context-area").classed("areaHighlighted", false);
-    // select(".collectionBar").attr('fill')
+    select("#growth-label")
+      .attr("fill", colors["light-blue"])
+      .attr("stroke-width", 4);
   }
 
   //draw the stacked bars
-  const keys = ["Ae. Aegypti", "total"];
-
   const stack = d3.stack().keys(["aegypti", "collections"]);
   let dataStack = stack(data);
 
@@ -329,7 +343,6 @@ export const InvasiveGraph = function(divId, dataObj, divWidth) {
     .domain([0, yMax])
     .range([height, 0]);
   let collectionsAxis = d3.axisLeft(collectionsScale);
-
   let miniCollectionsScale = scaleLinear()
     .domain([0, yMax])
     .range([height2, 0]);
@@ -343,7 +356,7 @@ export const InvasiveGraph = function(divId, dataObj, divWidth) {
     .text("Collections");
 
   function calculateAWeek() {
-    return x(new Date("2018-01-07")) - x(new Date("2018-01-01"));
+    return x(new Date("2018-01-08")) - x(new Date("2018-01-01"));
   }
 
   // console.log("one weeks width is " + oneWeek);
@@ -369,24 +382,24 @@ export const InvasiveGraph = function(divId, dataObj, divWidth) {
     .attr("height", 0)
     .attr("class", function() {
       if (this.parentElement.id == 0) {
-        return "collectionBar yellow";
-      } else return "collectionBar black";
+        return "collectionBar aegypti";
+      } else return "collectionBar total";
     });
 
   var t = d3
     .transition()
-    .delay(500)
+    .delay(2500)
     .duration(1500);
 
   d3
-    .selectAll(".yellow")
+    .selectAll(".aegypti")
     .transition(t)
     .attr("height", d => height - collectionsScale(d[1] - d[0]))
     .attr("y", d => collectionsScale(d[1]));
   d3
-    .selectAll(".black")
+    .selectAll(".total")
     .transition()
-    .delay(1500)
+    .delay(4000)
     .duration(1500)
     .attr("height", d => height - collectionsScale(d[1] - d[0]))
     .attr("y", d => collectionsScale(d[1]));
