@@ -7,7 +7,7 @@
     font-size: 28px;
     font-style: italic;
     text-align: left;
-    height: 220px;
+    height: 180px;
     @at-root #{&}__heading {
       margin-left: 30px;
       padding: 10px;
@@ -38,7 +38,7 @@
     .selector__mosquito {
       display: grid;
       grid-template-columns: 2fr 3fr;
-      height: 50px;
+      height: 40px;
       border-radius: 0;
 
       svg {
@@ -84,9 +84,8 @@
     }
     @at-root #{&}--label {
       color: white;
-      margin-top: 25px;
+      margin-top: 10px;
       text-align: left;
-      // padding-bottom: 10px;
     }
   }
 }
