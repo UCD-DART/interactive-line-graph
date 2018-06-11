@@ -19,10 +19,12 @@ import { colors } from "./helpers";
 
 // const formatDate = timeFormat("%b %d, %Y");
 
-export const InvasiveGraph = function(divId, dataObj, divWidth, species) {
+export const InvasiveGraph = function(dataObj, species) {
   if (document.getElementById("svg")) {
     document.getElementById("svg").remove();
   }
+
+  let divWidth = document.getElementById("chart--invasive").clientWidth;
 
   let svg = select("#chart--invasive")
     .append("svg")
@@ -44,10 +46,17 @@ export const InvasiveGraph = function(divId, dataObj, divWidth, species) {
   dataObj.forEach(d => {
     let obj = {};
     obj.date = new Date(d.start_date);
-    obj.growth =
-      d["Ae. aegypti daily population growth"] > 0
-        ? +d["Ae. aegypti daily population growth"]
-        : 0;
+    if (d["Ae. aegypti daily population growth"]) {
+      obj.growth =
+        d["Ae. aegypti daily population growth"] > 0
+          ? +d["Ae. aegypti daily population growth"]
+          : 0;
+    } else {
+      obj.growth =
+        d["Ae. albopictus daily population growth"] > 0
+          ? +d["Ae. albopictus daily population growth"]
+          : 0;
+    }
     obj.aegypti = d["Ae. aegypti"] || 0;
     obj.collections = d["Total collections"] || 0;
     data.push(obj);
