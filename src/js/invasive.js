@@ -5,15 +5,14 @@ import {
   clovisData,
   delanoData,
   sdAegypti,
-  sdAlbopictus
+  sdAlbopictus,
+  bakersfieldData,
+  fresnoData
 } from "../constants/clovisInvasive";
 import { colors } from "./helpers";
 import { Map } from "./map";
 import { InvasiveGraph } from "./invasiveChart";
 import axios from "axios";
-
-console.log(sdAegypti);
-console.log(sdAlbopictus);
 
 const map = new google.maps.Map(
   document.getElementById("map"),
@@ -23,8 +22,6 @@ const map = new google.maps.Map(
 //set up some state variables
 let city = "Clovis";
 let species = "aegypti";
-
-document.cookie = "authtoken=51b6a36d08509e71b9f8f3a4ddd9f0d8f0684cad";
 
 const invasiveMap = Map(map);
 invasiveMap.drawInvasiveMap(data);
@@ -36,25 +33,35 @@ map.data.addListener("click", function(e) {
   }/${species}`;
   console.log(url);
 
-  console.log(document.cookie);
-  // const request = axios.create({
-  //   timeout: 10000,
-  //   withCredentials: true,
-  //   headers: {
-  //     // authtoken: "51b6a36d08509e71b9f8f3a4ddd9f0d8f0684cad",
-  //     // SESS4137c6466818b9e352b9c64faf0008b9: "93vafh9ocasasttn2lpeho9qg7"
-  //   }
-  // });
-  axios
-    .get(
-      // "https://maps.calsurv.org/invasive/data/San%20Diego%20Co%20VCP/San%20Diego/aegypti"
-      url
-    )
-    .then(res => {
-      console.log(res);
-      invasiveGraph = InvasiveGraph("chart--invasive", res.data, width);
-    })
-    .catch(err => console.log(err));
+  let cityData;
+
+  switch (f.city) {
+    case "Fresno":
+      invasiveGraph = InvasiveGraph(fresnoData);
+      break;
+    case "Delano":
+      invasiveGraph = InvasiveGraph(delanoData);
+      break;
+    case "Clovis":
+      invasiveGraph = InvasiveGraph(clovisData);
+      break;
+    case "San Diego":
+      let sdData = species === "aegypti" ? sdAegypti : sdAlbopictus;
+      invasiveGraph = InvasiveGraph(sdData);
+      break;
+    case "Bakersfield":
+      invasiveGraph = InvasiveGraph(bakersfieldData);
+      break;
+    default:
+      axios
+        .get(url)
+        .then(res => {
+          console.log(res.data);
+          cityData = res.data;
+          invasiveGraph = InvasiveGraph(cityData);
+        })
+        .catch(err => console.log(err));
+  }
 });
 
 // const tokenStr = "51b6a36d08509e71b9f8f3a4ddd9f0d8f0684cad";
@@ -78,10 +85,13 @@ for (let i = 0; i < selectors.length; i++) {
 function changeMosquito(mosquito) {
   if (mosquito === "aegypti") {
     invasiveMap.showAegypti();
+    species = "aegypti";
   } else if (mosquito === "albopictus") {
     invasiveMap.showAlbopictus();
+    species = "albopictus";
   } else if (mosquito === "notoscriptus") {
     invasiveMap.showNotoscriptus();
+    species = "notoscriptus";
   }
 }
 
@@ -104,5 +114,8 @@ function showCityDetails(props) {
 
 //DRAW THE CHART
 let invasiveGraph;
-let width = document.getElementById("chart--invasive").clientWidth;
-invasiveGraph = InvasiveGraph("chart--invasive", clovisData, width);
+function calculateWidth() {
+  return document.getElementById("chart--invasive").clientWidth;
+}
+// let width = document.getElementById("chart--invasive").clientWidth;
+invasiveGraph = InvasiveGraph(clovisData, species);
