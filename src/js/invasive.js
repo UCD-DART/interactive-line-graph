@@ -19,6 +19,8 @@ const map = new google.maps.Map(
   invasiveMapOptions
 );
 
+// console.log(data);
+
 //set up some state variables
 let city = "Clovis";
 let species = "aegypti";
@@ -34,6 +36,32 @@ map.data.addListener("click", function(e) {
   console.log(url);
 
   let cityData;
+
+  fetch("https://maps.calsurv.org/invasive/data/Tulare%20MAD/Tulare/aegypti", {
+    credentials: "include",
+    headers: {},
+    referrer: "https://maps.calsurv.org/invasive",
+    referrerPolicy: "no-referrer-when-downgrade",
+    body: null,
+    method: "GET",
+    mode: "cors"
+  })
+    .then(res => {
+      return res.json();
+    })
+    .then(myJson => console.log(myJson));
+
+  // const options = {
+  //   credentials: "include",
+  //   headers: {},
+  //   referrer: "https://maps.calsurv.org/invasive",
+  //   referrerPolicy: "no-referrer-when-downgrade",
+  //   body: null,
+  //   method: "GET",
+  //   mode: "cors"
+  // };
+
+  // axios.get(url, options).then(res => console.log(res));
 
   switch (f.city) {
     case "Fresno":
