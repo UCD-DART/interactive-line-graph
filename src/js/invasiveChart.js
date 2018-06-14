@@ -33,7 +33,7 @@ export const InvasiveGraph = function(dataObj, species) {
     .attr("class", "card")
     .attr("id", "svg");
 
-  const margin = { top: 20, right: 0, bottom: 110, left: 50 }, // for main graph
+  const margin = { top: 20, right: 0, bottom: 110, left: 70 }, // for main graph
     margin2 = { top: 320, right: 50, bottom: 40, left: 50 }, //for context
     height = +svg.attr("height") - margin.top - margin.bottom,
     width = +svg.attr("width") - margin.left - margin.right,
@@ -123,7 +123,7 @@ export const InvasiveGraph = function(dataObj, species) {
   const startingArea = data.map(d => {
     return {
       date: d.date,
-      growth: 5
+      growth: 0
     };
   });
 
@@ -238,11 +238,11 @@ export const InvasiveGraph = function(dataObj, species) {
     .append("text")
     .attr("id", "growth-label")
     .attr("fill", colors["cyan"])
-    .attr("transform", "rotate(-90), translate(0,20)")
+    .attr("transform", "rotate(-90), translate(-160,30)")
     .attr("y", 6)
     .attr("dy", "0.7em")
     .attr("text-anchor", "end")
-    .text("Aegypti Growth (%)");
+    .text("Growth (%)");
 
   let mini = context
     .append("path")
@@ -258,19 +258,6 @@ export const InvasiveGraph = function(dataObj, species) {
         return area2(interpolator(t));
       };
     });
-
-  // context
-  //   .selectAll(".series")
-  //   .data(dataStack)
-  //   .enter()
-  //   .attr("fill", "black")
-  //   .selectAll("rect")
-  //   .data(d => d)
-  //   .enter()
-  //   .append("rect")
-  //   .attr("x", d => x2(new Date(d.data.date)))
-  //   .attr("y", d => miniCollectionsScale(d[1]))
-  //   .attr("height", d => height2 - miniCollectionsScale(d[1] - d[0]));
 
   // bottom chart gets x axis with xAxis2
   context
@@ -311,7 +298,7 @@ export const InvasiveGraph = function(dataObj, species) {
     .attr("fill", colors["cyan"])
     .attr("d", area)
     .transition()
-    .duration(2500)
+    .duration(1000)
     .attrTween("d", function() {
       const interpolator = d3.interpolateArray(startingArea, data);
       return function(t) {
@@ -359,13 +346,14 @@ export const InvasiveGraph = function(dataObj, species) {
   focus
     .append("g")
     .call(collectionsAxis)
+    .attr("class", "axis")
     .append("text")
-    .attr("transform", "rotate(-90), translate(0,-30)")
+    .attr("transform", "rotate(-90), translate(-160,-50)")
     .attr("class", "collections--label")
     .text("Collections");
 
   function calculateAWeek() {
-    return x(new Date("2018-01-08")) - x(new Date("2018-01-01"));
+    return x(new Date("2018-01-06")) - x(new Date("2018-01-01"));
   }
 
   // console.log("one weeks width is " + oneWeek);
@@ -395,10 +383,46 @@ export const InvasiveGraph = function(dataObj, species) {
       } else return "collectionBar total";
     });
 
+  var miniSeries = context
+    .selectAll(".series")
+    .data(dataStack)
+    .enter()
+    .append("g")
+    .attr("fill", (d, i) => barColors[i])
+    .attr("id", (d, i) => `mini${i}`);
+
+  var miniRects = miniSeries
+    .selectAll("rect")
+    .data(d => d)
+    .enter()
+    .append("rect")
+    .attr("x", d => x2(new Date(d.data.date)))
+    .attr("y", d => miniCollectionsScale(d[1]))
+    .attr("width", 1)
+    .attr("height", d => height2 - miniCollectionsScale(d[1] - d[0]))
+    .attr("class", function() {
+      if (this.parentElement.id == "mini1") {
+        return "collectionBar miniAegypti";
+      } else return "collectionBar miniTotal";
+    });
+
+  // context
+  //   .selectAll(".miniBars")
+  //   .data(dataStack)
+  //   .enter()
+  //   .attr("fill", "black")
+  //   .selectAll("rect")
+  //   .data(d => d)
+  //   .enter()
+  //   .append("rect")
+  //   .attr("x", d => x2(new Date(d.data.date)))
+  //   .attr("y", d => miniCollectionsScale(d[1]))
+  //   .attr("height", d => height2 - miniCollectionsScale(d[1] - d[0]));
+
   var t = d3
     .transition()
-    .delay(2500)
-    .duration(1500);
+    .delay(1000)
+    .duration(1000);
 
   d3
     .selectAll(".aegypti")
@@ -408,8 +432,8 @@ export const InvasiveGraph = function(dataObj, species) {
   d3
     .selectAll(".total")
     .transition()
-    .delay(4000)
-    .duration(1500)
+    .delay(1800)
+    .duration(800)
     .attr("height", d => height - collectionsScale(d[1] - d[0]))
     .attr("y", d => collectionsScale(d[1]));
 };
