@@ -13,6 +13,10 @@ import { colors } from "./helpers";
 import { Map } from "./map";
 import { InvasiveGraph } from "./invasiveChart";
 import axios from "axios";
+import * as geojson from "../constants/invasiveData.json";
+
+console.log(geojson);
+console.log(data);
 
 const map = new google.maps.Map(
   document.getElementById("map"),
@@ -50,18 +54,6 @@ map.data.addListener("click", function(e) {
       return res.json();
     })
     .then(myJson => console.log(myJson));
-
-  // const options = {
-  //   credentials: "include",
-  //   headers: {},
-  //   referrer: "https://maps.calsurv.org/invasive",
-  //   referrerPolicy: "no-referrer-when-downgrade",
-  //   body: null,
-  //   method: "GET",
-  //   mode: "cors"
-  // };
-
-  // axios.get(url, options).then(res => console.log(res));
 
   switch (f.city) {
     case "Fresno":
