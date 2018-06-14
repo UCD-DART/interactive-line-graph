@@ -13,27 +13,50 @@ async function getMyData() {
     });
     let features = layer.data.features;
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < features.length; i++) {
       let f = features[i].properties;
-      const url = `https://maps.calsurv.org/invasive/data/${f.agency}/${
+      console.log(f.city);
+      let aegyptiurl = `https://maps.calsurv.org/invasive/data/${f.agency}/${
         f.city
       }/aegypti`;
-      let cityData = await axios({
-        url: url,
-        validateStatus: status => status < 500
-      });
+      let albourl = `https://maps.calsurv.org/invasive/data/${f.agency}/${
+        f.city
+      }/albopictus`;
 
-      if (cityData.data.length > 1 && cityData.status === 200) {
-        let collections = cityData.data.map(d => {
-          return {
-            date: d.end_date,
-            growth: d["Ae. aegypti daily population growth"]
-          };
-        });
-        f.properties.invasive = collections;
-        finalFeatures.push(f);
-        console.log(f.city);
-      }
+      //grab aetypti data and push it into collections
+      let aegyptiData = await axios({
+        url: aegyptiurl,
+        validateStatus: status => status < 500
+      })
+        .then(res => {
+          if (res.data.length > 1 && res.status === 200) {
+            let collections = res.data.map(d => {
+              return {
+                date: d.end_date,
+                aegyptiGrowth: +d["Ae. aegypti daily population growth"]
+              };
+            });
+            f["aegypti"] = collections;
+          }
+        })
+        .catch(err => console.log(`${f.city} didnt work with error: ${err}`));
+
+      //grab albos data and push it into the collections
+      // let albosData = await axios({
+      //   url: albourl,
+      //   validateStatus: status => status < 500
+      // }).catch(err => console.log(`${f.city} didnt work with error: ${err}`));
+      // if (albosData.data.length > 1 && albosData.status === 200) {
+      //   let collections = albosData.data.map(d => {
+      //     return {
+      //       date: d.end__date,
+      //       albopictusGrowth: +d["Ae. albopictus daily population growth"]
+      //     };
+      //   });
+      //   f["albopictus"] = collections;
+      // }
+
+      finalFeatures.push(f);
     }
 
     geoJson = {
