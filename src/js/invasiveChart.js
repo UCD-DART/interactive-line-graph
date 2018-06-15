@@ -150,10 +150,8 @@ export const InvasiveGraph = function(dataObj, species) {
       .attr("d", area);
     // console.log(area);
 
-    d3
-      .selectAll(".collectionBar")
-      .attr("x", d => x(d.data.date))
-      .attr("width", calculateAWeek());
+    d3.selectAll(".collectionBar").attr("x", d => x(d.data.date));
+    selectAll(".miniCollectionBar").attr("x", d => x2(d.data.date));
 
     select(".focus")
       .select(".axis--x")
@@ -357,7 +355,7 @@ export const InvasiveGraph = function(dataObj, species) {
   }
 
   // console.log("one weeks width is " + oneWeek);
-  var barColors = [colors["dark-red"], colors["blue"]];
+  var barColors = [colors["dark-red"], colors["deep-purple"]];
   var series = graph
     .selectAll(".series")
     .data(dataStack)
@@ -402,22 +400,9 @@ export const InvasiveGraph = function(dataObj, species) {
     .attr("height", d => height2 - miniCollectionsScale(d[1] - d[0]))
     .attr("class", function() {
       if (this.parentElement.id == "mini1") {
-        return "collectionBar miniAegypti";
-      } else return "collectionBar miniTotal";
+        return "miniCollectionBar miniAegypti";
+      } else return "miniCollectionBar miniTotal";
     });
-
-  // context
-  //   .selectAll(".miniBars")
-  //   .data(dataStack)
-  //   .enter()
-  //   .attr("fill", "black")
-  //   .selectAll("rect")
-  //   .data(d => d)
-  //   .enter()
-  //   .append("rect")
-  //   .attr("x", d => x2(new Date(d.data.date)))
-  //   .attr("y", d => miniCollectionsScale(d[1]))
-  //   .attr("height", d => height2 - miniCollectionsScale(d[1] - d[0]));
 
   var t = d3
     .transition()
