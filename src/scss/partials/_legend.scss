@@ -44,3 +44,37 @@
     // margin: 10px;
   }
 }
+
+// Invasive Legend //
+.invasive__legend {
+  display: flex;
+  justify-content: space-evenly;
+  height: 40px;
+  align-items: center;
+
+  @at-root #{&}--item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+
+    .invasive__legend-box {
+      width: 20px;
+      height: 20px;
+      background: red;
+      margin-right: 15px;
+
+      @at-root #{&}--surveillance {
+        background: $green;
+      }
+      @at-root #{&}--no-surveillance {
+        background: $gray;
+      }
+      @at-root #{&}--aegypti {
+        background: $red;
+      }
+      @at-root #{&}--albopictus {
+        background: $blue;
+      }
+    }
+  }
+}
