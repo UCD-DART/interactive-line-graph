@@ -7,10 +7,88 @@
     font-size: 28px;
     font-style: italic;
     text-align: left;
-    height: 180px;
-    @at-root #{&}__heading {
-      margin-left: 30px;
-      padding: 10px;
+    height: 70px;
+    display: grid;
+    grid-template-columns: 2fr 1fr 2fr;
+    align-items: center;
+    // justify-content: center;
+    // grid-template-columns: 2fr 1fr 2fr;
+
+    //the mosquito toggle container label
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 100px;
+      height: 34px;
+      margin: 0 auto;
+      // border: 1px solid green;
+
+      input {
+        display: none;
+      }
+    }
+
+    /* The actual toggle element */
+    .mosquito-toggle {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: $red;
+      border-radius: 35px;
+
+      @at-root #{&}:before {
+        border-radius: 50%;
+      }
+      -webkit-transition: 1s;
+      transition: 1s;
+
+      @at-root #{&}:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 30px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: 1s;
+        transition: 1s;
+      }
+    }
+    .mosquito {
+      display: flex;
+      // border: 1px dashed black;
+
+      svg {
+        height: 40px;
+        width: 40px;
+      }
+    }
+    .mosquito--left {
+      justify-content: flex-end;
+      color: $red;
+      fill: $red;
+    }
+    .mosquito--right {
+      justify-content: flex-start;
+      color: $blue;
+      fill: $blue;
+    }
+
+    input:checked + .mosquito-toggle {
+      background-color: $blue;
+    }
+
+    input:focus + .mosquito-toggle {
+      box-shadow: 0 0 1px $blue;
+    }
+
+    input:checked + .mosquito-toggle:before {
+      -webkit-transform: translateX(59px);
+      -ms-transform: translateX(59px);
+      transform: translateX(60px);
     }
   }
 
