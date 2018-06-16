@@ -199,8 +199,8 @@ export const mapOptions = {
 };
 
 export const invasiveMapOptions = {
-  center: { lat: 33.8146995, lng: -118.4412634 },
-  zoom: 8,
+  center: { lat: 35.8146995, lng: -119.4412634 },
+  zoom: 7,
   mapTypeControl: false,
   scrollwheel: false,
   fullscreenControl: false,
