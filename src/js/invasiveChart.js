@@ -346,7 +346,7 @@ export const InvasiveGraph = function(dataObj, species) {
     .call(collectionsAxis)
     .attr("class", "axis")
     .append("text")
-    .attr("transform", "rotate(-90), translate(-160,-50)")
+    .attr("transform", "rotate(-90), translate(-150,-40)")
     .attr("class", "collections--label")
     .text("Collections");
 
