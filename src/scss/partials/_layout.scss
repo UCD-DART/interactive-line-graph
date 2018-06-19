@@ -21,7 +21,7 @@ body {
   box-sizing: border-box;
 
   @at-root #{&}__invasive {
-    height: 85vh;
+    height: 80vh;
   }
 }
 @media (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) {
