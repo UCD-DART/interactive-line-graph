@@ -236,8 +236,8 @@ export const InvasiveGraph = function(dataObj, species) {
     .append("text")
     .attr("id", "growth-label")
     .attr("fill", colors["cyan"])
-    .attr("transform", "rotate(-90), translate(-160,30)")
-    .attr("y", 6)
+    .attr("transform", "rotate(-90), translate(-180,30)")
+    .attr("y", 0)
     .attr("dy", "0.7em")
     .attr("text-anchor", "end")
     .text("Growth (%)");
@@ -309,13 +309,26 @@ export const InvasiveGraph = function(dataObj, species) {
     .on("mouseover", highlightArea)
     .on("mouseout", resetArea);
 
+  const labelTransition = d3
+    .transition()
+    .delay(0)
+    .duration(1000);
+
   function highlightArea(d) {
     select(".focus-area").moveToFront();
     select(".area").classed("areaHighlighted", true);
     select(".context-area").classed("areaHighlighted", true);
+
     select("#growth-label")
+      .transition(labelTransition)
       .attr("fill", colors["dark-blue"])
-      .attr("stroke-width", 4);
+      .style("font-size", "24px")
+      .attr("transform", "rotate(-90), translate(-150, 30)");
+    select("#collections-label")
+      .transition(labelTransition)
+      .style("font-size", "12px")
+      .attr("fill", colors["light-blue"])
+      .attr("transform", "rotate(-90), translate(-200, -40)");
   }
 
   function resetArea(d, i) {
@@ -323,8 +336,16 @@ export const InvasiveGraph = function(dataObj, species) {
     select(".area").classed("areaHighlighted", false);
     select(".context-area").classed("areaHighlighted", false);
     select("#growth-label")
+      .transition(labelTransition)
       .attr("fill", colors["light-blue"])
-      .attr("stroke-width", 4);
+      .style("font-size", "12px")
+      .attr("transform", "rotate(-90), translate(-200, 30)");
+
+    select("#collections-label")
+      .transition(labelTransition)
+      .style("font-size", "24px")
+      .attr("fill", colors["dark-blue"])
+      .attr("transform", "rotate(-90), translate(-140, -40)");
   }
 
   //draw the stacked bars
@@ -346,13 +367,15 @@ export const InvasiveGraph = function(dataObj, species) {
     .call(collectionsAxis)
     .attr("class", "axis")
     .append("text")
-    .attr("transform", "rotate(-90), translate(-150,-40)")
-    .attr("class", "collections--label")
+    .attr("transform", "rotate(-90), translate(-140,-40)")
+    // .attr("class", "collections--label")
+    .attr("id", "collections-label")
     .text("Collections");
 
   function calculateAWeek() {
-    return x(new Date("2018-01-06")) - x(new Date("2018-01-01"));
+    return x(new Date("2018-01-08")) - x(new Date("2018-01-01")) - 1;
   }
+  console.log(calculateAWeek());
 
   // console.log("one weeks width is " + oneWeek);
   var barColors = [colors["dark-red"], colors["deep-purple"]];
