@@ -75,6 +75,14 @@
       @at-root #{&}--albopictus {
         background: $blue;
       }
+
+      @at-root #{&}--total-collections {
+        background: $purple;
+      }
+
+      @at-root #{&}--growth {
+        background: $light-blue;
+      }
     }
   }
 }
