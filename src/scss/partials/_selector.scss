@@ -4,13 +4,23 @@
   margin-bottom: 0px;
 
   .card {
-    font-size: 28px;
-    font-style: italic;
-    text-align: left;
-    height: 70px;
     display: grid;
-    grid-template-columns: 2fr 1fr 2fr;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 45px;
+    height: 80px;
+  }
+
+  .selector__mosquitos {
+    font-size: 18px;
+    font-style: italic;
+    // border: 2px dashed green;
+    // text-align: left;
+    // height: 90px;
+    display: grid;
+    grid-gap: 5px;
     align-items: center;
+    // grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    // align-items: center;
     // justify-content: center;
     // grid-template-columns: 2fr 1fr 2fr;
 
@@ -59,6 +69,7 @@
     }
     .mosquito {
       display: flex;
+      align-items: center;
       // border: 1px dashed black;
 
       svg {
@@ -92,78 +103,105 @@
     }
   }
 
-  .active {
-    border: 6px solid black;
-    border-radius: 0;
-    box-sizing: border-box;
-  }
-
-  .selector__mosquitos {
+  .invasiveChart__legend {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 5px;
-    margin: 0 10px 0 10px;
-    font-size: 16px;
-  }
-
-  .selector__surveillance {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    margin: 10px;
+    grid-template-rows: 1fr 1fr;
     font-size: 18px;
-    // grid-gap: 10px;
 
-    .selector__mosquito {
+    @at-root #{&}--item {
       display: grid;
-      grid-template-columns: 2fr 3fr;
-      height: 40px;
-      border-radius: 0;
-
-      svg {
-        margin: 0 auto;
-        height: 60px;
-      }
-      @at-root #{&}--label {
-        margin-top: 5px;
-      }
-    }
-  }
-
-  @at-root #{&}__mosquito {
-    height: 75px;
-    text-align: center;
-    border-radius: 10px;
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-
-    svg {
-      height: 30px;
-      margin: 15px auto 0px;
-      text-align: center;
-    }
-
-    @at-root #{&}--surveillance {
-      background: $green;
-      font-size: 16px;
-    }
-    @at-root #{&}--aegypti {
-      background: $red;
-    }
-    @at-root #{&}--albopictus {
-      background: $blue;
-    }
-
-    @at-root #{&}--total {
-      background: $deep-purple;
-    }
-
-    @at-root #{&}--noData {
-      background: $gray;
-    }
-    @at-root #{&}--label {
-      color: white;
-      margin-top: 10px;
+      grid-template-columns: 1fr 5fr;
       text-align: left;
+      margin-top: 5px;
+    }
+
+    @at-root #{&}-box {
+      height: 25px;
+      width: 25px;
+
+      @at-root #{&}--total-collections {
+        background-color: $purple;
+      }
+
+      @at-root #{&}--growth {
+        background: $light-blue;
+        border-radius: 100% 20% 0 0;
+      }
     }
   }
+
+  // .active {
+  //   border: 6px solid black;
+  //   border-radius: 0;
+  //   box-sizing: border-box;
+  // }
+
+  // .selector__mosquitos {
+  //   display: grid;
+  //   grid-template-columns: repeat(3, 1fr);
+  //   grid-gap: 5px;
+  //   margin: 0 10px 0 10px;
+  //   font-size: 16px;
+  // }
+
+  // .selector__surveillance {
+  //   display: grid;
+  //   grid-template-columns: repeat(2, 1fr);
+  //   margin: 10px;
+  //   font-size: 18px;
+  //   // grid-gap: 10px;
+
+  //   .selector__mosquito {
+  //     display: grid;
+  //     grid-template-columns: 2fr 3fr;
+  //     height: 40px;
+  //     border-radius: 0;
+
+  //     svg {
+  //       margin: 0 auto;
+  //       height: 60px;
+  //     }
+  //     @at-root #{&}--label {
+  //       margin-top: 5px;
+  //     }
+  //   }
+  // }
+
+  // @at-root #{&}__mosquito {
+  //   height: 75px;
+  //   text-align: center;
+  //   border-radius: 10px;
+  //   display: grid;
+  //   grid-template-columns: 1fr 2fr;
+
+  //   svg {
+  //     height: 30px;
+  //     margin: 15px auto 0px;
+  //     text-align: center;
+  //   }
+
+  //   @at-root #{&}--surveillance {
+  //     background: $green;
+  //     font-size: 16px;
+  //   }
+  //   @at-root #{&}--aegypti {
+  //     background: $red;
+  //   }
+  //   @at-root #{&}--albopictus {
+  //     background: $blue;
+  //   }
+
+  //   @at-root #{&}--total {
+  //     background: $deep-purple;
+  //   }
+
+  //   @at-root #{&}--noData {
+  //     background: $gray;
+  //   }
+  //   @at-root #{&}--label {
+  //     color: white;
+  //     margin-top: 10px;
+  //     text-align: left;
+  //   }
+  // }
 }
