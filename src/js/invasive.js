@@ -37,7 +37,7 @@ map.data.addListener("click", function(e) {
   const url = `https://maps.calsurv.org/invasive/data/${f.agency}/${
     f.city
   }/${species}`;
-  console.log(url);
+  // console.log(url);
 
   let cityData;
 
@@ -117,19 +117,22 @@ function changeMosquito(mosquito) {
 
 function showCityDetails(props) {
   document.getElementById("cityName").innerHTML = props.city;
-  document.getElementById("aegypti-text").innerHTML = props.aegypti_detections;
-  document.getElementById("albopictus-text").innerHTML =
+  document.getElementById("aegypti_detections").innerHTML =
+    props.aegypti_detections;
+  document.getElementById("albopictus_detections").innerHTML =
     props.albopictus_detections;
-  document.getElementById("aegypti-first-found").innerHTML =
+  document.getElementById("aegypti_first_found").innerHTML =
     props.aegypti_first_found || "N/A";
-  document.getElementById("aegypti-last-found").innerHTML =
+  document.getElementById("aegypti_last_found").innerHTML =
     props.aegypti_last_found || "N/A";
-  document.getElementById("albopictus-first-found").innerHTML =
+  document.getElementById("albopictus_first_found").innerHTML =
     props.albopictus_first_found || "N/A";
-  document.getElementById("albopictus-last-found").innerHTML =
+  document.getElementById("albopictus_last_found").innerHTML =
     props.albopictus_last_found || "N/A";
   document.getElementById("agency").innerHTML = props.agency;
-  document.getElementById("website").innerHTML = props.website || "N/A";
+  document.getElementById("website").innerHTML = props.website
+    ? `<a href=${props.website}>${props.website}</a>`
+    : "No page available";
 }
 
 //DRAW THE CHART
