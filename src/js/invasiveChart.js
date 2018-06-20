@@ -262,7 +262,10 @@ export const InvasiveGraph = function(dataObj, species) {
     .append("g")
     .attr("class", "axis axis--x")
     .attr("transform", "translate(0," + height2 + ")")
-    .call(xAxis2);
+    .call(xAxis2)
+    .selectAll("text")
+    .attr("transform", "rotate(-20)")
+    .style("text-anchor", "end");
 
   // big gray brush element is applied to the bottom chart
   context
@@ -373,9 +376,9 @@ export const InvasiveGraph = function(dataObj, species) {
     .text("Collections");
 
   function calculateAWeek() {
+    // the x scaled version of one week minus one pixel
     return x(new Date("2018-01-08")) - x(new Date("2018-01-01")) - 1;
   }
-  console.log(calculateAWeek());
 
   // console.log("one weeks width is " + oneWeek);
   var barColors = [colors["dark-red"], colors["deep-purple"]];
@@ -400,8 +403,8 @@ export const InvasiveGraph = function(dataObj, species) {
     .attr("height", 0)
     .attr("class", function() {
       if (this.parentElement.id == 0) {
-        return "collectionBar aegypti";
-      } else return "collectionBar total";
+        return "collectionBar collectionBar__aegypti";
+      } else return "collectionBar collectionBar__total";
     });
 
   var miniSeries = context
@@ -423,8 +426,8 @@ export const InvasiveGraph = function(dataObj, species) {
     .attr("height", d => height2 - miniCollectionsScale(d[1] - d[0]))
     .attr("class", function() {
       if (this.parentElement.id == "mini1") {
-        return "miniCollectionBar miniAegypti";
-      } else return "miniCollectionBar miniTotal";
+        return "miniCollectionBar miniCollectionBar__aegypti";
+      } else return "miniCollectionBar miniCollectionBar__total";
     });
 
   var t = d3
@@ -433,12 +436,12 @@ export const InvasiveGraph = function(dataObj, species) {
     .duration(1000);
 
   d3
-    .selectAll(".aegypti")
+    .selectAll(".collectionBar__aegypti")
     .transition(t)
     .attr("height", d => height - collectionsScale(d[1] - d[0]))
     .attr("y", d => collectionsScale(d[1]));
   d3
-    .selectAll(".total")
+    .selectAll(".collectionBar__total")
     .transition()
     .delay(1800)
     .duration(800)
