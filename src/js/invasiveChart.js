@@ -33,7 +33,7 @@ export const InvasiveGraph = function(dataObj, species) {
     .attr("class", "card")
     .attr("id", "svg");
 
-  const margin = { top: 20, right: 0, bottom: 110, left: 70 }, // for main graph
+  const margin = { top: 40, right: 0, bottom: 110, left: 70 }, // for main graph
     margin2 = { top: 320, right: 50, bottom: 40, left: 50 }, //for context
     height = +svg.attr("height") - margin.top - margin.bottom,
     width = +svg.attr("width") - margin.left - margin.right,
@@ -103,7 +103,7 @@ export const InvasiveGraph = function(dataObj, species) {
 
   //SET AXES
   const xAxis = axisBottom(x),
-    xAxis2 = axisBottom(x2),
+    xAxis2 = axisBottom(x2).ticks(5),
     yAxis = axisLeft(y);
 
   const area = d3
@@ -123,7 +123,7 @@ export const InvasiveGraph = function(dataObj, species) {
   const startingArea = data.map(d => {
     return {
       date: d.date,
-      growth: 0
+      growth: 16
     };
   });
 
