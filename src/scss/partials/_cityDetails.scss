@@ -115,6 +115,10 @@
     th {
       padding-top: 10px;
     }
+    tr:nth-child(2) {
+      // display: flex;
+      align-items: center;
+    }
     td {
       padding: 5px;
     }
