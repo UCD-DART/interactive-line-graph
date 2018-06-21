@@ -116,6 +116,8 @@ function changeMosquito(mosquito) {
 }
 
 function showCityDetails(props) {
+  const website = props.website ? `<a href=${props.website}>${props.website}</a>`: "No page available";
+
   document.getElementById("cityName").innerHTML = props.city;
   document.getElementById("aegypti_detections").innerHTML =
     props.aegypti_detections;
@@ -130,9 +132,8 @@ function showCityDetails(props) {
   document.getElementById("albopictus_last_found").innerHTML =
     props.albopictus_last_found || "N/A";
   document.getElementById("agency").innerHTML = props.agency;
-  document.getElementById("website").innerHTML = props.website
-    ? `<a href=${props.website}>${props.website}</a>`
-    : "No page available";
+  document.getElementById("website").innerHTML = website
+    
 }
 
 //DRAW THE CHART
