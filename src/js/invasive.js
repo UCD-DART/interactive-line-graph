@@ -1,22 +1,26 @@
 import "../scss/zika.scss";
 import { mapOptions, invasiveMapOptions } from "../constants/mapSettings";
-import * as data from "../constants/invasiveGeo";
+// import * as data from "../constants/invasiveGeo";
 import {
   clovisData,
   delanoData,
   sdAegypti,
   sdAlbopictus,
   bakersfieldData,
-  fresnoData
+  fresnoData,
+  SanDiego
 } from "../constants/clovisInvasive";
 import { colors } from "./helpers";
 import { Map } from "./map";
 import { InvasiveGraph } from "./invasiveChart";
 import axios from "axios";
-import * as geojson from "../constants/invasiveData.json";
+import * as geojson from "../constants/invasiveData3.json";
 
 console.log(geojson);
-console.log(data);
+// console.log(data);
+// console.log(clovisData);
+// console.log("merged data");
+// console.log(SanDiego);
 
 const map = new google.maps.Map(
   document.getElementById("map"),
@@ -28,79 +32,75 @@ const map = new google.maps.Map(
 //set up some state variables
 let city = "Clovis";
 let species = "aegypti";
+let dataObj = geojson.features[1].properties.data;
+// console.log(geojson.features[1]);
+// console.log(dataObj);
+let invasiveGraph;
 
 const invasiveMap = Map(map);
-invasiveMap.drawInvasiveMap(data);
+invasiveMap.drawInvasiveMap(geojson);
+
 map.data.addListener("click", function(e) {
   showCityDetails(e.feature.f);
   const f = e.feature.f;
-  const url = `https://maps.calsurv.org/invasive/data/${f.agency}/${
-    f.city
-  }/${species}`;
+  // const url = `https://maps.calsurv.org/invasive/data/${f.agency}/${
+  //   f.city
+  // }/${species}`;
   // console.log(url);
+  changeCity(f.city);
 
-  let cityData;
+  // let cityData;
 
-  fetch("https://maps.calsurv.org/invasive/data/Tulare%20MAD/Tulare/aegypti", {
-    credentials: "include",
-    headers: {},
-    referrer: "https://maps.calsurv.org/invasive",
-    referrerPolicy: "no-referrer-when-downgrade",
-    body: null,
-    method: "GET",
-    mode: "cors"
-  })
-    .then(res => {
-      return res.json();
-    })
-    .then(myJson => console.log(myJson));
+  // fetch("https://maps.calsurv.org/invasive/data/Tulare%20MAD/Tulare/aegypti", {
+  //   credentials: "include",
+  //   headers: {},
+  //   referrer: "https://maps.calsurv.org/invasive",
+  //   referrerPolicy: "no-referrer-when-downgrade",
+  //   body: null,
+  //   method: "GET",
+  //   mode: "cors"
+  // })
+  //   .then(res => {
+  //     return res.json();
+  //   })
+  //   .then(myJson => console.log(myJson));
 
-  switch (f.city) {
-    case "Fresno":
-      invasiveGraph = InvasiveGraph(fresnoData);
-      break;
-    case "Delano":
-      invasiveGraph = InvasiveGraph(delanoData);
-      break;
-    case "Clovis":
-      invasiveGraph = InvasiveGraph(clovisData);
-      break;
-    case "San Diego":
-      let sdData = species === "aegypti" ? sdAegypti : sdAlbopictus;
-      invasiveGraph = InvasiveGraph(sdData);
-      break;
-    case "Bakersfield":
-      invasiveGraph = InvasiveGraph(bakersfieldData);
-      break;
-    default:
-      axios
-        .get(url)
-        .then(res => {
-          console.log(res.data);
-          cityData = res.data;
-          invasiveGraph = InvasiveGraph(cityData);
-        })
-        .catch(err => console.log(err));
-  }
+  // switch (f.city) {
+  //   case "Fresno":
+  //     invasiveGraph = InvasiveGraph(fresnoData);
+  //     break;
+  //   case "Delano":
+  //     invasiveGraph = InvasiveGraph(delanoData);
+  //     break;
+  //   case "Clovis":
+  //     invasiveGraph = InvasiveGraph(clovisData);
+  //     break;
+  //   case "San Diego":
+  //     let sdData = species === "aegypti" ? sdAegypti : sdAlbopictus;
+  //     invasiveGraph = InvasiveGraph(sdData);
+  //     break;
+  //   case "Bakersfield":
+  //     invasiveGraph = InvasiveGraph(bakersfieldData);
+  //     break;
+  //   default:
+  //     axios
+  //       .get(url)
+  //       .then(res => {
+  //         console.log(res.data);
+  //         cityData = res.data;
+  //         invasiveGraph = InvasiveGraph(cityData);
+  //       })
+  //       .catch(err => console.log(err));
+  // }
 });
 
-// const tokenStr = "51b6a36d08509e71b9f8f3a4ddd9f0d8f0684cad";
+const mosquitoToggle = document.getElementById("changeMosquito");
+mosquitoToggle.addEventListener('change', function() {
+  if (this.checked) {
+    changeMosquito("albopictus")
+  } else changeMosquito("aegypti")
+});
 
-let selectors = document.getElementsByClassName("selector__mosquito--toggle");
-
-for (let i = 0; i < selectors.length; i++) {
-  let el = selectors[i];
-  el.addEventListener("click", function() {
-    //remove active classes from other elements, add active class to clicked, change mosquito styling for map
-    if (!el.classList.contains("active")) {
-      for (let j = 0; j < selectors.length; j++) {
-        selectors[j].classList.remove("active");
-      }
-      el.classList.add("active");
-      changeMosquito(el.id);
-    }
-  });
-}
 
 function changeMosquito(mosquito) {
   if (mosquito === "aegypti") {
@@ -109,10 +109,20 @@ function changeMosquito(mosquito) {
   } else if (mosquito === "albopictus") {
     invasiveMap.showAlbopictus();
     species = "albopictus";
-  } else if (mosquito === "notoscriptus") {
-    invasiveMap.showNotoscriptus();
-    species = "notoscriptus";
-  }
+  } 
+  invasiveGraph = InvasiveGraph(dataObj, species);
+}
+
+function changeCity(newCity) {
+  city = newCity;
+  geojson.features.forEach(d => {
+    if (d.properties.city === newCity) {
+      dataObj = d.properties.data;
+    }
+  });
+  console.log("new city is " + city);
+  console.log(dataObj);
+  invasiveGraph = InvasiveGraph(dataObj, species)
 }
 
 function showCityDetails(props) {
@@ -137,9 +147,9 @@ function showCityDetails(props) {
 }
 
 //DRAW THE CHART
-let invasiveGraph;
-function calculateWidth() {
-  return document.getElementById("chart--invasive").clientWidth;
-}
+// function calculateWidth() {
+//   return document.getElementById("chart--invasive").clientWidth;
+// }
 // let width = document.getElementById("chart--invasive").clientWidth;
-invasiveGraph = InvasiveGraph(clovisData, species);
+// invasiveGraph = InvasiveGraph(dataObj, species);
+invasiveGraph = InvasiveGraph(dataObj, species);
