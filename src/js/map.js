@@ -31,28 +31,28 @@ export const Map = function(mapObj) {
     };
   };
 
-  const invasiveColor = feature => {
-    let detected = [];
-    let albos = feature.getProperty("albopictus_detections");
-    let aegypti = feature.getProperty("aegypti_detections");
-    let color;
+  // const invasiveColor = feature => {
+  //   let detected = [];
+  //   let albos = feature.getProperty("albopictus_detections");
+  //   let aegypti = feature.getProperty("aegypti_detections");
+  //   let color;
 
-    if (albos && aegypti) {
-      color = colors["orange"];
-    } else if (aegypti) {
-      color = colors["blue"];
-    } else if (albos) {
-      color = colors["red"];
-    } else color = colors["green"];
+  //   if (albos && aegypti) {
+  //     color = colors["orange"];
+  //   } else if (aegypti) {
+  //     color = colors["blue"];
+  //   } else if (albos) {
+  //     color = colors["red"];
+  //   } else color = colors["green"];
 
-    return {
-      fillColor: color,
-      fillOpacity: 0.5,
-      strokeWeight: 2,
-      strokeColor: color,
-      zindex: 0
-    };
-  };
+  //   return {
+  //     fillColor: color,
+  //     fillOpacity: 0.5,
+  //     strokeWeight: 2,
+  //     strokeColor: color,
+  //     zindex: 0
+  //   };
+  // };
 
   const aegyptiStyle = feature => {
     let detected = [];
@@ -95,26 +95,26 @@ export const Map = function(mapObj) {
     };
   };
 
-  const notoscriptusStyle = feature => {
-    let albos = feature.getProperty("albopictus_detections");
-    let aegypti = feature.getProperty("aegypti_detections");
-    let survielance = feature.getProperty("surveillance_start");
-    let color;
+  // const notoscriptusStyle = feature => {
+  //   let albos = feature.getProperty("albopictus_detections");
+  //   let aegypti = feature.getProperty("aegypti_detections");
+  //   let survielance = feature.getProperty("surveillance_start");
+  //   let color;
 
-    if (albos && aegypti) {
-      color = colors["orange"];
-    } else if (survielance) {
-      color = colors["green"];
-    } else color = colors["gray"];
+  //   if (albos && aegypti) {
+  //     color = colors["orange"];
+  //   } else if (survielance) {
+  //     color = colors["green"];
+  //   } else color = colors["gray"];
 
-    return {
-      fillColor: color,
-      fillOpacity: 0.5,
-      strokeWeight: 2,
-      strokeColor: color,
-      zindex: 0
-    };
-  };
+  //   return {
+  //     fillColor: color,
+  //     fillOpacity: 0.5,
+  //     strokeWeight: 2,
+  //     strokeColor: color,
+  //     zindex: 0
+  //   };
+  // };
 
   const showAegypti = () => {
     map.data.setStyle(aegyptiStyle);
@@ -207,6 +207,5 @@ export const Map = function(mapObj) {
     drawInvasiveMap: drawInvasiveMap,
     showAegypti: showAegypti,
     showAlbopictus: showAlbopictus,
-    showNotoscriptus: showNotoscriptus
   };
 };
