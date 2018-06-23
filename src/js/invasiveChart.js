@@ -17,7 +17,7 @@ import {
 import * as d3 from "d3";
 import { colors } from "./helpers";
 
-// const formatDate = timeFormat("%b %d, %Y");
+const formatDate = timeFormat("%b %d, %Y");
 
 export const InvasiveGraph = function(dataObj, species) {
   if (document.getElementById("svg")) {
@@ -46,21 +46,47 @@ export const InvasiveGraph = function(dataObj, species) {
   dataObj.forEach(d => {
     let obj = {};
     obj.date = new Date(d.start_date);
-    if (d["Ae. aegypti daily population growth"]) {
-      obj.growth =
-        d["Ae. aegypti daily population growth"] > 0
-          ? +d["Ae. aegypti daily population growth"]
-          : 0;
+    obj.collections = +d["Total collections"] || 0;  
+    if (species === "aegypti") {
+      obj.growth = +d["Ae. aegypti daily population growth"] || 0;
+      obj.aegypti = +d["Ae. aegypti"] || 0;
     } else {
-      obj.growth =
-        d["Ae. albopictus daily population growth"] > 0
-          ? +d["Ae. albopictus daily population growth"]
-          : 0;
+      obj.growth = +d["Ae. albopictus daily population growth"] || 0;
+      obj.aegypti = +d["Ae. albopictus"] || 0;
     }
-    obj.aegypti = d["Ae. aegypti"] || 0;
-    obj.collections = d["Total collections"] || 0;
     data.push(obj);
   });
+
+
+  // dataObj.forEach(d => {
+  //   let obj = {};
+  //   obj.date = new Date(d.start_date);
+  //   // obj.date = new Date(d.date) || new Date(d.start_date);
+  //   if (d["Ae. aegypti daily population growth"]) {
+  //     obj.growth =
+  //       d["Ae. aegypti daily population growth"] > 0
+  //         ? +d["Ae. aegypti daily population growth"]
+  //         : 0;
+  //   } else {
+  //     obj.growth =
+  //       d["Ae. albopictus daily population growth"] > 0
+  //         ? +d["Ae. albopictus daily population growth"]
+  //         : 0;
+  //   }
+  //   obj.aegypti = d["Ae. aegypti"] || 0;
+  //   obj.collections = d["Total collections"] || 0;
+  //   data.push(obj);
+  // });
+  // dataObj.forEach(d => {
+  //   let obj = {};
+  //   obj.date = new Date(d.date);
+  //   if (species === "aegypti") {
+  //     obj.growth = +d["aegyptiGrowth"] || 0;
+  //   } else {
+  //     obj.growth = +d["albopictusGrowth"] || 0;
+  //   }
+  //   data.push(obj);
+  // })
 
   // console.log(data);
 
@@ -123,7 +149,7 @@ export const InvasiveGraph = function(dataObj, species) {
   const startingArea = data.map(d => {
     return {
       date: d.date,
-      growth: 16
+      growth: 1
     };
   });
 
@@ -282,12 +308,48 @@ export const InvasiveGraph = function(dataObj, species) {
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
     .call(zoom);
 
-  brushStart = x(new Date("04-15-2016"));
-  brushEnd = x(new Date("11-15-2016"));
+  brushStart = x(new Date("04-15-2017"));
+  brushEnd = x(new Date("11-15-2017"));
 
   function setBrush() {
     select(".brush").call(brush.move, [brushStart, brushEnd]);
   }
+  // const tooltip = select("#graph")
+  //     .append("div")
+  //     .attr("class", "toolTip")
+  //     .style("opacity", 0);
+
+  // function tipMouseover(d) {
+  //   // redrawTooltip();
+  //   // let color = labelZikaRisk(d.risk);
+
+  //   const html = `<div>hello</hello>`
+
+  //   // const html = `
+  //   //           <div class='toolTip__risk' style='background:$'> 
+  //   //           <div class='toolTip__risk--title'> Risk Factor</div> 
+  //   //           <div class='toolTip__risk--value'> ${d.risk}
+  //   //           </div> 
+  //   //           </div>
+  //   //           <div class='toolTip__date'>${formatDate(d.date)}</div>
+  //   //       `;
+  //   tooltip
+  //     .html(html)
+  //     .style("left", event.pageX + 15 + "px")
+  //     .style("top", event.pageY - 28 + "px")
+  //     .transition()
+  //     .duration(500)
+  //     .style("opacity", 0.9);
+  // }
+
+  // function tipMouseout(tooltip) {
+  //   tooltip
+  //     .transition()
+  //     .duration(300)
+  //     .style("opacity", 0);
+  // }
+
+
 
   setBrush();
 
@@ -377,11 +439,12 @@ export const InvasiveGraph = function(dataObj, species) {
 
   function calculateAWeek() {
     // the x scaled version of one week minus one pixel
-    return x(new Date("2018-01-08")) - x(new Date("2018-01-01")) - 1;
+    return x(new Date("2018-01-08")) - x(new Date("2018-01-01"));
   }
 
   // console.log("one weeks width is " + oneWeek);
   var barColors = [colors["dark-red"], colors["deep-purple"]];
+  if (species !== "aegypti") barColors[0] = colors["blue"];
   var series = graph
     .selectAll(".series")
     .data(dataStack)
@@ -406,6 +469,14 @@ export const InvasiveGraph = function(dataObj, species) {
         return "collectionBar collectionBar__aegypti";
       } else return "collectionBar collectionBar__total";
     });
+    // .on('mouseover', d => {
+    //   tooltip.transition().duration(200).style("opacity", .9);
+    //   tooltip.html(formatDate(d.date) + "<br/>" + d.aegypti)
+    //   .style("left", (event.pageX) + "px")
+    //   .style("top", (event.pageY - 28) + "px");
+    //   console.log('moused over!')
+    // });
+    // .on('mouseout');
 
   var miniSeries = context
     .selectAll(".series")
