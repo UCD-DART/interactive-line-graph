@@ -8,7 +8,7 @@ let geoJson;
 async function getMyData() {
   let finalFeatures = [];
 
-  let starterCities = ["Fresno", "San Diego", "Rancho Cucamonga", "Bakersfield", "Delano", "Clovis", "Newport Beach", "Tulare"];
+  let starterCities = ["Fresno", "San Diego", "Rancho Cucamonga", "Bakersfield", "Delano", "Clovis", "Newport Beach", "Tulare", "Palm Springs", "Chino Hills"];
 
   try {
     const layer = await axios({
@@ -20,13 +20,13 @@ async function getMyData() {
 
       
 
-      let f = features[i].properties;
-      if (starterCities.indexOf(f.city) === -1) continue;
+      let f = features[i];
+      if (starterCities.indexOf(f.properties.city) === -1) continue;
 
-      f.data = cities[f.city];
+      f.properties.data = cities[f.properties.city];
       
 
-      console.log(f.city);
+      console.log(f.properties.city);
       // let aegyptiurl = `https://maps.calsurv.org/invasive/data/${f.agency}/${
       //   f.city
       // }/aegypti`;
