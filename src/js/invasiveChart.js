@@ -9,6 +9,8 @@ import {
   axisLeft,
   axisRight,
   brushX,
+  curveCardinal,
+  line as d3line,
   zoom as d3zoom,
   transition,
   event,
@@ -46,7 +48,7 @@ export const InvasiveGraph = function(dataObj, species) {
   dataObj.forEach(d => {
     let obj = {};
     obj.date = new Date(d.start_date);
-    obj.collections = +d["Total collections"] || 0;  
+    obj.collections = +d["Total collections"] || 0;
     if (species === "aegypti") {
       obj.growth = +d["Ae. aegypti daily population growth"] || 0;
       obj.aegypti = +d["Ae. aegypti"] || 0;
@@ -56,7 +58,6 @@ export const InvasiveGraph = function(dataObj, species) {
     }
     data.push(obj);
   });
-
 
   // dataObj.forEach(d => {
   //   let obj = {};
@@ -91,19 +92,19 @@ export const InvasiveGraph = function(dataObj, species) {
   // console.log(data);
 
   // add to the selection prototype methods
-  d3.selection.prototype.moveToFront = function() {
-    return this.each(function() {
-      this.parentNode.appendChild(this);
-    });
-  };
-  d3.selection.prototype.moveToBack = function() {
-    return this.each(function() {
-      var firstChild = this.parentNode.firstChild;
-      if (firstChild) {
-        this.parentNode.insertBefore(this, firstChild);
-      }
-    });
-  };
+  // d3.selection.prototype.moveToFront = function() {
+  //   return this.each(function() {
+  //     this.parentNode.appendChild(this);
+  //   });
+  // };
+  // d3.selection.prototype.moveToBack = function() {
+  //   return this.each(function() {
+  //     var firstChild = this.parentNode.firstChild;
+  //     if (firstChild) {
+  //       this.parentNode.insertBefore(this, firstChild);
+  //     }
+  //   });
+  // };
 
   //draw the g container
   const g = svg
@@ -132,12 +133,17 @@ export const InvasiveGraph = function(dataObj, species) {
     xAxis2 = axisBottom(x2).ticks(5),
     yAxis = axisLeft(y);
 
-  const area = d3
-    .area()
-    .curve(d3.curveMonotoneX)
+  const growthLine = d3line()
+    .curve(curveCardinal)
     .x(d => x(d.date))
-    .y1(d => y(d.growth))
-    .y0(height);
+    .y(d => y(d.growth));
+
+  // const area = d3
+  //   .area()
+  //   .curve(d3.curveMonotoneX)
+  //   .x(d => x(d.date))
+  //   .y1(d => y(d.growth))
+  //   .y0(height);
   const area2 = d3
     .area()
     .curve(d3.curveMonotoneX)
@@ -149,7 +155,7 @@ export const InvasiveGraph = function(dataObj, species) {
   const startingArea = data.map(d => {
     return {
       date: d.date,
-      growth: 1
+      growth: d.growth
     };
   });
 
@@ -172,8 +178,8 @@ export const InvasiveGraph = function(dataObj, species) {
     x.domain(s.map(x2.invert, x2));
     select(".graph")
       .datum(data)
-      .select(".area")
-      .attr("d", area);
+      .select(".line")
+      .attr("d", growthLine);
     // console.log(area);
 
     d3.selectAll(".collectionBar").attr("x", d => x(d.data.date));
@@ -196,8 +202,8 @@ export const InvasiveGraph = function(dataObj, species) {
     x.domain(t.rescaleX(x2).domain());
 
     select(".graph")
-      .select(".area")
-      .attr("d", area);
+      .select(".line")
+      .attr("d", growthLine);
 
     select(".focus")
       .select(".axis--x")
@@ -262,18 +268,18 @@ export const InvasiveGraph = function(dataObj, species) {
     .append("text")
     .attr("id", "growth-label")
     .attr("fill", colors["cyan"])
-    .attr("transform", "rotate(-90), translate(-180,30)")
+    .attr("transform", "rotate(-90), translate(-80,30)")
     .attr("y", 0)
     .attr("dy", "0.7em")
     .attr("text-anchor", "end")
-    .text("Growth (%)");
+    .text("Daily Population Growth (%)");
 
   let mini = context
     .append("path")
     .datum(startingArea)
     .attr("class", "area context-area")
     .attr("fill", colors["cyan"])
-    .attr("d", area)
+    .attr("d", area2)
     .transition()
     .duration(2500)
     .attrTween("d", function() {
@@ -326,10 +332,10 @@ export const InvasiveGraph = function(dataObj, species) {
   //   const html = `<div>hello</hello>`
 
   //   // const html = `
-  //   //           <div class='toolTip__risk' style='background:$'> 
-  //   //           <div class='toolTip__risk--title'> Risk Factor</div> 
+  //   //           <div class='toolTip__risk' style='background:$'>
+  //   //           <div class='toolTip__risk--title'> Risk Factor</div>
   //   //           <div class='toolTip__risk--value'> ${d.risk}
-  //   //           </div> 
+  //   //           </div>
   //   //           </div>
   //   //           <div class='toolTip__date'>${formatDate(d.date)}</div>
   //   //       `;
@@ -349,69 +355,67 @@ export const InvasiveGraph = function(dataObj, species) {
   //     .style("opacity", 0);
   // }
 
-
-
   setBrush();
 
   //append the area element
-  let growthArea = graph
-    .append("path")
-    .datum(startingArea)
-    .attr("class", "area focus-area")
-    .attr("fill", colors["cyan"])
-    .attr("d", area)
-    .transition()
-    .duration(1000)
-    .attrTween("d", function() {
-      const interpolator = d3.interpolateArray(startingArea, data);
-      return function(t) {
-        return area(interpolator(t));
-      };
-    });
+  // let growthArea = graph
+  //   .append("path")
+  //   .datum(startingArea)
+  //   .attr("class", "area focus-area")
+  //   .attr("fill", "none")
+  //   .attr("d", area)
+  //   .transition()
+  //   .duration(1000)
+  //   .attrTween("d", function() {
+  //     const interpolator = d3.interpolateArray(startingArea, data);
+  //     return function(t) {
+  //       return area(interpolator(t));
+  //     };
+  //   });
 
   //add hover events for the area graph to make it easier to see
-  select(".focus-area")
-    .on("mouseover", highlightArea)
-    .on("mouseout", resetArea);
+  // select(".focus-area")
+  //   .on("mouseover", highlightArea)
+  //   .on("mouseout", resetArea);
 
   const labelTransition = d3
     .transition()
     .delay(0)
     .duration(1000);
 
-  function highlightArea(d) {
-    select(".focus-area").moveToFront();
-    select(".area").classed("areaHighlighted", true);
-    select(".context-area").classed("areaHighlighted", true);
+  // function highlightArea(d) {
+  //   select(".focus-area").moveToFront();
+  //   select(".area").classed("areaHighlighted", true);
+  //   select(".context-area").classed("areaHighlighted", true);
 
-    select("#growth-label")
-      .transition(labelTransition)
-      .attr("fill", colors["dark-blue"])
-      .style("font-size", "24px")
-      .attr("transform", "rotate(-90), translate(-150, 30)");
-    select("#collections-label")
-      .transition(labelTransition)
-      .style("font-size", "12px")
-      .attr("fill", colors["light-blue"])
-      .attr("transform", "rotate(-90), translate(-200, -40)");
-  }
+  //   select("#growth-label")
+  //     .transition(labelTransition)
+  //     .attr("fill", colors["dark-blue"])
+  //     .style("font-size", "24px")
+  //     .attr("transform", "rotate(-90), translate(-150, 30)");
+  //   select("#collections-label")
+  //     .transition(labelTransition)
+  //     .style("font-size", "12px")
+  //     .attr("fill", colors["light-blue"])
+  //     .attr("transform", "rotate(-90), translate(-200, -40)");
+  // }
 
-  function resetArea(d, i) {
-    select(".focus-area").moveToBack();
-    select(".area").classed("areaHighlighted", false);
-    select(".context-area").classed("areaHighlighted", false);
-    select("#growth-label")
-      .transition(labelTransition)
-      .attr("fill", colors["light-blue"])
-      .style("font-size", "12px")
-      .attr("transform", "rotate(-90), translate(-200, 30)");
+  // function resetArea(d, i) {
+  //   select(".focus-area").moveToBack();
+  //   select(".area").classed("areaHighlighted", false);
+  //   select(".context-area").classed("areaHighlighted", false);
+  //   select("#growth-label")
+  //     .transition(labelTransition)
+  //     .attr("fill", colors["light-blue"])
+  //     .style("font-size", "12px")
+  //     .attr("transform", "rotate(-90), translate(-200, 30)");
 
-    select("#collections-label")
-      .transition(labelTransition)
-      .style("font-size", "24px")
-      .attr("fill", colors["dark-blue"])
-      .attr("transform", "rotate(-90), translate(-140, -40)");
-  }
+  //   select("#collections-label")
+  //     .transition(labelTransition)
+  //     .style("font-size", "24px")
+  //     .attr("fill", colors["dark-blue"])
+  //     .attr("transform", "rotate(-90), translate(-140, -40)");
+  // }
 
   //draw the stacked bars
   const stack = d3.stack().keys(["aegypti", "collections"]);
@@ -469,14 +473,15 @@ export const InvasiveGraph = function(dataObj, species) {
         return "collectionBar collectionBar__aegypti";
       } else return "collectionBar collectionBar__total";
     });
-    // .on('mouseover', d => {
-    //   tooltip.transition().duration(200).style("opacity", .9);
-    //   tooltip.html(formatDate(d.date) + "<br/>" + d.aegypti)
-    //   .style("left", (event.pageX) + "px")
-    //   .style("top", (event.pageY - 28) + "px");
-    //   console.log('moused over!')
-    // });
-    // .on('mouseout');
+
+  // .on('mouseover', d => {
+  //   tooltip.transition().duration(200).style("opacity", .9);
+  //   tooltip.html(formatDate(d.date) + "<br/>" + d.aegypti)
+  //   .style("left", (event.pageX) + "px")
+  //   .style("top", (event.pageY - 28) + "px");
+  //   console.log('moused over!')
+  // });
+  // .on('mouseout');
 
   var miniSeries = context
     .selectAll(".series")
@@ -500,6 +505,13 @@ export const InvasiveGraph = function(dataObj, species) {
         return "miniCollectionBar miniCollectionBar__aegypti";
       } else return "miniCollectionBar miniCollectionBar__total";
     });
+
+  let growthLineElement = graph
+    .append("path")
+    .datum(data)
+    .attr("class", "line")
+    .attr("d", growthLine)
+    .style("stroke", "black");
 
   var t = d3
     .transition()
