@@ -400,7 +400,7 @@ export const InvasiveGraph = function(dataObj, species) {
   }
 
   // console.log("one weeks width is " + oneWeek);
-  var barColors = [colors["dark-red"], colors["deep-purple"]];
+  var barColors = [colors["dark-red"], colors["purple"]];
   if (species !== "aegypti") barColors[0] = colors["blue"];
   var series = graph
     .selectAll(".series")
@@ -462,6 +462,8 @@ export const InvasiveGraph = function(dataObj, species) {
       } else return "miniCollectionBar miniCollectionBar__total";
     });
 
+  let startingLine = [[0, 0], [200, 100]];
+
   let growthLineElement = graph
     .append("path")
     .datum(data)
@@ -489,32 +491,55 @@ export const InvasiveGraph = function(dataObj, species) {
 
   let tooltip = select("#chart--invasive")
     .append("div")
-    .attr("class", "toolTip")
+    .attr("class", "toolTip toolTip-invasive")
     .style("opacity", 0);
 
-  function redrawTooltip() {
-    if (document.querySelector(".toolTip")) {
-      select(".toolTip").remove();
-    }
+  // function redrawTooltip() {
+  //   if (document.querySelector(".toolTip")) {
+  //     select(".toolTip").remove();
+  //   }
 
-    tooltip = select("#chart--invasive")
-      .append("div")
-      .attr("class", "toolTip")
-      .style("opacity", 0);
-  }
+  //   tooltip = select("#chart--invasive")
+  //     .append("div")
+  //     .attr("class", "toolTip")
+  //     .style("opacity", 0);
+  // }
 
+  console.log(window.visualViewport.width);
   function tipMouseover(d) {
-    // redrawTooltip();
-    console.log(d);
+    console.log("just moused over " + d.data.date);
+    console.log(event.pageX, event.pageY);
+    const rightEdge = window.visualViewport.width;
+
+    let leftPos = event.pageX + 300 > rightEdge ? rightEdge - 300 : event.pageX;
+
+    // if (event.pageX + 300 > rightEdge) {
+    //   leftPos = rightEdge - 300;
+    // } else leftPos = event.pageX;
 
     const html = `
-    <div> ${formatDate(d.data.date)}</div>
-    <ul> 
-      <li> Traps with Aegypti: ${d.data.aegypti}</li>
-      <li>Total traps: ${d.data.collections}</li>
-      <li>Projected Growth: ${d.data.growth} % </li>
-     </ul>
+        <div class="toolTip-invasive__data">
+          <div class="toolTip-invasive__data--collections">
+            <div class="toolTip-invasive__data--collections--total"> ${
+              d.data.collections
+            } Total Collections</div>
+            <div class="toolTip-invasive__data--collections--aegypti"> ${
+              d.data.aegypti
+            } Aegypti Collections</div>
+          </div>
+          <div class="toolTip-invasive__data--growth">
+            <div class="toolTip-invasive__data--growth--value">${
+              d.data.growth
+            }%</div>
+            <div class="toolTip-invasive__data--growth--label">Projected Growth</div>
+          </div>
+        </div>
+        <div class="toolTip-invasive__date">
+          ${formatDate(d.data.date)}
+        </div>
     `;
+
+    const html2 = "hellerrr";
 
     // const html = `
     //             <div class='toolTip__risk' style='background:${color}'>
@@ -525,17 +550,17 @@ export const InvasiveGraph = function(dataObj, species) {
     //         `;
     tooltip
       .html(html)
-      .style("left", event.pageX + "px")
-      .style("top", event.pageY - 100 + "px")
-      .transition()
-      .duration(500)
+      .style("left", "800px")
+      .style("top", "200px")
+      // .transition()
+      // .duration(500)
       .style("opacity", 0.9);
   }
 
   function tipMouseout(tooltip) {
     tooltip
-      .transition()
-      .duration(300)
+      // .transition()
+      // .duration(300)
       .style("opacity", 0);
   }
 };
