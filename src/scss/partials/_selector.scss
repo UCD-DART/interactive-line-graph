@@ -13,17 +13,10 @@
   .selector__mosquitos {
     font-size: 18px;
     font-style: italic;
-    // border: 2px dashed green;
-    // text-align: left;
-    // height: 90px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 5px;
     align-items: center;
-    // grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    // align-items: center;
-    // justify-content: center;
-    // grid-template-columns: 2fr 1fr 2fr;
 
     //the mosquito toggle container label
     .switch {
@@ -68,6 +61,8 @@
         transition: 1s;
       }
     }
+
+    //mosquito icons on either side of toggle
     .mosquito {
       display: flex;
       align-items: center;
@@ -128,8 +123,10 @@
 
       @at-root #{&}--growth {
         background: $light-blue;
-        border-radius: 100% 20% 0 0;
+        border-radius: 0;
         width: 45px;
+        height: 5px;
+        margin-top: 10px;
       }
     }
   }
