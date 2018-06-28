@@ -59,53 +59,6 @@ export const InvasiveGraph = function(dataObj, species) {
     data.push(obj);
   });
 
-  // dataObj.forEach(d => {
-  //   let obj = {};
-  //   obj.date = new Date(d.start_date);
-  //   // obj.date = new Date(d.date) || new Date(d.start_date);
-  //   if (d["Ae. aegypti daily population growth"]) {
-  //     obj.growth =
-  //       d["Ae. aegypti daily population growth"] > 0
-  //         ? +d["Ae. aegypti daily population growth"]
-  //         : 0;
-  //   } else {
-  //     obj.growth =
-  //       d["Ae. albopictus daily population growth"] > 0
-  //         ? +d["Ae. albopictus daily population growth"]
-  //         : 0;
-  //   }
-  //   obj.aegypti = d["Ae. aegypti"] || 0;
-  //   obj.collections = d["Total collections"] || 0;
-  //   data.push(obj);
-  // });
-  // dataObj.forEach(d => {
-  //   let obj = {};
-  //   obj.date = new Date(d.date);
-  //   if (species === "aegypti") {
-  //     obj.growth = +d["aegyptiGrowth"] || 0;
-  //   } else {
-  //     obj.growth = +d["albopictusGrowth"] || 0;
-  //   }
-  //   data.push(obj);
-  // })
-
-  // console.log(data);
-
-  // add to the selection prototype methods
-  // d3.selection.prototype.moveToFront = function() {
-  //   return this.each(function() {
-  //     this.parentNode.appendChild(this);
-  //   });
-  // };
-  // d3.selection.prototype.moveToBack = function() {
-  //   return this.each(function() {
-  //     var firstChild = this.parentNode.firstChild;
-  //     if (firstChild) {
-  //       this.parentNode.insertBefore(this, firstChild);
-  //     }
-  //   });
-  // };
-
   //draw the g container
   const g = svg
     .append("g")
@@ -125,7 +78,7 @@ export const InvasiveGraph = function(dataObj, species) {
 
   x.domain(extent(data, d => d.date));
   x2.domain(x.domain());
-  y.domain([0, d3.max(data, d => d.growth)]);
+  y.domain([0, d3.max(data, d => d.growth) * 1.1]);
   y2.domain(y.domain());
 
   //SET AXES
@@ -268,7 +221,7 @@ export const InvasiveGraph = function(dataObj, species) {
     .append("text")
     .attr("id", "growth-label")
     .attr("fill", colors["cyan"])
-    .attr("transform", "rotate(-90), translate(-80,30)")
+    .attr("transform", "rotate(-90), translate(-10,35)")
     .attr("y", 0)
     .attr("dy", "0.7em")
     .attr("text-anchor", "end")
@@ -436,7 +389,7 @@ export const InvasiveGraph = function(dataObj, species) {
     .call(collectionsAxis)
     .attr("class", "axis")
     .append("text")
-    .attr("transform", "rotate(-90), translate(-140,-40)")
+    .attr("transform", "rotate(-90), translate(0,-45)")
     // .attr("class", "collections--label")
     .attr("id", "collections-label")
     .text("Collections");
@@ -472,7 +425,10 @@ export const InvasiveGraph = function(dataObj, species) {
       if (this.parentElement.id == 0) {
         return "collectionBar collectionBar__aegypti";
       } else return "collectionBar collectionBar__total";
-    });
+    })
+    // .on("mouseover", d => console.log(d));
+    .on("mouseover", d => tipMouseover(d))
+    .on("mouseout", d => tipMouseout(tooltip));
 
   // .on('mouseover', d => {
   //   tooltip.transition().duration(200).style("opacity", .9);
@@ -511,7 +467,7 @@ export const InvasiveGraph = function(dataObj, species) {
     .datum(data)
     .attr("class", "line")
     .attr("d", growthLine)
-    .style("stroke", "black");
+    .style("stroke", colors["light-blue"]);
 
   var t = d3
     .transition()
@@ -530,4 +486,56 @@ export const InvasiveGraph = function(dataObj, species) {
     .duration(800)
     .attr("height", d => height - collectionsScale(d[1] - d[0]))
     .attr("y", d => collectionsScale(d[1]));
+
+  let tooltip = select("#chart--invasive")
+    .append("div")
+    .attr("class", "toolTip")
+    .style("opacity", 0);
+
+  function redrawTooltip() {
+    if (document.querySelector(".toolTip")) {
+      select(".toolTip").remove();
+    }
+
+    tooltip = select("#chart--invasive")
+      .append("div")
+      .attr("class", "toolTip")
+      .style("opacity", 0);
+  }
+
+  function tipMouseover(d) {
+    // redrawTooltip();
+    console.log(d);
+
+    const html = `
+    <div> ${formatDate(d.data.date)}</div>
+    <ul> 
+      <li> Traps with Aegypti: ${d.data.aegypti}</li>
+      <li>Total traps: ${d.data.collections}</li>
+      <li>Projected Growth: ${d.data.growth} % </li>
+     </ul>
+    `;
+
+    // const html = `
+    //             <div class='toolTip__risk' style='background:${color}'>
+    //               <div class='toolTip__risk--title'> Risk Factor </div>
+    //               <div class='toolTip__risk--value'> ${d.data.growth} </div>
+    //             </div>
+    //             <div class='toolTip__date'>${d.data.date}</div>
+    //         `;
+    tooltip
+      .html(html)
+      .style("left", event.pageX + "px")
+      .style("top", event.pageY - 100 + "px")
+      .transition()
+      .duration(500)
+      .style("opacity", 0.9);
+  }
+
+  function tipMouseout(tooltip) {
+    tooltip
+      .transition()
+      .duration(300)
+      .style("opacity", 0);
+  }
 };
