@@ -6,6 +6,7 @@ export const Map = function(mapObj) {
   let map = mapObj;
   let currentCity = "Fresno";
   let week = 25; // just a random number picked to stylet he map
+  let date = new Date("2018-06-01");
 
   const riskColor = feature => {
     let risk = feature.getProperty("risk");
@@ -54,15 +55,24 @@ export const Map = function(mapObj) {
   //   };
   // };
 
+  const changeDate = newDate => {
+    date = new Date(newDate);
+    showAegypti();
+  };
+
   const aegyptiStyle = feature => {
-    let detected = [];
     let aegeypti = feature.getProperty("aegypti_detections");
     let survielance = feature.getProperty("surveillance_start");
     let color;
 
-    if (aegeypti) {
+    let firstDetected = new Date(feature.getProperty("aegypti_first_found"));
+    let survillanceStarted = new Date(
+      feature.getProperty("surveillance_start")
+    );
+
+    if (firstDetected < date) {
       color = colors["red"];
-    } else if (survielance) {
+    } else if (survillanceStarted < date) {
       color = colors["green"];
     } else color = colors["gray"];
 
@@ -95,37 +105,12 @@ export const Map = function(mapObj) {
     };
   };
 
-  // const notoscriptusStyle = feature => {
-  //   let albos = feature.getProperty("albopictus_detections");
-  //   let aegypti = feature.getProperty("aegypti_detections");
-  //   let survielance = feature.getProperty("surveillance_start");
-  //   let color;
-
-  //   if (albos && aegypti) {
-  //     color = colors["orange"];
-  //   } else if (survielance) {
-  //     color = colors["green"];
-  //   } else color = colors["gray"];
-
-  //   return {
-  //     fillColor: color,
-  //     fillOpacity: 0.5,
-  //     strokeWeight: 2,
-  //     strokeColor: color,
-  //     zindex: 0
-  //   };
-  // };
-
   const showAegypti = () => {
     map.data.setStyle(aegyptiStyle);
   };
 
   const showAlbopictus = () => {
     map.data.setStyle(albopictusStyle);
-  };
-
-  const showNotoscriptus = () => {
-    map.data.setStyle(notoscriptusStyle);
   };
 
   const setCity = function(city) {
@@ -207,5 +192,6 @@ export const Map = function(mapObj) {
     drawInvasiveMap: drawInvasiveMap,
     showAegypti: showAegypti,
     showAlbopictus: showAlbopictus,
+    changeDate: changeDate
   };
 };
