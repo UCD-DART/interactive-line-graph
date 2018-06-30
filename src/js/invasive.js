@@ -1,26 +1,25 @@
 import "../scss/zika.scss";
-import { mapOptions, invasiveMapOptions } from "../constants/mapSettings";
+import { invasiveMapOptions } from "../constants/mapSettings";
 // import * as data from "../constants/invasiveGeo";
-import {
-  clovisData,
-  delanoData,
-  sdAegypti,
-  sdAlbopictus,
-  bakersfieldData,
-  fresnoData,
-  SanDiego
-} from "../constants/clovisInvasive";
-import { colors } from "./helpers";
+// import {
+//   clovisData,
+//   delanoData,
+//   sdAegypti,
+//   sdAlbopictus,
+//   bakersfieldData,
+//   fresnoData,
+//   SanDiego
+// } from "../constants/clovisInvasive";
+// import { colors } from "./helpers";
 import { Map } from "./map";
 import { InvasiveGraph } from "./invasiveChart";
-import axios from "axios";
 import * as geojson from "../constants/invasiveData3.json";
+import { Slider } from "./slider";
+import { timeFormat } from "d3-time-format";
 
 console.log(geojson);
-// console.log(data);
-// console.log(clovisData);
-// console.log("merged data");
-// console.log(SanDiego);
+
+const formatDate = timeFormat("%b %d, %Y");
 
 const map = new google.maps.Map(
   document.getElementById("map"),
@@ -95,12 +94,11 @@ map.data.addListener("click", function(e) {
 });
 
 const mosquitoToggle = document.getElementById("changeMosquito");
-mosquitoToggle.addEventListener('change', function() {
+mosquitoToggle.addEventListener("change", function() {
   if (this.checked) {
-    changeMosquito("albopictus")
-  } else changeMosquito("aegypti")
+    changeMosquito("albopictus");
+  } else changeMosquito("aegypti");
 });
-
 
 function changeMosquito(mosquito) {
   if (mosquito === "aegypti") {
@@ -109,7 +107,7 @@ function changeMosquito(mosquito) {
   } else if (mosquito === "albopictus") {
     invasiveMap.showAlbopictus();
     species = "albopictus";
-  } 
+  }
   invasiveGraph = InvasiveGraph(dataObj, species);
 }
 
@@ -122,11 +120,13 @@ function changeCity(newCity) {
   });
   console.log("new city is " + city);
   console.log(dataObj);
-  invasiveGraph = InvasiveGraph(dataObj, species)
+  invasiveGraph = InvasiveGraph(dataObj, species);
 }
 
 function showCityDetails(props) {
-  const website = props.website ? `<a href=${props.website}>${props.website}</a>`: "No page available";
+  const website = props.website
+    ? `<a href=${props.website}>${props.website}</a>`
+    : "No page available";
 
   document.getElementById("cityName").innerHTML = props.city;
   document.getElementById("aegypti_detections").innerHTML =
@@ -142,14 +142,29 @@ function showCityDetails(props) {
   document.getElementById("albopictus_last_found").innerHTML =
     props.albopictus_last_found || "N/A";
   document.getElementById("agency").innerHTML = props.agency;
-  document.getElementById("website").innerHTML = website
-    
+  document.getElementById("website").innerHTML = website;
 }
 
-//DRAW THE CHART
-// function calculateWidth() {
-//   return document.getElementById("chart--invasive").clientWidth;
-// }
-// let width = document.getElementById("chart--invasive").clientWidth;
-// invasiveGraph = InvasiveGraph(dataObj, species);
+//Add slider and its behavior
+let dates = [];
+for (let i = 2; i < 9; i++) {
+  const year = "201" + i;
+  dates.push(new Date(`${year}-01-02`));
+  dates.push(new Date(`${year}-04-02`));
+  dates.push(new Date(`${year}-07-02`));
+  dates.push(new Date(`${year}-11-02`));
+}
+
+console.log(dates);
+Slider("slider", dates.length);
+document.getElementById("pickDate").oninput = e => changeDate(e.target.value);
+document.getElementById("pickDate").classList.add("slider-invasive");
+
+function changeDate(idx) {
+  let newDate = dates[idx];
+  invasiveMap.changeDate(newDate);
+  document.getElementById("selected-date").innerHTML = formatDate(newDate);
+}
+
+//initialize the chart
 invasiveGraph = InvasiveGraph(dataObj, species);
