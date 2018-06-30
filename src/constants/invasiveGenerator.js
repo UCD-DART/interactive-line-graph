@@ -8,7 +8,7 @@ let geoJson;
 async function getMyData() {
   let finalFeatures = [];
 
-  let starterCities = ["Fresno", "San Diego", "Rancho Cucamonga", "Bakersfield", "Delano", "Clovis", "Newport Beach", "Tulare", "Palm Springs", "Chino Hills"];
+  let starterCities = ["Fresno", "San Diego", "Rancho Cucamonga", "Bakersfield", "Delano", "Clovis", "Newport Beach", "Tulare", "Palm Springs", "Chino Hills", "Madera", "Arvin", "Pico Rivera"];
 
   try {
     const layer = await axios({
