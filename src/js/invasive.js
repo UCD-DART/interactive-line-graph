@@ -155,7 +155,6 @@ for (let i = 2; i < 9; i++) {
   dates.push(new Date(`${year}-11-02`));
 }
 
-console.log(dates);
 Slider("slider", dates.length);
 document.getElementById("pickDate").oninput = e => changeDate(e.target.value);
 document.getElementById("pickDate").classList.add("slider-invasive");
@@ -163,6 +162,10 @@ document.getElementById("pickDate").classList.add("slider-invasive");
 function changeDate(idx) {
   let newDate = dates[idx];
   invasiveMap.changeDate(newDate);
+  species === "aegypti"
+    ? invasiveMap.showAegypti()
+    : invasiveMap.showAlbopictus();
+
   document.getElementById("selected-date").innerHTML = formatDate(newDate);
 }
 
