@@ -57,15 +57,15 @@ export const Map = function(mapObj) {
 
   const changeDate = newDate => {
     date = new Date(newDate);
-    showAegypti();
   };
 
   const aegyptiStyle = feature => {
-    let aegeypti = feature.getProperty("aegypti_detections");
-    let survielance = feature.getProperty("surveillance_start");
+    // let aegeypti = feature.getProperty("aegypti_detections");
+    // let survielance = feature.getProperty("surveillance_start");
     let color;
 
-    let firstDetected = new Date(feature.getProperty("aegypti_first_found"));
+    let firstDetected =
+      new Date(feature.getProperty("aegypti_first_found")) || false;
     let survillanceStarted = new Date(
       feature.getProperty("surveillance_start")
     );
@@ -86,13 +86,16 @@ export const Map = function(mapObj) {
   };
 
   const albopictusStyle = feature => {
-    let albos = feature.getProperty("albopictus_detections");
-    let survielance = feature.getProperty("surveillance_start");
+    let firstDetected =
+      new Date(feature.getProperty("albopictus_first_found")) || false;
+    let survielanceStarted = new Date(
+      feature.getProperty("surveillance_start")
+    );
     let color;
 
-    if (albos) {
+    if (firstDetected && firstDetected < date) {
       color = colors["blue"];
-    } else if (survielance) {
+    } else if (survielanceStarted < date) {
       color = colors["green"];
     } else color = colors["gray"];
 
