@@ -8,7 +8,21 @@ let geoJson;
 async function getMyData() {
   let finalFeatures = [];
 
-  let starterCities = ["Fresno", "San Diego", "Rancho Cucamonga", "Bakersfield", "Delano", "Clovis", "Newport Beach", "Tulare", "Palm Springs", "Chino Hills", "Madera", "Arvin", "Pico Rivera"];
+  let starterCities = [
+    "Fresno",
+    "San Diego",
+    "Rancho Cucamonga",
+    "Bakersfield",
+    "Delano",
+    "Clovis",
+    "Newport Beach",
+    "Tulare",
+    "Palm Springs",
+    "Chino Hills",
+    "Madera",
+    "Arvin",
+    "Pico Rivera"
+  ];
 
   try {
     const layer = await axios({
@@ -17,15 +31,10 @@ async function getMyData() {
     let features = layer.data.features;
 
     for (let i = 0; i < features.length; i++) {
-
-      
-
       let f = features[i];
-      if (starterCities.indexOf(f.properties.city) === -1) continue;
-
-      f.properties.data = cities[f.properties.city];
-      
-
+      if (starterCities.indexOf(f.properties.city) > -1) {
+        f.properties.data = cities[f.properties.city];
+      }
       console.log(f.properties.city);
       // let aegyptiurl = `https://maps.calsurv.org/invasive/data/${f.agency}/${
       //   f.city
@@ -44,7 +53,7 @@ async function getMyData() {
       //       let collections = res.data.map(d => {
       //         return {
       //           date: d.end_date,
-      //           aegyptiGrowth: +d["Ae. aegypti daily population growth"]
+      //           aegyptiGrowth: +d["Aecd ... aegypti daily population growth"]
       //         };
       //       });
       //       f["aegypti"] = collections;
@@ -91,7 +100,9 @@ async function getMyData() {
       features: finalFeatures
     };
 
-    fs.writeFile("./invasiveData3.json", JSON.stringify(geoJson), function(err) {
+    fs.writeFile("./invasiveData3.json", JSON.stringify(geoJson), function(
+      err
+    ) {
       if (err) console.log("writing to disk did not work");
     });
     console.log("finished?  see if the file is there...");
