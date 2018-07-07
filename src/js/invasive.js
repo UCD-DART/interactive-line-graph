@@ -29,15 +29,19 @@ const map = new google.maps.Map(
 // console.log(data);
 
 //set up some state variables
-let city = "Clovis";
+let city = "San Diego";
 let species = "aegypti";
-let dataObj = geojson.features[1].properties.data;
+let dataObj = geojson.features[1281].properties.data; //index for San Diego in the static data
 // console.log(geojson.features[1]);
 // console.log(dataObj);
 let invasiveGraph;
 
 const invasiveMap = Map(map);
 invasiveMap.drawInvasiveMap(geojson);
+
+// for (let i = 0; i < geojson.features.length; i++) {
+//   if (geojson.features[i].properties.city === "San Diego") console.log(i);
+// }
 
 map.data.addListener("click", function(e) {
   showCityDetails(e.feature.f);
@@ -49,16 +53,20 @@ map.data.addListener("click", function(e) {
   changeCity(f.city);
 
   // let cityData;
+  console.log(f.agency);
 
-  // fetch("https://maps.calsurv.org/invasive/data/Tulare%20MAD/Tulare/aegypti", {
-  //   credentials: "include",
-  //   headers: {},
-  //   referrer: "https://maps.calsurv.org/invasive",
-  //   referrerPolicy: "no-referrer-when-downgrade",
-  //   body: null,
-  //   method: "GET",
-  //   mode: "cors"
-  // })
+  // fetch(
+  //   `https://maps.calsurv.org/invasive/data/${f.agency}/${f.city}/aegypti`,
+  //   {
+  //     credentials: "include",
+  //     headers: {},
+  //     referrer: "https://maps.calsurv.org/invasive",
+  //     referrerPolicy: "no-referrer-when-downgrade",
+  //     body: null,
+  //     method: "GET",
+  //     mode: "cors"
+  //   }
+  // )
   //   .then(res => {
   //     return res.json();
   //   })
@@ -120,7 +128,29 @@ function changeCity(newCity) {
   });
   console.log("new city is " + city);
   console.log(dataObj);
-  invasiveGraph = InvasiveGraph(dataObj, species);
+  if (dataObj) {
+    invasiveGraph = InvasiveGraph(dataObj, species);
+  } else {
+    document.getElementById("chart--invasive").innerHTML = `
+      <div class='card'>
+        <h1>No data for that city.  Try one of these cities on the map:</h1>
+        
+        <li>"Fresno",</li>
+        <li>"San Diego",</li>
+        <li>"Rancho Cucamonga",</li>
+        <li>"Bakersfield",</li>
+        <li>"Delano",</li>
+        <li>"Clovis",</li>
+        <li>"Newport Beach",</li>
+        <li>"Tulare",</li>
+        <li>"Palm Springs",</li>
+        <li>"Chino Hills",</li>
+        <li>"Madera",</li>
+        <li>"Arvin",</li>
+        <li>"Pico Rivera"</li>
+      </div>
+      `;
+  }
 }
 
 function showCityDetails(props) {
@@ -155,7 +185,7 @@ for (let i = 2; i < 9; i++) {
   dates.push(new Date(`${year}-11-02`));
 }
 
-Slider("slider", dates.length);
+Slider("slider", dates.length - 1);
 document.getElementById("pickDate").oninput = e => changeDate(e.target.value);
 document.getElementById("pickDate").classList.add("slider-invasive");
 
@@ -170,4 +200,7 @@ function changeDate(idx) {
 }
 
 //initialize the chart
+
+changeCity("San Diego");
+showCityDetails(geojson.features[1281].properties);
 invasiveGraph = InvasiveGraph(dataObj, species);
