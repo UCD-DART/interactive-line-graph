@@ -22,9 +22,10 @@ import { colors } from "./helpers";
 const formatDate = timeFormat("%b %d, %Y");
 
 export const InvasiveGraph = function(dataObj, species) {
-  if (document.getElementById("svg")) {
-    document.getElementById("svg").remove();
-  }
+  document.getElementById("chart--invasive").innerHTML = ""; // short term emptying thing for non-existent cities
+  // if (document.getElementById("svg")) {
+  //   document.getElementById("svg").remove();
+  // }
 
   let divWidth = document.getElementById("chart--invasive").clientWidth;
 
@@ -375,6 +376,8 @@ export const InvasiveGraph = function(dataObj, species) {
   let dataStack = stack(data);
 
   let yMax = d3.max(dataStack, y => d3.max(y, d => d[1]));
+  if (yMax < 10) yMax = 10;
+
   let collectionsScale = d3
     .scaleLinear()
     .domain([0, yMax])
@@ -505,13 +508,11 @@ export const InvasiveGraph = function(dataObj, species) {
   //     .style("opacity", 0);
   // }
 
-  console.log(window.visualViewport.width);
+  // console.log(window.visualViewport.width);
   function tipMouseover(d) {
-    console.log("just moused over " + d.data.date);
-    console.log(event.pageX, event.pageY);
-    const rightEdge = window.visualViewport.width;
+    // const rightEdge = window.visualViewport.width;
 
-    let leftPos = event.pageX + 300 > rightEdge ? rightEdge - 300 : event.pageX;
+    // let leftPos = event.pageX + 300 > rightEdge ? rightEdge - 300 : event.pageX;
 
     // if (event.pageX + 300 > rightEdge) {
     //   leftPos = rightEdge - 300;
@@ -522,7 +523,7 @@ export const InvasiveGraph = function(dataObj, species) {
           <div class="toolTip-invasive__data--collections">
             <div class="toolTip-invasive__data--collections--total"> ${
               d.data.collections
-            } Total Collections</div>
+            } Other Collections</div>
             <div class="toolTip-invasive__data--collections--aegypti"> ${
               d.data.aegypti
             } Aegypti Collections</div>
@@ -539,28 +540,19 @@ export const InvasiveGraph = function(dataObj, species) {
         </div>
     `;
 
-    const html2 = "hellerrr";
-
-    // const html = `
-    //             <div class='toolTip__risk' style='background:${color}'>
-    //               <div class='toolTip__risk--title'> Risk Factor </div>
-    //               <div class='toolTip__risk--value'> ${d.data.growth} </div>
-    //             </div>
-    //             <div class='toolTip__date'>${d.data.date}</div>
-    //         `;
     tooltip
       .html(html)
       .style("left", "800px")
       .style("top", "200px")
-      // .transition()
-      // .duration(500)
+      .transition()
+      .duration(500)
       .style("opacity", 0.9);
   }
 
   function tipMouseout(tooltip) {
     tooltip
-      // .transition()
-      // .duration(300)
+      .transition()
+      .duration(300)
       .style("opacity", 0);
   }
 };
