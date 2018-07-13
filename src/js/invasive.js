@@ -16,8 +16,10 @@ import { InvasiveGraph } from "./invasiveChart";
 import * as geojson from "../constants/invasiveData3.json";
 import { Slider } from "./slider";
 import { timeFormat } from "d3-time-format";
+import axios from "axios";
+import "babel-polyfill"; // for async await
 
-console.log(geojson);
+// console.log(geojson);
 
 const formatDate = timeFormat("%b %d, %Y");
 
@@ -26,7 +28,113 @@ const map = new google.maps.Map(
   invasiveMapOptions
 );
 
+axios
+  .get("https://maps.calsurv.org/invasive/layer")
+  .then(res => {
+    const features = res.data.features.slice(0, 10);
+    console.log(features);
+
+    for (let i = 0; i < 10; i++) {
+      const feature = features[i]; // {geometry, properties}
+      const city = feature.properties.city;
+      const agency = feature.properties.agency;
+
+      const aegyptiURL = `https://maps.calsurv.org/invasive/data/${agency}/${city}/aegypti`;
+      const albosURL = `https://maps.calsurv.org/invasive/data/${agency}/${city}/albopictus`;
+      // console.log(aegyptiURL);
+      // console.log(albosURL);
+
+      let aegyptiData, albopictusData;
+      async function getAndMergeData() {
+        aegyptiData = await fetch(aegyptiURL, {
+          credentials: "include",
+          headers: {},
+          referrer: "https://maps.calsurv.org/invasive",
+          referrerPolicy: "no-referrer-when-downgrade",
+          body: null,
+          method: "GET",
+          mode: "cors"
+        })
+          .then(res => res.json())
+          .catch(err => console.log("aegypti fetch request fucked up"));
+
+        albopictusData = await fetch(albosURL, {
+          credentials: "include",
+          headers: {},
+          referrer: "https://maps.calsurv.org/invasive",
+          referrerPolicy: "no-referrer-when-downgrade",
+          body: null,
+          method: "GET",
+          mode: "cors"
+        })
+          .then(res => res.json())
+          .catch(err => console.log("albos fetch request fucked up"));
+
+        // console.log(aegyptiData);
+        // console.log(albopictusData);
+        let merged = [];
+        for (let i = 0; i < aegyptiData.length; i++) {
+          let obj = Object.assign(aegyptiData[i], albopictusData[i]);
+          merged.push(obj);
+        }
+        console.log(merged);
+      }
+      getAndMergeData();
+
+      // console.log(aegyptiData);
+    }
+  })
+  .catch(err => console.log(err));
+
 // console.log(data);
+// axios
+//   .get("https://maps.calsurv.org/invasive/layer")
+//   .then(res => {
+//     let finalFeatures = [];
+//     // console.log(res.data.features);
+//     // res.data.features
+//     for (let i = 0; i < 10; i++) {
+//       let f = res.data.features[i];
+//       let simpleFeature = {};
+
+//       let urlAegypti = `https://maps.calsurv.org/invasive/data/${
+//         f.properties.agency
+//       }/${f.properties.city}/aegypti`;
+//       let urlAlbos = `https://maps.calsurv.org/invasive/data/${
+//         f.properties.agency
+//       }/${f.properties.city}/albopictus`;
+
+//       //get the aegypti data
+// fetch(urlAegypti, {
+//   credentials: "include",
+//   headers: {},
+//   referrer: "https://maps.calsurv.org/invasive",
+//   referrerPolicy: "no-referrer-when-downgrade",
+//   body: null,
+//   method: "GET",
+//   mode: "cors"
+// })
+//         .then(response => response.json())
+//         .then(aegyptiJson => {
+//           aegyptiJson = aegyptiJson.map(d => {
+//             simpleFeature = {
+//               date: d.end_date,
+//               "Ae. aegypti daily population growth":
+//                 d["Ae. aegypti daily population growth"] || 0,
+//               "Total Collections": d["Total collections"],
+//               "Ae. aegypti": d["Ae. aegypti"]
+//             };
+//             return obj;
+//           });
+//           f.properties.data = aegyptiJson;
+//           finalFeatures.push(f);
+//           console.log(f.properties.city);
+//           if (i === 25) console.log(finalFeatures);
+//         })
+//         .catch(err => console.log(err));
+//     }
+//   })
+//   .catch(err => console.log(err));
 
 //set up some state variables
 let city = "San Diego";
@@ -46,14 +154,30 @@ invasiveMap.drawInvasiveMap(geojson);
 map.data.addListener("click", function(e) {
   showCityDetails(e.feature.f);
   const f = e.feature.f;
-  // const url = `https://maps.calsurv.org/invasive/data/${f.agency}/${
-  //   f.city
-  // }/${species}`;
+  const url = `https://maps.calsurv.org/invasive/data/${f.agency}/${
+    f.city
+  }/${species}`;
   // console.log(url);
-  changeCity(f.city);
+  // changeCity(f.city);
 
   // let cityData;
-  console.log(f.agency);
+  // console.log(f.agency);
+
+  fetch(url, {
+    credentials: "include",
+    headers: {},
+    referrer: "https://maps.calsurv.org/invasive",
+    referrerPolicy: "no-referrer-when-downgrade",
+    body: null,
+    method: "GET",
+    mode: "cors"
+  })
+    .then(res => res.json())
+    .then(json => {
+      dataObj = json;
+      changeCity(f.city);
+    })
+    .catch(err => console.log(err));
 
   // fetch(
   //   `https://maps.calsurv.org/invasive/data/${f.agency}/${f.city}/aegypti`,
@@ -126,8 +250,8 @@ function changeCity(newCity) {
       dataObj = d.properties.data;
     }
   });
-  console.log("new city is " + city);
-  console.log(dataObj);
+  // console.log("new city is " + city);
+  // console.log(JSON.stringify(dataObj));
   if (dataObj) {
     invasiveGraph = InvasiveGraph(dataObj, species);
   } else {
