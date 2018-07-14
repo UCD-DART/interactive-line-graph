@@ -18,6 +18,7 @@ import { Slider } from "./slider";
 import { timeFormat } from "d3-time-format";
 import axios from "axios";
 import "babel-polyfill"; // for async await
+import { resolve } from "path";
 
 // console.log(geojson);
 
@@ -31,58 +32,89 @@ const map = new google.maps.Map(
 axios
   .get("https://maps.calsurv.org/invasive/layer")
   .then(res => {
-    const features = res.data.features.slice(0, 10);
+    const features = res.data.features.slice(550, 555);
     console.log(features);
 
-    for (let i = 0; i < 10; i++) {
-      const feature = features[i]; // {geometry, properties}
-      const city = feature.properties.city;
-      const agency = feature.properties.agency;
+    const fetchOptions = {
+      credentials: "include",
+      headers: {},
+      referrer: "https://maps.calsurv.org/invasive",
+      referrerPolicy: "no-referrer-when-downgrade",
+      body: null,
+      method: "GET",
+      mode: "cors"
+    };
 
-      const aegyptiURL = `https://maps.calsurv.org/invasive/data/${agency}/${city}/aegypti`;
-      const albosURL = `https://maps.calsurv.org/invasive/data/${agency}/${city}/albopictus`;
-      // console.log(aegyptiURL);
-      // console.log(albosURL);
+    function generateFeatures() {
+      let finalFeatures = [];
+      for (let i = 0; i < features.length; i++) {
+        const feature = features[i]; // {geometry, properties}
+        console.log(feature);
+        const city = feature.properties.city;
 
-      let aegyptiData, albopictusData;
-      async function getAndMergeData() {
-        aegyptiData = await fetch(aegyptiURL, {
-          credentials: "include",
-          headers: {},
-          referrer: "https://maps.calsurv.org/invasive",
-          referrerPolicy: "no-referrer-when-downgrade",
-          body: null,
-          method: "GET",
-          mode: "cors"
-        })
-          .then(res => res.json())
-          .catch(err => console.log("aegypti fetch request fucked up"));
+        const agency = feature.properties.agency;
+        // console.log("agency is " + agency);
 
-        albopictusData = await fetch(albosURL, {
-          credentials: "include",
-          headers: {},
-          referrer: "https://maps.calsurv.org/invasive",
-          referrerPolicy: "no-referrer-when-downgrade",
-          body: null,
-          method: "GET",
-          mode: "cors"
-        })
-          .then(res => res.json())
-          .catch(err => console.log("albos fetch request fucked up"));
-
-        // console.log(aegyptiData);
-        // console.log(albopictusData);
-        let merged = [];
-        for (let i = 0; i < aegyptiData.length; i++) {
-          let obj = Object.assign(aegyptiData[i], albopictusData[i]);
-          merged.push(obj);
+        //if we are not going to make a request due to parameter names, just push empty data
+        if (city.includes("/") || agency.includes("/") || city.includes("(")) {
+          console.log("found a slash in " + city);
+          feature.properties.data = [];
+          finalFeatures.push(feature);
+          continue;
         }
-        console.log(merged);
-      }
-      getAndMergeData();
 
-      // console.log(aegyptiData);
+        //lets get some collections and reproduction data!
+        const aegyptiURL = `https://maps.calsurv.org/invasive/data/${agency}/${city}/aegypti`;
+        const albosURL = `https://maps.calsurv.org/invasive/data/${agency}/${city}/albopictus`;
+        const notoURL = `https://maps.calsurv.org/invasive/data/${agency}/${city}/notoscriptus`;
+        const rrURL = `https://maps.calsurv.org/invasive/data/${agency}/${city}/rr`;
+
+        let aegyptiData, albopictusData, notoscriptusData;
+
+        async function getAndMergeData() {
+          //grab the aegypti and the albos data
+          aegyptiData = await fetch(aegyptiURL, fetchOptions)
+            .then(res => res.json())
+            .catch(err => console.log("aegypti fetch request fucked up"));
+
+          albopictusData = await fetch(albosURL, fetchOptions)
+            .then(res => res.json())
+            .catch(err => console.log("albos fetch request fucked up"));
+
+          //now either merge the data or just grab the reprostuff
+          let merged = [];
+          if (!aegyptiData && !albopictusData) {
+            console.log(city + " only has rr data");
+            merged = fetch(rrURL, fetchOptions)
+              .then(res => (merged = res.json()))
+              .catch(err => console.log("backup fetch fucked up"));
+          } else {
+            for (let i = 0; i < aegyptiData.length; i++) {
+              let obj = Object.assign(aegyptiData[i], albopictusData[i]);
+              merged.push(obj);
+            }
+          }
+          return merged;
+        }
+
+        async function assignMergedDataToFeature() {
+          feature.properties.data = await getAndMergeData();
+        }
+        assignMergedDataToFeature();
+        finalFeatures.push(feature);
+      }
+      return finalFeatures;
     }
+    async function generateGeoJson() {
+      const features = await generateFeatures();
+      function asyncStringify(data) {
+        return new Promise((resolve, reject) => {
+          resolve(JSON.stringify(data));
+        });
+      }
+      return asyncStringify(features);
+    }
+    console.log(generateGeoJson());
   })
   .catch(err => console.log(err));
 
