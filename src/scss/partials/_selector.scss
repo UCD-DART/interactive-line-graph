@@ -132,3 +132,24 @@
     }
   }
 }
+
+.beta-selector {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 5px;
+  div {
+    height: 25px;
+    margin-left: 5px;
+    padding: 15px;
+    font-weight: bold;
+  }
+  #pickAegypti {
+    background-color: $red;
+  }
+  #pickAlbo {
+    background-color: $blue;
+  }
+  #pickNoto {
+    background-color: $orange;
+  }
+}
