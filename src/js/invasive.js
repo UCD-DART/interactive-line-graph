@@ -2,11 +2,11 @@ import "../scss/zika.scss";
 import { invasiveMapOptions } from "../constants/mapSettings";
 // import * as data from "../constants/invasiveGeo";
 // import {
-  // clovisData,
-  // delanoData,
-  // sdAegypti,
-  // sdAlbopictus,
-  // bakersfieldData,
+// clovisData,
+// delanoData,
+// sdAegypti,
+// sdAlbopictus,
+// bakersfieldData,
 //   fresnoData,
 //   SanDiego
 // } from "../constants/clovisInvasive";
@@ -14,11 +14,11 @@ import { invasiveMapOptions } from "../constants/mapSettings";
 import { Map } from "./map";
 import { InvasiveGraph } from "./invasiveChart";
 // import * as geojson from "../constants/invasiveData3.json";
-import { Slider } from "./slider";
+import { Slider, DualSlider } from "./slider";
 import { timeFormat } from "d3-time-format";
 import axios from "axios";
 import "babel-polyfill"; // for async await
-import * as geojson from "../constants/separatedinvasive.json"
+import * as geojson from "../constants/separatedinvasive.json";
 
 console.log(geojson);
 
@@ -91,7 +91,7 @@ const map = new google.maps.Map(
 //           // notoscriptusData = await fetch(notoURL, fetchOptions)
 //           //   .then(res => res.json())
 //           //   .catch(err => console.log("noto fetch request fucked up"));
-          
+
 //           let data = {};
 
 //           data["aegypti"] = aegyptiData.map(obj => {
@@ -121,7 +121,7 @@ const map = new google.maps.Map(
 //           //     .then(res => (merged = res.json()))
 //           //     .catch(err => console.log("backup fetch fucked up" + err));
 //           // } else if (aegyptiData.length - albopictusData.length === 0){
-//           //   for (let i = 0; i < aegyptiData.length; i++) {              
+//           //   for (let i = 0; i < aegyptiData.length; i++) {
 //           //     let obj = Object.assign(aegyptiData[i], albopictusData[i]);
 //           //     merged.push(obj);
 //           //   }
@@ -231,10 +231,10 @@ const map = new google.maps.Map(
 let city = "Fresno";
 let species = "aegypti";
 let idx;
-geojson.features.forEach((f,i) => {
+geojson.features.forEach((f, i) => {
   if (f.properties.city === city) idx = i;
-})
-let dataObj = geojson.features[idx].properties.data; 
+});
+let dataObj = geojson.features[idx].properties.data;
 let invasiveGraph;
 let startDate, endDate;
 
@@ -254,7 +254,7 @@ map.data.addListener("click", function(e) {
   geojson.features.forEach(feat => {
     if (feat.properties.city === f.city) {
       dataObj = feat.properties.data;
-      console.log(dataObj)
+      console.log(dataObj);
     }
   });
   invasiveChart = InvasiveGraph(dataObj, species);
@@ -333,14 +333,15 @@ map.data.addListener("click", function(e) {
 //   } else changeMosquito("aegypti");
 // });
 
-document.getElementById("pickAegypti").addEventListener("click", function() {
-  console.log('clicked');
-  changeMosquito("aegypti");
-});
-document.getElementById("pickAlbo").addEventListener("click", function() {
-  changeMosquito("albopictus");
-});
-document.getElementById("pickNoto").addEventListener("click", () => changeMosquito("notoscriptus"));
+document
+  .getElementById("pickAegypti")
+  .addEventListener("click", () => changeMosquito("aegypti"));
+document
+  .getElementById("pickAlbo")
+  .addEventListener("click", () => changeMosquito("albopictus"));
+document
+  .getElementById("pickNoto")
+  .addEventListener("click", () => changeMosquito("notoscriptus"));
 
 function changeMosquito(mosquito) {
   if (mosquito === "aegypti") {
@@ -355,7 +356,8 @@ function changeMosquito(mosquito) {
     return;
   }
   console.log(dataObj);
-  if (species != "notoscriptus") invasiveGraph = InvasiveGraph(dataObj, species);
+  if (species != "notoscriptus")
+    invasiveGraph = InvasiveGraph(dataObj, species);
 }
 
 function changeCity(newCity) {
@@ -367,14 +369,14 @@ function changeCity(newCity) {
     }
   });
 
-    //to animate city name, need to remove old node, insert new node
+  //to animate city name, need to remove old node, insert new node
   // const oldCityNode = document.getElementById("currentCity");
   // let newCityNode = oldCityNode.cloneNode(true);
   // newCityNode.innerHTML = newCity;
   // oldCityNode.parentNode.replaceChild(newCityNode, oldCityNode);
   // console.log("new city is " + city);
   // console.log(JSON.stringify(dataObj));
-  
+
   invasiveGraph = InvasiveGraph(dataObj, species);
 }
 
@@ -402,8 +404,8 @@ function showCityDetails(props) {
 
 //Add slider and its behavior
 let dates = [];
-for (let i = 2; i < 9; i++) {
-  const year = "201" + i;
+for (let year = 2011; year < 2019; year++) {
+  // const year = "201" + i;
   dates.push(new Date(`${year}-01-02`));
   dates.push(new Date(`${year}-04-02`));
   dates.push(new Date(`${year}-07-02`));
@@ -412,47 +414,60 @@ for (let i = 2; i < 9; i++) {
 
 // const Slider = Slider('slider', dates.length)
 
+// Slider("slider", dates.length - 1);
+// document.getElementById("pickDate").oninput = e => changeDate(e.target.value);
+// document.getElementById("pickDate").classList.add("slider-invasive");
 
-//initialize slider
-// function getVals(){
-//   // Get slider values
-//   var parent = this.parentNode;
-//   var slides = parent.getElementsByTagName("input");
-//     var slide1 = parseFloat( slides[0].value );
-//     var slide2 = parseFloat( slides[1].value );
-//   // Neither slider will clip the other, so make sure we determine which is larger
-//   if( slide1 > slide2 ){ var tmp = slide2; slide2 = slide1; slide1 = tmp; }
-//   startDate = dates[slide1];
-//   endDate = dates[slide2];
-//   invasiveMap.changeDates(startDate, endDate, species);
-  
-//   var displayElement = parent.getElementsByClassName("rangeValues")[0];
-//       displayElement.innerHTML = formatDate(startDate) + " - " + formatDate(endDate);
-//       // invasiveMap.changeDates(startDate, endDate, species)
-// }
+DualSlider("dualslider", dates.length);
 
-//   // Initialize Sliders
-// var sliderSections = document.getElementsByClassName("range-slider");
-// for( var x = 0; x < sliderSections.length; x++ ){
-//   var sliders = sliderSections[x].getElementsByTagName("input");
-//   for( var y = 0; y < sliders.length; y++ ){
-//     if( sliders[y].type ==="range" ){
-//       sliders[y].oninput = getVals;
-//       // Manually trigger event first time to display values
-//       sliders[y].oninput();
-//     }
-//   }
-// }
+// initialize slider
+function getVals() {
+  // Get slider values
+  var parent = this.parentNode;
+  var slides = parent.getElementsByTagName("input");
+  var slide1 = parseFloat(slides[0].value);
+  var slide2 = parseFloat(slides[1].value);
+  // Neither slider will clip the other, so make sure we determine which is larger
+  if (slide1 > slide2) {
+    var tmp = slide2;
+    slide2 = slide1;
+    slide1 = tmp;
+  }
+  startDate = dates[slide1];
+  endDate = dates[slide2];
+  invasiveMap.changeDates(startDate, endDate, species);
+  if (species == "aegypti") {
+    invasiveMap.showAegypti();
+  } else if (species === "albopictus") {
+    invasiveMap.showAlbopictus();
+  } else if (species === "notoscriptus") {
+    invasiveMap.showNotoscriptus();
+  }
 
-Slider("slider", dates.length - 1);
-document.getElementById("pickDate").oninput = e => changeDate(e.target.value);
-document.getElementById("pickDate").classList.add("slider-invasive");
+  var displayElement = parent.getElementsByClassName("rangeValues")[0];
+  displayElement.innerHTML =
+    formatDate(startDate) + " - " + formatDate(endDate);
+  // invasiveMap.changeDates(startDate, endDate, species)
+}
+
+// Initialize Sliders
+var sliderSections = document.getElementsByClassName("range-slider");
+for (var x = 0; x < sliderSections.length; x++) {
+  var sliders = sliderSections[x].getElementsByTagName("input");
+  for (var y = 0; y < sliders.length; y++) {
+    if (sliders[y].type === "range") {
+      sliders[y].oninput = getVals;
+      // Manually trigger event first time to display values
+      sliders[y].oninput();
+    }
+  }
+}
 
 function changeDate(idx) {
   let newDate = dates[idx];
   invasiveMap.changeDate(newDate);
   if (species === "aegypti") {
-    invasiveMap.showAegypti()
+    invasiveMap.showAegypti();
   } else if (species === "albopictus") {
     invasiveMap.showAlbopictus();
   } else if (species === "notoscriptus") {
