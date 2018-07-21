@@ -46,19 +46,28 @@ export const InvasiveGraph = function(dataObj, species) {
   let graph;
 
   let data = [];
-  dataObj.forEach(d => {
+  // dataObj.forEach(d => {
+  //   let obj = {};
+  //   obj.date = new Date(d.start_date);
+  //   obj.collections = +d["Total collections"] || 0;
+  //   if (species === "aegypti") {
+  //     obj.growth = +d["Ae. aegypti daily population growth"] || 0;
+  //     obj.aegypti = +d["Ae. aegypti"] || 0;
+  //   } else {
+  //     obj.growth = +d["Ae. albopictus daily population growth"] || 0;
+  //     obj.aegypti = +d["Ae. albopictus"] || 0;
+  //   }
+  //   data.push(obj);
+  // });
+  dataObj[species].forEach(d => {
     let obj = {};
-    obj.date = new Date(d.start_date);
-    obj.collections = +d["Total collections"] || 0;
-    if (species === "aegypti") {
-      obj.growth = +d["Ae. aegypti daily population growth"] || 0;
-      obj.aegypti = +d["Ae. aegypti"] || 0;
-    } else {
-      obj.growth = +d["Ae. albopictus daily population growth"] || 0;
-      obj.aegypti = +d["Ae. albopictus"] || 0;
-    }
-    data.push(obj);
-  });
+    obj.date = new Date(d.date) || new Date("01-01-2015");
+    obj.collections = +d.total || 0;
+    obj.growth = +d.growth || 0;
+    obj.aegypti = +d.species || 0;
+    data.push(obj)
+  })
+  console.log(data);
 
   //draw the g container
   const g = svg
@@ -129,6 +138,7 @@ export const InvasiveGraph = function(dataObj, species) {
   function brushed() {
     if (event.sourceEvent && event.sourceEvent.type === "zoom") return; // ignore brush-by-zoom
     const s = event.selection || x2.range();
+    // console.log(x.invert(s[0]));
     x.domain(s.map(x2.invert, x2));
     select(".graph")
       .datum(data)
@@ -136,7 +146,7 @@ export const InvasiveGraph = function(dataObj, species) {
       .attr("d", growthLine);
     // console.log(area);
 
-    d3.selectAll(".collectionBar").attr("x", d => x(d.data.date));
+    d3.selectAll(".collectionBar").attr("x", d => x(d.data.date)).attr('width', calculateAWeek());
     selectAll(".miniCollectionBar").attr("x", d => x2(d.data.date));
 
     select(".focus")
