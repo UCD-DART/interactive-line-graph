@@ -55,13 +55,14 @@
   @at-root #{&}--item {
     display: flex;
     justify-content: space-between;
-    font-size: 18px;
+    font-size: 16px;
 
     .invasive__legend-box {
       width: 20px;
       height: 20px;
       background: red;
-      margin-right: 15px;
+      margin-right: 5px;
+      margin-left: 5px;
 
       @at-root #{&}--surveillance {
         background: $green;
@@ -74,6 +75,9 @@
       }
       @at-root #{&}--albopictus {
         background: $blue;
+      }
+      @at-root #{&}--notoscriptus {
+        background: $yellow;
       }
     }
   }
