@@ -1,26 +1,23 @@
-import "../scss/zika.scss";
-import { invasiveMapOptions } from "../constants/mapSettings";
-import { Map } from "./map";
-import { InvasiveGraph } from "./invasiveChart";
-import { DualSlider } from "./slider";
-import { timeFormat } from "d3-time-format";
-import axios from "axios";
-import "babel-polyfill"; // for async await
-import * as geojson from "../constants/separatedinvasive.json";
+import '../scss/zika.scss';
+import { invasiveMapOptions } from '../constants/mapSettings';
+import { Map } from './map';
+import { InvasiveGraph } from './invasiveChart';
+import { DualSlider } from './slider';
+import { timeFormat } from 'd3-time-format';
+import axios from 'axios';
+import 'babel-polyfill'; // for async await
+import * as geojson from '../constants/separatedinvasive.json';
 
 console.log(geojson);
+console.log('test pushing to dart repo');
 
-const formatDate = timeFormat("%b %d, %Y");
+const formatDate = timeFormat('%b %d, %Y');
 
-const map = new google.maps.Map(
-  document.getElementById("map"),
-  invasiveMapOptions
-);
-
+const map = new google.maps.Map(document.getElementById('map'), invasiveMapOptions);
 
 //set up some state variables
-let city = "Fresno";
-let species = "aegypti";
+let city = 'Fresno';
+let species = 'aegypti';
 let idx;
 geojson.features.forEach((f, i) => {
   if (f.properties.city === city) idx = i;
@@ -32,12 +29,10 @@ let startDate, endDate;
 const invasiveMap = Map(map);
 invasiveMap.drawInvasiveMap(geojson);
 
-map.data.addListener("click", function(e) {
+map.data.addListener('click', function(e) {
   showCityDetails(e.feature.f);
   const f = e.feature.f;
-  const url = `https://maps.calsurv.org/invasive/data/${f.agency}/${
-    f.city
-  }/${species}`;
+  const url = `https://maps.calsurv.org/invasive/data/${f.agency}/${f.city}/${species}`;
   geojson.features.forEach(feat => {
     if (feat.properties.city === f.city) {
       dataObj = feat.properties.data;
@@ -54,26 +49,20 @@ map.data.addListener("click", function(e) {
 //   } else changeMosquito("aegypti");
 // });
 
-document
-  .getElementById("pickAegypti")
-  .addEventListener("click", () => changeMosquito("aegypti"));
-document
-  .getElementById("pickAlbo")
-  .addEventListener("click", () => changeMosquito("albopictus"));
-document
-  .getElementById("pickNoto")
-  .addEventListener("click", () => changeMosquito("notoscriptus"));
+document.getElementById('pickAegypti').addEventListener('click', () => changeMosquito('aegypti'));
+document.getElementById('pickAlbo').addEventListener('click', () => changeMosquito('albopictus'));
+document.getElementById('pickNoto').addEventListener('click', () => changeMosquito('notoscriptus'));
 
 function changeMosquito(mosquito) {
-  if (mosquito === "aegypti") {
+  if (mosquito === 'aegypti') {
     invasiveMap.showAegypti();
-    species = "aegypti";
-  } else if (mosquito === "albopictus") {
+    species = 'aegypti';
+  } else if (mosquito === 'albopictus') {
     invasiveMap.showAlbopictus();
-    species = "albopictus";
-  } else if (mosquito === "notoscriptus") {
+    species = 'albopictus';
+  } else if (mosquito === 'notoscriptus') {
     invasiveMap.showNotoscriptus();
-    species = "notoscriptus";
+    species = 'notoscriptus';
   }
   console.log(dataObj);
   // if (species != "notoscriptus")
@@ -103,23 +92,18 @@ function changeCity(newCity) {
 function showCityDetails(props) {
   const website = props.website
     ? `<a href=${props.website}>${props.website}</a>`
-    : "No page available";
+    : 'No page available';
 
-  document.getElementById("cityName").innerHTML = props.city;
-  document.getElementById("aegypti_detections").innerHTML =
-    props.aegypti_detections;
-  document.getElementById("albopictus_detections").innerHTML =
-    props.albopictus_detections;
-  document.getElementById("aegypti_first_found").innerHTML =
-    props.aegypti_first_found || "N/A";
-  document.getElementById("aegypti_last_found").innerHTML =
-    props.aegypti_last_found || "N/A";
-  document.getElementById("albopictus_first_found").innerHTML =
-    props.albopictus_first_found || "N/A";
-  document.getElementById("albopictus_last_found").innerHTML =
-    props.albopictus_last_found || "N/A";
-  document.getElementById("agency").innerHTML = props.agency;
-  document.getElementById("website").innerHTML = website;
+  document.getElementById('cityName').innerHTML = props.city;
+  document.getElementById('aegypti_detections').innerHTML = props.aegypti_detections;
+  document.getElementById('albopictus_detections').innerHTML = props.albopictus_detections;
+  document.getElementById('aegypti_first_found').innerHTML = props.aegypti_first_found || 'N/A';
+  document.getElementById('aegypti_last_found').innerHTML = props.aegypti_last_found || 'N/A';
+  document.getElementById('albopictus_first_found').innerHTML =
+    props.albopictus_first_found || 'N/A';
+  document.getElementById('albopictus_last_found').innerHTML = props.albopictus_last_found || 'N/A';
+  document.getElementById('agency').innerHTML = props.agency;
+  document.getElementById('website').innerHTML = website;
 }
 
 //Add slider and its behavior
@@ -138,13 +122,13 @@ for (let year = 2011; year < 2019; year++) {
 // document.getElementById("pickDate").oninput = e => changeDate(e.target.value);
 // document.getElementById("pickDate").classList.add("slider-invasive");
 
-DualSlider("dualslider", dates.length);
+DualSlider('dualslider', dates.length);
 
 // initialize slider
 function getVals() {
   // Get slider values
   var parent = this.parentNode;
-  var slides = parent.getElementsByTagName("input");
+  var slides = parent.getElementsByTagName('input');
   var slide1 = parseFloat(slides[0].value);
   var slide2 = parseFloat(slides[1].value);
 
@@ -157,26 +141,25 @@ function getVals() {
   startDate = dates[slide1];
   endDate = dates[slide2];
   invasiveMap.changeDates(startDate, endDate, species);
-  if (species == "aegypti") {
+  if (species == 'aegypti') {
     invasiveMap.showAegypti();
-  } else if (species === "albopictus") {
+  } else if (species === 'albopictus') {
     invasiveMap.showAlbopictus();
-  } else if (species === "notoscriptus") {
+  } else if (species === 'notoscriptus') {
     invasiveMap.showNotoscriptus();
   }
 
-  var displayElement = parent.getElementsByClassName("rangeValues")[0];
-  displayElement.innerHTML =
-    formatDate(startDate) + " - " + formatDate(endDate);
+  var displayElement = parent.getElementsByClassName('rangeValues')[0];
+  displayElement.innerHTML = formatDate(startDate) + ' - ' + formatDate(endDate);
   // invasiveMap.changeDates(startDate, endDate, species)
 }
 
 // Initialize Sliders
-var sliderSections = document.getElementsByClassName("range-slider");
+var sliderSections = document.getElementsByClassName('range-slider');
 for (var x = 0; x < sliderSections.length; x++) {
-  var sliders = sliderSections[x].getElementsByTagName("input");
+  var sliders = sliderSections[x].getElementsByTagName('input');
   for (var y = 0; y < sliders.length; y++) {
-    if (sliders[y].type === "range") {
+    if (sliders[y].type === 'range') {
       sliders[y].oninput = getVals;
       // Manually trigger event first time to display values
       sliders[y].oninput();
@@ -199,6 +182,6 @@ for (var x = 0; x < sliderSections.length; x++) {
 // }
 
 //initialize the chart with Fresno data
-changeCity("Fresno");
+changeCity('Fresno');
 showCityDetails(geojson.features[idx].properties);
 invasiveGraph = InvasiveGraph(dataObj, species);
