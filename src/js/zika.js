@@ -6,7 +6,7 @@ import { mapOptions } from "../constants/mapSettings";
 import { Map } from "./map";
 import { Slider } from "./slider";
 import { Chart } from "./chart";
-import * as data from "./risk2.json";
+import * as data from "./currentRisk.json";
 import { colors, labelZikaRisk } from "./helpers";
 
 let currentCity = "Fresno";
