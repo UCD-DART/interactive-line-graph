@@ -66,8 +66,6 @@ export const Map = function(mapObj) {
   const changeDates = (newStart, newEnd, species) => {
     startDate = newStart;
     endDate = newEnd;
-    console.log(startDate, endDate);
-
     // console.log(startDate, endDate);
     // let surviellance = false;
     // let target = false;
@@ -216,7 +214,7 @@ export const Map = function(mapObj) {
   };
 
   const showAegypti = () => {
-    console.log("showing aegypti between " + startDate + " and " + endDate);
+    // console.log("showing aegypti between " + startDate + " and " + endDate);
     map.data.setStyle(aegyptiStyle);
   };
 
