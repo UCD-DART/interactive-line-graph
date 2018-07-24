@@ -414,7 +414,11 @@ export const InvasiveGraph = function(dataObj, species) {
 
   // console.log("one weeks width is " + oneWeek);
   var barColors = [colors["dark-red"], colors["purple"]];
-  if (species !== "aegypti") barColors[0] = colors["blue"];
+  if (species === "albopictus") {
+    barColors[0] = colors["blue"];
+  } else if (species === "notoscriptus") {
+    barColors[0] = colors["yellow"]
+  }
   var series = graph
     .selectAll(".series")
     .data(dataStack)
