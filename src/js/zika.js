@@ -6,7 +6,7 @@ import { mapOptions } from "../constants/mapSettings";
 import { Map } from "./map";
 import { Slider } from "./slider";
 import { Chart } from "./chart";
-import * as data from "./risk2.json";
+import * as data from "./currentRisk.json";
 import { colors, labelZikaRisk } from "./helpers";
 
 let currentCity = "Fresno";
@@ -15,7 +15,9 @@ let week = 28;
 let riskObj = {};
 let cityDetails = [];
 
-console.log("yipeeee!");
+console.log("testing new time format function!");
+
+const formatDate = timeFormat("%b %d, %Y");
 
 // MAP BEHAVIOR
 const map = new google.maps.Map(document.getElementById("map"), mapOptions);
@@ -62,8 +64,6 @@ function changeDetails(week) {
 // ALL SLIDER BEHAVIOR
 Slider("slider", data.features[0].properties.risk.length);
 document.querySelector("#pickDate").oninput = e => changeDate(e.target.value);
-
-const formatDate = timeFormat("%b %d, %Y");
 
 function changeDate(idx) {
   week = idx;

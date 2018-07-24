@@ -13,7 +13,7 @@
 .axis text {
   stroke: black;
   stroke-width: 0px;
-  font-size: 14px;
+  font-size: 24px;
   text-align: left;
 }
 #growth-label {
@@ -21,14 +21,16 @@
   // fill: $light-blue;
 }
 
-.collections--label {
-  font: bold 19px sans-serif;
-  fill: $light-blue;
+#collections-label {
+  font: bold 26px sans-serif;
+  fill: $purple;
 }
 
 .areaHighlighted {
   // fill: $dark-blue;
   opacity: 1;
+  stroke: $dark-blue;
+  stroke-width: 5;
 }
 
 .axis-label {
@@ -54,4 +56,14 @@
   stroke: black;
   fill: none;
   opacity: 0.5;
+}
+
+.tick {
+  text {
+    font: bold 14px sans-serif;
+    fill: $dark-blue;
+  }
+  line {
+    stroke: red;
+  }
 }

@@ -2,14 +2,14 @@ const path = require("path");
 // const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 
 module.exports = {
-  entry: "./src/js/invasive.js", //change this to any file I'm currently working on for dev purposes
-  // entry: {
-  //    zika: "./src/js/zika.js",
-  //   invasive: "./src/js/invasive.js"
-  // },
+  // entry: "./src/js/invasive.js", //change this to any file I'm currently working on for dev purposes
+  entry: {
+     zika: "./src/js/zika.js",
+    invasive: "./src/js/invasive.js"
+  },
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "invasive.js" //change this to whatever file you're working on for the dev purposes
+    filename: "[name].js" //change this to whatever file you're working on for the dev purposes
   },
   module: {
     rules: [

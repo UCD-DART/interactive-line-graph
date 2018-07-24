@@ -22,13 +22,19 @@ import * as d3 from "d3";
 
 import { colors, labelZikaRisk } from "./helpers";
 
-const formatDate = timeFormat("%b %d, %Y");
-
 export const Chart = function(divId, riskObj, divWidth, initDate) {
   //remove an SVG if already present
   if (document.getElementById("svg")) {
     document.getElementById("svg").remove();
   }
+
+  initDate = new Date(initDate);
+
+  // let test = new DinitDate.replace(/\s/, 'T')+'Z')
+
+  const formatDate = timeFormat("%b %d, %Y");
+  // console.log(formatDate(initDate));
+
   let svg = select("#chart")
     .append("svg")
     .attr("height", 400) // height should stay constant or else the axes get difficult to work with
@@ -432,7 +438,7 @@ export const Chart = function(divId, riskObj, divWidth, initDate) {
 
     tooltip = select("#chart")
       .append("div")
-      .attr("class", "toolTip")
+      .attr("class", "toolTip toolTip-zika")
       .style("opacity", 0);
   }
 

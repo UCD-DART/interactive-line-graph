@@ -6,6 +6,11 @@ export const Map = function(mapObj) {
   let map = mapObj;
   let currentCity = "Fresno";
   let week = 25; // just a random number picked to stylet he map
+  let date = new Date("2018-06-01");
+  let startDate = new Date("01-01-2011");
+  let endDate = new Date("11-01-2018");
+  let geojson;
+  let species = "aegypti";
 
   const riskColor = feature => {
     let risk = feature.getProperty("risk");
@@ -31,92 +36,185 @@ export const Map = function(mapObj) {
     };
   };
 
-  const invasiveColor = feature => {
-    let detected = [];
-    let albos = feature.getProperty("albopictus_detections");
-    let aegypti = feature.getProperty("aegypti_detections");
-    let color;
+  // const invasiveColor = feature => {
+  //   let detected = [];
+  //   let albos = feature.getProperty("albopictus_detections");
+  //   let aegypti = feature.getProperty("aegypti_detections");
+  //   let color;
 
-    if (albos && aegypti) {
-      color = colors["orange"];
-    } else if (aegypti) {
-      color = colors["blue"];
-    } else if (albos) {
-      color = colors["red"];
-    } else color = colors["green"];
+  //   if (albos && aegypti) {
+  //     color = colors["orange"];
+  //   } else if (aegypti) {
+  //     color = colors["blue"];
+  //   } else if (albos) {
+  //     color = colors["red"];
+  //   } else color = colors["green"];
 
-    return {
-      fillColor: color,
-      fillOpacity: 0.5,
-      strokeWeight: 2,
-      strokeColor: color,
-      zindex: 0
-    };
+  //   return {
+  //     fillColor: color,
+  //     fillOpacity: 0.5,
+  //     strokeWeight: 2,
+  //     strokeColor: color,
+  //     zindex: 0
+  //   };
+  // };
+
+  const changeDate = newDate => {
+    date = new Date(newDate);
+  };
+
+  const changeDates = (newStart, newEnd, species) => {
+    startDate = newStart;
+    endDate = newEnd;
+    // console.log(startDate, endDate);
+    // let surviellance = false;
+    // let target = false;
+    // let idx = 0;
+
+    // let data = feature.getProperty("data");
+    // let aegypti = data.aegypti;
+
+    // for (let i=0; i< aegypti.length; i++) {
+    //   if (startDate < aegypti[i].date) {
+    //     continue;
+    //   } else {
+
+    //   }
+    // }
   };
 
   const aegyptiStyle = feature => {
-    let detected = [];
-    let aegeypti = feature.getProperty("aegypti_detections");
-    let survielance = feature.getProperty("surveillance_start");
-    let color;
+    let aegyptiStart = new Date(feature.getProperty("aegypti_first_found"));
+    let aegyptiLast = new Date(feature.getProperty("aegypti_last_found"));
+    let surviellance = new Date(feature.getProperty("surveillance_start"));
+    // let data = feature.getProperty("data");
+    // let inRange;
+    let color = colors["gray"];
 
-    if (aegeypti) {
+    if (
+      startDate < aegyptiStart &&
+      endDate > aegyptiLast &&
+      startDate < aegyptiLast &&
+      endDate > aegyptiStart
+    ) {
       color = colors["red"];
-    } else if (survielance) {
+    } else if (endDate > surviellance) {
       color = colors["green"];
-    } else color = colors["gray"];
+    }
+
+    // let firstDetected =
+    //   new Date(feature.getProperty("aegypti_first_found")) || false;
+    // let survillanceStarted = new Date(
+    //   feature.getProperty("surveillance_start")
+    // );
+
+    // // let data = feature.getProperty("data");
+    // // let aegypti = data.aegypti;
+    // // if (!aegypti.length) {
+    // //   color = colors["gray"];
+    // // } else {
+    // //   color = colors["green"];
+    // // }
+
+    // if (firstDetected < date) {
+    //   color = colors["red"];
+    // } else if (survillanceStarted < date) {
+    //   color = colors["green"];
+    // } else color = colors["gray"];
 
     return {
       fillColor: color,
       fillOpacity: 0.5,
-      strokeWeight: 2,
+      strokeWeight: 0.5,
       strokeColor: color,
       zindex: 0
     };
   };
 
   const albopictusStyle = feature => {
-    let albos = feature.getProperty("albopictus_detections");
-    let survielance = feature.getProperty("surveillance_start");
-    let color;
+    // let firstDetected =
+    //   new Date(feature.getProperty("albopictus_first_found")) || false;
+    // let surviellanceStarted = new Date(
+    //   feature.getProperty("surveillance_start")
+    // );
+    // let color;
 
-    if (albos) {
+    // if (firstDetected && firstDetected < date) {
+    //   color = colors["blue"];
+    // } else if (surviellanceStarted < date) {
+    //   color = colors["green"];
+    // } else color = colors["gray"];
+
+    let alboStart = new Date(feature.getProperty("albopictus_first_found"));
+    let alboLast = new Date(feature.getProperty("albopictus_last_found"));
+    let surviellance = new Date(feature.getProperty("surveillance_start"));
+    // let data = feature.getProperty("data");
+    // let inRange;
+    let color = colors["gray"];
+
+    if (
+      startDate < alboStart &&
+      endDate > alboLast &&
+      startDate < alboLast &&
+      endDate > alboStart
+    ) {
       color = colors["blue"];
-    } else if (survielance) {
+    } else if (endDate > surviellance) {
       color = colors["green"];
-    } else color = colors["gray"];
+    }
 
     return {
       fillColor: color,
       fillOpacity: 0.5,
-      strokeWeight: 2,
+      strokeWeight: 0.5,
       strokeColor: color,
       zindex: 0
     };
   };
 
   const notoscriptusStyle = feature => {
-    let albos = feature.getProperty("albopictus_detections");
-    let aegypti = feature.getProperty("aegypti_detections");
-    let survielance = feature.getProperty("surveillance_start");
-    let color;
+    // let firstDetected =
+    //   new Date(feature.getProperty("notoscriptus_first_found")) || false;
+    // let surviellanceStarted = new Date(
+    //   feature.getProperty("surveillance_start")
+    // );
+    // let color;
 
-    if (albos && aegypti) {
-      color = colors["orange"];
-    } else if (survielance) {
+    // if (firstDetected && firstDetected < date) {
+    //   color = colors["yellow"];
+    // } else if (surviellanceStarted < date) {
+    //   color = colors["green"];
+    // } else color = colors["gray"];
+
+    let notoStart = new Date(feature.getProperty("notoscriptus_first_found"));
+    let notoLast = new Date(feature.getProperty("notoscriptus_last_found"));
+    let surviellance = new Date(feature.getProperty("surveillance_start"));
+    // let data = feature.getProperty("data");
+    // let inRange;
+    let color = colors["gray"];
+
+    if (
+      startDate < notoStart &&
+      endDate > notoLast &&
+      startDate < notoLast &&
+      endDate > notoStart
+    ) {
+      color = colors["yellow"];
+    } else if (endDate > surviellance) {
       color = colors["green"];
-    } else color = colors["gray"];
+    }
 
     return {
       fillColor: color,
       fillOpacity: 0.5,
-      strokeWeight: 2,
+      strokeWeight: 0.5,
       strokeColor: color,
       zindex: 0
     };
   };
 
   const showAegypti = () => {
+    // console.log("showing aegypti between " + startDate + " and " + endDate);
     map.data.setStyle(aegyptiStyle);
   };
 
@@ -192,6 +290,7 @@ export const Map = function(mapObj) {
   };
 
   const drawInvasiveMap = function(geoJson) {
+    geojson = geoJson;
     geoJson.features.forEach(feature => {
       let geo = feature.geometry;
       feature.geometry = decodeGeometry(geo);
@@ -207,6 +306,8 @@ export const Map = function(mapObj) {
     drawInvasiveMap: drawInvasiveMap,
     showAegypti: showAegypti,
     showAlbopictus: showAlbopictus,
-    showNotoscriptus: showNotoscriptus
+    showNotoscriptus: showNotoscriptus,
+    changeDate: changeDate,
+    changeDates: changeDates
   };
 };

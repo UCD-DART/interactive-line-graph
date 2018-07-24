@@ -52,7 +52,9 @@ async function getMyData() {
       type: "FeatureCollection",
       features: finalFeatures
     };
-    fs.writeFile("./risk2.json", JSON.stringify(geoJson), function(err) {
+    let time = new Date();
+    time = time.toJSON().substring(0, 10);
+    fs.writeFile(`./src/js/currentRisk.json`, JSON.stringify(geoJson), function(err) {
       if (err) console.log("writing to disk did not work");
     });
     console.log(
