@@ -6,7 +6,7 @@ import { mapOptions } from "../constants/mapSettings";
 import { Map } from "./map";
 import { Slider } from "./slider";
 import { Chart } from "./chart";
-import * as data from "./risk2.json";
+import * as data from "./currentRisk.json";
 import { colors, labelZikaRisk } from "./helpers";
 
 let currentCity = "Fresno";
@@ -14,6 +14,10 @@ let cityId = 13832;
 let week = 28;
 let riskObj = {};
 let cityDetails = [];
+
+console.log("testing new time format function!");
+
+const formatDate = timeFormat("%b %d, %Y");
 
 // MAP BEHAVIOR
 const map = new google.maps.Map(document.getElementById("map"), mapOptions);
@@ -30,8 +34,6 @@ map.data.addListener("click", function(e) {
   getCityDetails(cityId);
 });
 
-// SLIDER BEHAVIOR
-// INIT FAKE DATA FIRST -- all of this should actually be a axios req
 function getCityDetails(id) {
   axios.get(`http://mathew.calsurv.org/api/zika/${id}`).then(res => {
     cityDetails = res.data;
@@ -63,8 +65,6 @@ function changeDetails(week) {
 Slider("slider", data.features[0].properties.risk.length);
 document.querySelector("#pickDate").oninput = e => changeDate(e.target.value);
 
-const formatDate = timeFormat("%b %d, %Y");
-
 function changeDate(idx) {
   week = idx;
   zikaMap.setWeek(week);
@@ -81,6 +81,7 @@ function changeDate(idx) {
 // DRAW GRAPH
 
 let width = document.getElementById("chart").clientWidth;
+let riskGraph;
 
 window.addEventListener("resize", function() {
   document.getElementById("chart").innerHTML = "";
@@ -88,7 +89,6 @@ window.addEventListener("resize", function() {
   riskGraph = Chart("chart", riskObj, width, riskObj[week].date);
   riskGraph.drawGraph();
 });
-let riskGraph;
 
 function setCity(city) {
   // Go through our static data, set current risk Object to the matching city

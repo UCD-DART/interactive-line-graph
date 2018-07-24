@@ -8,7 +8,7 @@
   // padding: 5px;
 }
 
-.legend__risk {
+.legend__item {
   padding: 4px;
   font-weight: bold;
   font-style: italic;
@@ -19,18 +19,22 @@
   // margin: 0 auto;
 }
 
-.legend__risk--xLow {
+.legend__item--xLow {
   background: #1565c0;
   color: white;
 }
-.legend__risk--low {
+.legend__item--low {
   background: #6ec6ff;
 }
-.legend__risk--moderate {
+.legend__item--moderate {
   background: #ef9a9a;
 }
-.legend__risk--high {
+.legend__item--high {
   background: #f44336;
+}
+
+.legend__invasive--surveillance {
+  background: $green;
 }
 
 @media (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) {
@@ -38,5 +42,43 @@
     padding: 10px 0px;
     font-size: 24px;
     // margin: 10px;
+  }
+}
+
+// Invasive Legend //
+.invasive__legend {
+  display: flex;
+  justify-content: space-evenly;
+  height: 40px;
+  align-items: center;
+
+  @at-root #{&}--item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+
+    .invasive__legend-box {
+      width: 20px;
+      height: 20px;
+      background: red;
+      margin-right: 5px;
+      margin-left: 5px;
+
+      @at-root #{&}--surveillance {
+        background: $green;
+      }
+      @at-root #{&}--no-surveillance {
+        background: $gray;
+      }
+      @at-root #{&}--aegypti {
+        background: $red;
+      }
+      @at-root #{&}--albopictus {
+        background: $blue;
+      }
+      @at-root #{&}--notoscriptus {
+        background: $yellow;
+      }
+    }
   }
 }

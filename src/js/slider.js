@@ -18,3 +18,19 @@ export const Slider = function(divId, length) {
     >
   `;
 };
+
+export const DualSlider = function(divId, length) {
+  const id = divId || "slider";
+
+  const min = 0;
+  const max = length - 1;
+
+  document.getElementById(id).innerHTML = `
+    <section class="range-slider">
+      <span class="rangeValues"></span>
+      <input id="date1" value="0" min="0" max=${max}  type="range" class="multi-slider">
+      <input id="date2" value="${max}" min="0" max=${max}  type="range" class="multi-slider">
+    </section>
+
+  `;
+};

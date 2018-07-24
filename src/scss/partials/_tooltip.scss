@@ -7,31 +7,97 @@
   background-color: #fff;
   border-radius: 2px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-}
 
-.toolTip__date {
-  font-style: oblique;
-  text-align: right;
-  padding: 25px;
-}
+  &.toolTip-zika {
+    display: grid;
+    // grid-template-columns: 1fr 2fr;
 
-.toolTip__risk {
-  font-style: italic;
-  background: #f44336;
-  font-size: 10px;
-  text-align: center;
-  padding-top: 5px;
-}
+    .toolTip__date {
+      font-style: oblique;
+      text-align: right;
+      padding: 25px;
+    }
 
-.toolTip__risk--title {
-  margin-top: 10px;
-}
+    .toolTip__risk {
+      font-style: italic;
+      background: #f44336;
+      font-size: 10px;
+      text-align: center;
+      padding-top: 5px;
+    }
 
-.toolTip__risk--value {
-  font-style: normal;
-  font-size: 36px;
-  color: black;
-  padding: 0 5px;
+    .toolTip__risk--title {
+      margin-top: 10px;
+    }
+
+    .toolTip__risk--value {
+      font-style: normal;
+      font-size: 36px;
+      color: black;
+      padding: 0 5px;
+    }
+  }
+
+  &.toolTip-invasive {
+    display: grid;
+    grid-template-rows: 2fr 1fr;
+    font-size: 14px;
+    width: 280px;
+
+    .toolTip-invasive__data {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+
+      // border: 5px red dotted;
+
+      @at-root #{&}--collections {
+        color: white;
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        // align-items: stretch;
+
+        @at-root #{&}--total {
+          background: $purple;
+          display: grid;
+          align-content: center;
+          text-align: center;
+        }
+        @at-root #{&}--aegypti {
+          background: $red;
+          display: grid;
+          align-content: center;
+          text-align: center;
+        }
+        @at-root #{&}--albopictus {
+          background: $blue;
+          display: grid;
+          align-content: center;
+          text-align: center;
+        }
+      }
+
+      @at-root #{&}--growth {
+        display: grid;
+        grid-template-rows: 2fr 1fr;
+        text-align: center;
+        background-color: $light-blue;
+
+        @at-root #{&}--value {
+          font-size: 36px;
+          color: black;
+          // border: ;
+        }
+        @at-root #{&}--label {
+          font-size: 12px;
+        }
+      }
+    }
+
+    .toolTip-invasive__date {
+      // background: $dark-blue;
+      color: $dark-blue;
+      text-align: center;
+      font-size: 24px;
+    }
+  }
 }

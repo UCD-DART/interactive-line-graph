@@ -3,10 +3,13 @@ const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
-  entry: "./src/js/zika.js",
+  entry: {
+    zika: "./src/js/zika.js",
+    invasive: "./src/js/invasive.js"
+  },
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "bundle.js"
+    filename: "[name].js"
   },
   module: {
     rules: [
