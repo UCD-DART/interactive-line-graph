@@ -9,7 +9,6 @@ import 'babel-polyfill'; // for async await
 import * as geojson from '../constants/separatedinvasive.json';
 
 console.log(geojson);
-console.log('test pushing to dart repo');
 
 const formatDate = timeFormat('%b %d, %Y');
 
@@ -74,7 +73,6 @@ function changeCity(newCity) {
   geojson.features.forEach(d => {
     if (d.properties.city === newCity) {
       dataObj = d.properties.data;
-      console.log(dataObj);
     }
   });
 
@@ -86,7 +84,7 @@ function changeCity(newCity) {
   // console.log("new city is " + city);
   // console.log(JSON.stringify(dataObj));
 
-  invasiveGraph = InvasiveGraph(dataObj, species);
+  invasiveChart = InvasiveGraph(dataObj, species);
 }
 
 function showCityDetails(props) {
@@ -140,6 +138,9 @@ function getVals() {
   }
   startDate = dates[slide1];
   endDate = dates[slide2];
+
+  // invasiveChart.setBrush(startDate, endDate);
+
   invasiveMap.changeDates(startDate, endDate, species);
   if (species == 'aegypti') {
     invasiveMap.showAegypti();
@@ -148,6 +149,7 @@ function getVals() {
   } else if (species === 'notoscriptus') {
     invasiveMap.showNotoscriptus();
   }
+  invasiveChart.setBrush(startDate, endDate);
 
   var displayElement = parent.getElementsByClassName('rangeValues')[0];
   displayElement.innerHTML = formatDate(startDate) + ' - ' + formatDate(endDate);
@@ -162,7 +164,7 @@ for (var x = 0; x < sliderSections.length; x++) {
     if (sliders[y].type === 'range') {
       sliders[y].oninput = getVals;
       // Manually trigger event first time to display values
-      sliders[y].oninput();
+      // sliders[y].oninput();
     }
   }
 }
@@ -184,4 +186,6 @@ for (var x = 0; x < sliderSections.length; x++) {
 //initialize the chart with Fresno data
 changeCity('Fresno');
 showCityDetails(geojson.features[idx].properties);
-invasiveGraph = InvasiveGraph(dataObj, species);
+// invasiveChart.setBrush('01-01-2016', '01-01-2017');
+
+// setTimeout(invasiveChart.setBrush('01-01-2015', '02-01-2015'), 3000);
