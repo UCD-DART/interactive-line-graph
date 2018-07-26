@@ -276,6 +276,51 @@ export const Map = function(mapObj) {
     return level;
   };
 
+  // <input id="map-search" type="text" placeholder="Search for your city">
+
+  const initAutocomplete = () => {
+    // let input = document.createElement('input');
+    // input.setAttribute('id', 'map-search');
+    // input.setAttribute('type', 'text');
+    // input.setAttribute('placeholder', "search for your city");
+    // document.getElementByClassName
+
+    const input = document.getElementById('map-search');
+    const searchBox = new google.maps.places.SearchBox(input);
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(input);
+
+    //bias the search box
+    map.addListener('bounds_changed', function() {
+      searchBox.setBounds(map.getBounds());
+    });
+
+    let markers = [];
+    searchBox.addListener('places_changed', function() {
+      const places = searchBox.getPlaces();
+      if (places.length === 0) return;
+
+      //clear out old marker(s)
+      markers.forEach(marker => marker.setMap(null));
+      markers = [];
+
+      //get icon name and location for place
+      const bounds = new google.maps.LatLngBounds();
+      places.forEach(place => {
+        if (!place.geometry) {
+          console.log(`${place} has no geometry`);
+          return;
+        }
+
+        if (place.geometry.viewport) {
+          bounds.union(place.geometry.viewport);
+        } else {
+          bounds.extend(place.geometry.location);
+        }
+      });
+      map.fitBounds(bounds);
+    });
+  };
+
   const _decodeCoordinates = function(coordinates) {
     if (typeof coordinates.point == 'undefined') {
       if (coordinates.constructor == Array) {
@@ -329,6 +374,7 @@ export const Map = function(mapObj) {
     });
     map.data.addGeoJson(geoJson);
     map.data.setStyle(showAegypti);
+    initAutocomplete();
   };
 
   return {
