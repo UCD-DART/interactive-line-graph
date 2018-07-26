@@ -8,8 +8,6 @@ import axios from 'axios';
 import 'babel-polyfill'; // for async await
 import * as geojson from '../constants/separatedinvasive.json';
 
-console.log(geojson);
-
 const formatDate = timeFormat('%b %d, %Y');
 
 const map = new google.maps.Map(document.getElementById('map'), invasiveMapOptions);
@@ -38,7 +36,8 @@ map.data.addListener('click', function(e) {
       console.log(dataObj);
     }
   });
-  invasiveChart = InvasiveGraph(dataObj, species);
+  invasiveMap.setInvasiveCity(f.city, species);
+  invasiveChart = InvasiveGraph(dataObj, species, startDate, endDate);
 });
 
 // const mosquitoToggle = document.getElementById("changeMosquito");
@@ -84,7 +83,7 @@ function changeCity(newCity) {
   // console.log("new city is " + city);
   // console.log(JSON.stringify(dataObj));
 
-  invasiveChart = InvasiveGraph(dataObj, species);
+  invasiveChart = InvasiveGraph(dataObj, species, startDate, endDate);
 }
 
 function showCityDetails(props) {
@@ -149,7 +148,8 @@ function getVals() {
   } else if (species === 'notoscriptus') {
     invasiveMap.showNotoscriptus();
   }
-  invasiveChart.setBrush(startDate, endDate);
+  console.log(startDate, endDate);
+  invasiveChart.setDates(startDate, endDate);
 
   var displayElement = parent.getElementsByClassName('rangeValues')[0];
   displayElement.innerHTML = formatDate(startDate) + ' - ' + formatDate(endDate);
@@ -157,17 +157,20 @@ function getVals() {
 }
 
 // Initialize Sliders
-var sliderSections = document.getElementsByClassName('range-slider');
-for (var x = 0; x < sliderSections.length; x++) {
-  var sliders = sliderSections[x].getElementsByTagName('input');
-  for (var y = 0; y < sliders.length; y++) {
-    if (sliders[y].type === 'range') {
+
+window.onload = function() {
+  const sliderSections = document.getElementsByClassName('range-slider');
+  for (var x = 0; x < sliderSections.length; x++) {
+    var sliders = sliderSections[x].getElementsByTagName('input');
+    for (var y = 0; y < sliders.length; y++) {
+      // if (sliders[y].type === 'range') {
       sliders[y].oninput = getVals;
       // Manually trigger event first time to display values
-      // sliders[y].oninput();
+      sliders[y].oninput();
+      // }
     }
   }
-}
+};
 
 // function changeDate(idx) {
 //   let newDate = dates[idx];
@@ -186,6 +189,7 @@ for (var x = 0; x < sliderSections.length; x++) {
 //initialize the chart with Fresno data
 changeCity('Fresno');
 showCityDetails(geojson.features[idx].properties);
+
 // invasiveChart.setBrush('01-01-2016', '01-01-2017');
 
 // setTimeout(invasiveChart.setBrush('01-01-2015', '02-01-2015'), 3000);
