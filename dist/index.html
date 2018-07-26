@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <title> Invasive Species Map </title>
-  <script src="https://maps.googleapis.com/maps/api/js?libraries=geometry&key=AIzaSyBf9C1QEaoX_bJbPjECtwo7iS82IQxJzX8"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?libraries=geometry,places&key=AIzaSyBf9C1QEaoX_bJbPjECtwo7iS82IQxJzX8"></script>
   <!-- StyleSheet for production -->
   <link rel="stylesheet" href="styles.css">
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"> -->
@@ -35,33 +35,35 @@
   <div class='visualizations'>
 
     <div class='map map__invasive'>
-      <div id='map'></div>
-      <div>
-        <div class="card">
-          <div class="invasive__legend">
-            <div class="invasive__legend--item">
-              <div class="invasive__legend-box invasive__legend-box--surveillance"></div>
-              <div class="invasive__legend-label invasive__legend-label--surveillance">Surveillance Covered</div>
-            </div>
-            <div class="invasive__legend--item">
-              <div class="invasive__legend-box invasive__legend-box--no-surveillance"></div>
-              <div class="invasive__legend-label invasive__legend-label--no-surveillance">No surveillance</div>
-            </div>
-            <div class="invasive__legend--item">
-              <div class="invasive__legend-box invasive__legend-box--aegypti"></div>
-              <div class="invasive__legend-label invasive__legend-label--aegypti">Ae. aegypti</div>
-            </div>
-            <div class="invasive__legend--item">
-              <div class="invasive__legend-box invasive__legend-box--albopictus"></div>
-              <div class="invasive__legend-label invasive__legend-label--albopictus">Ae. albopictus</div>
-            </div>
-            <div class="invasive__legend--item">
-              <div class="invasive__legend-box invasive__legend-box--notoscriptus"></div>
-              <div class="invasive__legend-label invasive__legend-label--notoscriptus">Ae. notoscriptus</div>
-            </div>
+      <div id='map'>
+      </div>
+      <input id="map-search" type="text" placeholder="Search for your city">
+
+      <div class="card">
+        <div class="invasive__legend">
+          <div class="invasive__legend--item">
+            <div class="invasive__legend-box invasive__legend-box--surveillance"></div>
+            <div class="invasive__legend-label invasive__legend-label--surveillance">Surveillance Covered</div>
+          </div>
+          <div class="invasive__legend--item">
+            <div class="invasive__legend-box invasive__legend-box--no-surveillance"></div>
+            <div class="invasive__legend-label invasive__legend-label--no-surveillance">No surveillance</div>
+          </div>
+          <div class="invasive__legend--item">
+            <div class="invasive__legend-box invasive__legend-box--aegypti"></div>
+            <div class="invasive__legend-label invasive__legend-label--aegypti">Ae. aegypti</div>
+          </div>
+          <div class="invasive__legend--item">
+            <div class="invasive__legend-box invasive__legend-box--albopictus"></div>
+            <div class="invasive__legend-label invasive__legend-label--albopictus">Ae. albopictus</div>
+          </div>
+          <div class="invasive__legend--item">
+            <div class="invasive__legend-box invasive__legend-box--notoscriptus"></div>
+            <div class="invasive__legend-label invasive__legend-label--notoscriptus">Ae. notoscriptus</div>
           </div>
         </div>
       </div>
+
 
     </div>
 
