@@ -21,7 +21,7 @@ import { colors } from './helpers';
 
 const formatDate = timeFormat('%b %d, %Y');
 
-export const InvasiveGraph = function(dataObj, species) {
+export const InvasiveGraph = function(dataObj, species, initDate, finalDate) {
   document.getElementById('chart--invasive').innerHTML = ''; // short term emptying thing for non-existent cities
   // if (document.getElementById("svg")) {
   //   document.getElementById("svg").remove();
@@ -67,7 +67,6 @@ export const InvasiveGraph = function(dataObj, species) {
     obj.aegypti = +d.species || 0;
     data.push(obj);
   });
-  console.log(data);
 
   //draw the g container
   const g = svg
@@ -90,6 +89,11 @@ export const InvasiveGraph = function(dataObj, species) {
   x2.domain(x.domain());
   y.domain([0, d3.max(data, d => d.growth) * 1.1]);
   y2.domain(y.domain());
+
+  const minDate = x.domain()[0];
+  const maxDate = x.domain()[1];
+  let startDate = initDate || minDate;
+  let endDate = finalDate || maxDate;
 
   //SET AXES
   const xAxis = axisBottom(x),
@@ -118,7 +122,7 @@ export const InvasiveGraph = function(dataObj, species) {
   const startingArea = data.map(d => {
     return {
       date: d.date,
-      growth: d.growth
+      growth: 1
     };
   });
 
@@ -282,7 +286,34 @@ export const InvasiveGraph = function(dataObj, species) {
   brushEnd = x(new Date('11-15-2017'));
 
   function setBrush() {
-    select('.brush').call(brush.move, [brushStart, brushEnd]);
+    select('.brush').call(brush.move, [x2(startDate), x2(endDate)]);
+  }
+
+  function setDates(newStart, newEnd) {
+    newStart = new Date(newStart);
+    newEnd = new Date(newEnd);
+
+    // startDate = newStart < minDate ? minDate : newStart;
+    // endDate = newEnd > maxDate ? maxDate : newEnd;
+    if (newStart < minDate) {
+      startDate = minDate;
+      select('.selection').classed('outOfBounds', true);
+      setTimeout(() => {
+        select('.selection').classed('outOfBounds', false);
+      }, 300);
+    } else startDate = newStart;
+
+    if (newEnd > maxDate) {
+      endDate = maxDate;
+      select('.selection').classed('outOfBounds', true);
+      setTimeout(() => {
+        select('.selection').classed('outOfBounds', false);
+      }, 300);
+    } else endDate = newEnd;
+
+    // select('.selection').style('fill', 'red');
+    console.log(`start: ${startDate}, end: ${endDate} `);
+    setBrush();
   }
   // const tooltip = select("#graph")
   //     .append("div")
@@ -574,6 +605,7 @@ export const InvasiveGraph = function(dataObj, species) {
   }
 
   return {
-    setBrush: setBrush
+    setBrush: setBrush,
+    setDates: setDates
   };
 };
