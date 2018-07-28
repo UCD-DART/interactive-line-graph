@@ -5,7 +5,7 @@ import { InvasiveGraph } from './invasiveChart';
 import { DualSlider } from './slider';
 import { timeFormat } from 'd3-time-format';
 import axios from 'axios';
-import 'babel-polyfill'; // for async await
+// import 'babel-polyfill'; // for async await
 import * as geojson from '../constants/separatedinvasive.json';
 
 const formatDate = timeFormat('%b %d, %Y');
@@ -64,7 +64,7 @@ function changeMosquito(mosquito) {
   }
   console.log(dataObj);
   // if (species != "notoscriptus")
-  //   invasiveGraph = InvasiveGraph(dataObj, species);
+  invasiveGraph = InvasiveGraph(dataObj, species);
 }
 
 function changeCity(newCity) {
