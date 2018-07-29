@@ -5,8 +5,17 @@ import { InvasiveGraph } from './invasiveChart';
 import { DualSlider } from './slider';
 import { timeFormat } from 'd3-time-format';
 import axios from 'axios';
-// import 'babel-polyfill'; // for async await
-import * as geojson from '../constants/separatedinvasive.json';
+import 'babel-polyfill'; // for async await
+// import * as geojson from '../constants/separatedTest.json';
+// import * as geojson from '../constants/separatedInvasive.json';
+
+// console.log(geojson);
+
+const go = async () => {
+
+const geojson = await axios.get('https://s3-us-west-2.amazonaws.com/zika-map/separatedinvasive.json').then(res =>  res.data).catch(err => console.error('wtf' + err));
+
+console.log(geojson);
 
 const formatDate = timeFormat('%b %d, %Y');
 
@@ -33,23 +42,12 @@ map.data.addListener('click', function(e) {
   geojson.features.forEach(feat => {
     if (feat.properties.city === f.city) {
       dataObj = feat.properties.data;
-      console.log(dataObj);
+      // console.log(dataObj);
     }
   });
   invasiveMap.setInvasiveCity(f.city, species);
   invasiveChart = InvasiveGraph(dataObj, species, startDate, endDate);
 });
-
-// const mosquitoToggle = document.getElementById("changeMosquito");
-// mosquitoToggle.addEventListener("change", function() {
-//   if (this.checked) {
-//     changeMosquito("albopictus");
-//   } else changeMosquito("aegypti");
-// });
-
-document.getElementById('pickAegypti').addEventListener('click', () => changeMosquito('aegypti'));
-document.getElementById('pickAlbo').addEventListener('click', () => changeMosquito('albopictus'));
-document.getElementById('pickNoto').addEventListener('click', () => changeMosquito('notoscriptus'));
 
 function changeMosquito(mosquito) {
   if (mosquito === 'aegypti') {
@@ -62,9 +60,9 @@ function changeMosquito(mosquito) {
     invasiveMap.showNotoscriptus();
     species = 'notoscriptus';
   }
-  console.log(dataObj);
+  // console.log(dataObj);
   // if (species != "notoscriptus")
-  invasiveGraph = InvasiveGraph(dataObj, species);
+  invasiveChart = InvasiveGraph(dataObj, species, startDate, endDate);
 }
 
 function changeCity(newCity) {
@@ -113,11 +111,6 @@ for (let year = 2011; year < 2019; year++) {
   dates.push(new Date(`${year}-11-02`));
 }
 
-// const Slider = Slider('slider', dates.length)
-
-// Slider("slider", dates.length - 1);
-// document.getElementById("pickDate").oninput = e => changeDate(e.target.value);
-// document.getElementById("pickDate").classList.add("slider-invasive");
 
 DualSlider('dualslider', dates.length);
 
@@ -148,7 +141,7 @@ function getVals() {
   } else if (species === 'notoscriptus') {
     invasiveMap.showNotoscriptus();
   }
-  console.log(startDate, endDate);
+  // console.log(startDate, endDate);
   invasiveChart.setDates(startDate, endDate);
 
   var displayElement = parent.getElementsByClassName('rangeValues')[0];
@@ -158,7 +151,8 @@ function getVals() {
 
 // Initialize Sliders
 
-window.onload = function() {
+function initSlider() {
+  console.log('slider init');
   const sliderSections = document.getElementsByClassName('range-slider');
   for (var x = 0; x < sliderSections.length; x++) {
     var sliders = sliderSections[x].getElementsByTagName('input');
@@ -172,24 +166,28 @@ window.onload = function() {
   }
 };
 
-// function changeDate(idx) {
-//   let newDate = dates[idx];
-//   invasiveMap.changeDate(newDate);
-//   if (species === "aegypti") {
-//     invasiveMap.showAegypti();
-//   } else if (species === "albopictus") {
-//     invasiveMap.showAlbopictus();
-//   } else if (species === "notoscriptus") {
-//     invasiveMap.showNotoscriptus();
-//   }
-
-//   document.getElementById("selected-date").innerHTML = formatDate(newDate);
-// }
+const selectors = document.getElementsByClassName('selector__mosquitos--mosquito');
+for (let i = 0; i < selectors.length; i++) {
+  let el = selectors[i];
+  el.addEventListener("click", function() {
+    //remove active classes from other elements, add active class to clicked, change mosquito styling for map
+    if (!el.classList.contains("active")) {
+      for (let j = 0; j < selectors.length; j++) {
+        selectors[j].classList.remove("active");
+      }
+      el.classList.add("active");
+      changeMosquito(el.id);
+    }
+  });
+}
 
 //initialize the chart with Fresno data
 changeCity('Fresno');
 showCityDetails(geojson.features[idx].properties);
 
-// invasiveChart.setBrush('01-01-2016', '01-01-2017');
 
-// setTimeout(invasiveChart.setBrush('01-01-2015', '02-01-2015'), 3000);
+initSlider();
+
+}
+
+go();
