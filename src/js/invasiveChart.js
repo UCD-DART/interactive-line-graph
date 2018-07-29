@@ -302,17 +302,21 @@ export const InvasiveGraph = function(dataObj, species, initDate, finalDate) {
         select('.selection').classed('outOfBounds', false);
       }, 300);
     } else startDate = newStart;
-
+    
     if (newEnd > maxDate) {
       endDate = maxDate;
       select('.selection').classed('outOfBounds', true);
       setTimeout(() => {
         select('.selection').classed('outOfBounds', false);
       }, 300);
+    } else if (newEnd < minDate) {
+      endDate = new Date(minDate);
+      endDate.setDate(endDate.getDate() +10); // add a tiny space for the brush to still exist
     } else endDate = newEnd;
-
+    
     // select('.selection').style('fill', 'red');
-    console.log(`start: ${startDate}, end: ${endDate} `);
+    // console.log(`start: ${startDate}, end: ${endDate} `);
+    console.log(startDate, endDate);
     setBrush();
   }
   // const tooltip = select("#graph")
@@ -567,15 +571,16 @@ export const InvasiveGraph = function(dataObj, species, initDate, finalDate) {
     // } else leftPos = event.pageX;
     leftPos += 'px';
 
+
     const html = `
         <div class="toolTip-invasive__data">
           <div class="toolTip-invasive__data--collections">
             <div class="toolTip-invasive__data--collections--total"> ${
               d.data.collections
             } Other Collections</div>
-            <div class="toolTip-invasive__data--collections--aegypti"> ${
+            <div class="toolTip-invasive__data--collections--${species}"> ${
               d.data.aegypti
-            } Aegypti Collections</div>
+            } ${species} Collections</div>
           </div>
           <div class="toolTip-invasive__data--growth">
             <div class="toolTip-invasive__data--growth--value">${d.data.growth}%</div>
