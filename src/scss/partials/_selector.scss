@@ -137,19 +137,26 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 5px;
+  box-sizing: border-box;
   div {
-    height: 25px;
+    height: 55px;
     margin-left: 5px;
     padding: 15px;
     font-weight: bold;
+    box-sizing: border-box;
   }
-  #pickAegypti {
+
+  .active {
+    border: 5px solid black;
+    // box-sizing: border-box;
+  }
+  #aegypti {
     background-color: $red;
   }
-  #pickAlbo {
+  #albopictus {
     background-color: $blue;
   }
-  #pickNoto {
+  #notoscriptus {
     background-color: $yellow;
   }
 }
