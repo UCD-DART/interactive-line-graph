@@ -6,7 +6,7 @@ export const Map = function(mapObj) {
   let map = mapObj;
   let currentCity = 'Fresno';
   let week = 25; // just a random number picked to stylet he map
-  let date = new Date('2018-06-01');
+  // let date = new Date('2018-06-01');
   let startDate = new Date('01-01-2011');
   let endDate = new Date('11-01-2018');
   let geojson;
@@ -66,21 +66,7 @@ export const Map = function(mapObj) {
   const changeDates = (newStart, newEnd, species) => {
     startDate = newStart;
     endDate = newEnd;
-    // console.log(startDate, endDate);
-    // let surviellance = false;
-    // let target = false;
-    // let idx = 0;
-
-    // let data = feature.getProperty("data");
-    // let aegypti = data.aegypti;
-
-    // for (let i=0; i< aegypti.length; i++) {
-    //   if (startDate < aegypti[i].date) {
-    //     continue;
-    //   } else {
-
-    //   }
-    // }
+    species = species;
   };
 
   const aegyptiStyle = feature => {
@@ -92,10 +78,7 @@ export const Map = function(mapObj) {
     let color = colors['gray'];
 
     if (
-      startDate < aegyptiStart &&
-      endDate > aegyptiLast &&
-      startDate < aegyptiLast &&
-      endDate > aegyptiStart
+      startDate < aegyptiLast && endDate > aegyptiStart
     ) {
       color = colors['red'];
     } else if (endDate > surviellance) {
@@ -171,10 +154,7 @@ export const Map = function(mapObj) {
     let color = colors['gray'];
 
     if (
-      startDate < alboStart &&
-      endDate > alboLast &&
-      startDate < alboLast &&
-      endDate > alboStart
+      startDate < alboLast && endDate > alboStart
     ) {
       color = colors['blue'];
     } else if (endDate > surviellance) {
@@ -212,10 +192,7 @@ export const Map = function(mapObj) {
     let color = colors['gray'];
 
     if (
-      startDate < notoStart &&
-      endDate > notoLast &&
-      startDate < notoLast &&
-      endDate > notoStart
+      startDate < notoLast && endDate > notoStart
     ) {
       color = colors['yellow'];
     } else if (endDate > surviellance) {
