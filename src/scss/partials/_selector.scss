@@ -4,104 +4,31 @@
   margin-bottom: 0px;
 
   .card {
+    display: -ms-grid;
     display: grid;
-    grid-template-columns: 5fr 4fr;
-    // align-content: space-between;
-    // grid-gap: 0px;
+    -ms-grid-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     height: 80px;
   }
 
   .selector__mosquitos {
+    // border: 1px solid green;
+    -ms-grid-column: 1;
     font-size: 18px;
     font-style: italic;
+    display: -ms-grid;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 0px;
     align-items: center;
-
-    //the mosquito toggle container label
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 100px;
-      height: 34px;
-      margin: 0 auto;
-      // border: 1px solid green;
-
-      input {
-        display: none;
-      }
-    }
-
-    /* The actual toggle element */
-    .mosquito-toggle {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: $red;
-      border-radius: 35px;
-
-      @at-root #{&}:before {
-        border-radius: 50%;
-      }
-      -webkit-transition: 1s;
-      transition: 1s;
-
-      @at-root #{&}:before {
-        position: absolute;
-        content: "";
-        height: 26px;
-        width: 30px;
-        left: 4px;
-        bottom: 4px;
-        background-color: white;
-        -webkit-transition: 1s;
-        transition: 1s;
-      }
-    }
-
-    //mosquito icons on either side of toggle
-    .mosquito {
-      display: flex;
-      align-items: center;
-      // border: 1px dashed black;
-
-      svg {
-        height: 40px;
-        width: 40px;
-      }
-    }
-    .mosquito--left {
-      justify-content: flex-end;
-      color: $red;
-      fill: $red;
-    }
-    .mosquito--right {
-      justify-content: flex-start;
-      color: $blue;
-      fill: $blue;
-    }
-
-    input:checked + .mosquito-toggle {
-      background-color: $blue;
-    }
-
-    input:focus + .mosquito-toggle {
-      box-shadow: 0 0 1px $blue;
-    }
-
-    input:checked + .mosquito-toggle:before {
-      -webkit-transform: translateX(59px);
-      -ms-transform: translateX(59px);
-      transform: translateX(60px);
-    }
   }
 
   .invasiveChart__legend {
+    // border: 2px solid red;
+    -ms-grid-column: 2;
+    display: -ms-grid;
     display: grid;
+    -ms-grid-rows: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     font-size: 18px;
 
@@ -111,6 +38,7 @@
       text-align: left;
       margin-top: 5px;
       text-align: left;
+      font-size: 14px;
     }
 
     @at-root #{&}-box {
@@ -131,13 +59,35 @@
       }
     }
   }
+
+  .invasiveChart__legend--item:nth-child(1) {
+    -ms-grid-row: 1;
+    border: 1px solid purple;
+  }
+  .invasiveChart__legend--item:nth-child(2) {
+    -ms-grid-row: 2;
+    border: 3px dashed green;
+  }
 }
 
 .beta-selector {
+  display: -ms-grid;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  -ms-grid-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-gap: 5px;
   box-sizing: border-box;
+
+  :nth-child(1) {
+    -ms-grid-column: 1;
+  }
+  :nth-child(2) {
+    -ms-grid-column: 2;
+  }
+  :nth-child(3) {
+    -ms-grid-column: 3;
+  }
+
   div {
     height: 55px;
     margin-left: 5px;
