@@ -43,14 +43,18 @@
 
 .invasive {
   height: auto;
-  display: grid;
-  grid-template-columns: 2fr 3fr;
+  display: flex;
+  // grid-template-columns: 2fr 3fr;
 
   .city-info {
-    display: grid;
-    grid-template-rows: 2fr 1fr 1fr;
+    // min-width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    // grid-template-rows: 2fr 1fr 1fr;
     margin-top: 5px;
     font-size: 14px;
+    text-align: center;
 
     @at-root #{&}__cityName {
       font-size: 36px;
@@ -60,6 +64,7 @@
 
     @at-root #{&}__website {
       display: flex;
+      justify-content: center;
       align-items: center;
       height: 30px;
       // grid-template-columns: 1fr 10fr;
@@ -71,56 +76,39 @@
       }
     }
   }
-  .title {
-    padding: 15px;
-    font-size: 24px;
-    font-weight: bold;
-  }
-
-  .aegypti {
-    color: $red;
-  }
-
-  .albopictus {
-    color: $blue;
-  }
-
-  #aegypti_detections {
-    font-weight: bold;
-    font-size: 48px;
-  }
-
-  #albopictus_detections {
-    font-weight: bold;
-    font-size: 48px;
-  }
-  .row {
-    font-size: 24px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-  .date-data {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 25px;
-    .dateItem {
+  .collection-table {
+    .aegypti {
+      color: $red;
     }
-  }
 
-  .agency-info {
-    margin-top: 10px;
-  }
+    .albopictus {
+      color: $blue;
+    }
 
-  table {
-    th {
-      padding-top: 10px;
+    .notoscriptus {
+      color: $green;
     }
-    tr:nth-child(2) {
-      // display: flex;
-      align-items: center;
+
+    .detections {
+      font-weight: bold;
+      font-size: 48px;
     }
-    td {
-      padding: 5px;
+
+    .agency-info {
+      margin-top: 10px;
+    }
+
+    table {
+      th {
+        padding-top: 5px;
+      }
+      // tr:nth-child(2) {
+      //   // display: flex;
+      //   align-items: center;
+      // }
+      td {
+        padding-top: 5px;
+      }
     }
   }
 }
