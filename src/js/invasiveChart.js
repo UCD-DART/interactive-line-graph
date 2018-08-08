@@ -86,7 +86,7 @@ export const InvasiveGraph = function(dataObj, species, initDate, finalDate) {
     .clamp(true);
 
   x.domain(extent(data, d => d.date));
-  x2.domain(x.domain());
+  x2.domain([new Date('2012-01-01'), new Date()]).clamp(true);
   y.domain([0, d3.max(data, d => d.growth) * 1.1]);
   y2.domain(y.domain());
 
@@ -122,7 +122,7 @@ export const InvasiveGraph = function(dataObj, species, initDate, finalDate) {
   const startingArea = data.map(d => {
     return {
       date: d.date,
-      growth: 1
+      growth: 0
     };
   });
 
@@ -302,7 +302,7 @@ export const InvasiveGraph = function(dataObj, species, initDate, finalDate) {
         select('.selection').classed('outOfBounds', false);
       }, 300);
     } else startDate = newStart;
-    
+
     if (newEnd > maxDate) {
       endDate = maxDate;
       select('.selection').classed('outOfBounds', true);
@@ -311,9 +311,9 @@ export const InvasiveGraph = function(dataObj, species, initDate, finalDate) {
       }, 300);
     } else if (newEnd < minDate) {
       endDate = new Date(minDate);
-      endDate.setDate(endDate.getDate() +10); // add a tiny space for the brush to still exist
+      endDate.setDate(endDate.getDate() + 10); // add a tiny space for the brush to still exist
     } else endDate = newEnd;
-    
+
     // select('.selection').style('fill', 'red');
     // console.log(`start: ${startDate}, end: ${endDate} `);
     console.log(startDate, endDate);
@@ -452,7 +452,7 @@ export const InvasiveGraph = function(dataObj, species, initDate, finalDate) {
   if (species === 'albopictus') {
     barColors[0] = colors['blue'];
   } else if (species === 'notoscriptus') {
-    barColors[0] = colors['yellow'];
+    barColors[0] = colors['orange'];
   }
   var series = graph
     .selectAll('.series')
@@ -546,31 +546,14 @@ export const InvasiveGraph = function(dataObj, species, initDate, finalDate) {
     .attr('class', 'toolTip toolTip-invasive')
     .style('opacity', 0);
 
-  // function redrawTooltip() {
-  //   if (document.querySelector(".toolTip")) {
-  //     select(".toolTip").remove();
-  //   }
-
-  //   tooltip = select("#chart--invasive")
-  //     .append("div")
-  //     .attr("class", "toolTip")
-  //     .style("opacity", 0);
-  // }
-
   // console.log(window.visualViewport.width);
   function tipMouseover(d) {
     //to draw the tool tip, we want the full tooltip to remain visible no matter where you're hovering
     // so we calculate where the right edge of the browser is, and make sure the left position of hte tooltip
     // is at least 400px away from that spot
     const rightEdge = window.visualViewport.width;
-
     let leftPos = event.pageX + 300 > rightEdge ? rightEdge - 300 : event.pageX;
-
-    // if (event.pageX + 300 > rightEdge) {
-    //   leftPos = rightEdge - 300;
-    // } else leftPos = event.pageX;
     leftPos += 'px';
-
 
     const html = `
         <div class="toolTip-invasive__data">
@@ -579,8 +562,8 @@ export const InvasiveGraph = function(dataObj, species, initDate, finalDate) {
               d.data.collections
             } Other Collections</div>
             <div class="toolTip-invasive__data--collections--${species}"> ${
-              d.data.aegypti
-            } ${species} Collections</div>
+      d.data.aegypti
+    } ${species} Collections</div>
           </div>
           <div class="toolTip-invasive__data--growth">
             <div class="toolTip-invasive__data--growth--value">${d.data.growth}%</div>
