@@ -77,9 +77,7 @@ export const Map = function(mapObj) {
     // let inRange;
     let color = colors['gray'];
 
-    if (
-      startDate < aegyptiLast && endDate > aegyptiStart
-    ) {
+    if (startDate < aegyptiLast && endDate > aegyptiStart) {
       color = colors['red'];
     } else if (endDate > surviellance) {
       color = colors['green'];
@@ -153,9 +151,7 @@ export const Map = function(mapObj) {
     // let inRange;
     let color = colors['gray'];
 
-    if (
-      startDate < alboLast && endDate > alboStart
-    ) {
+    if (startDate < alboLast && endDate > alboStart) {
       color = colors['blue'];
     } else if (endDate > surviellance) {
       color = colors['green'];
@@ -191,10 +187,8 @@ export const Map = function(mapObj) {
     // let inRange;
     let color = colors['gray'];
 
-    if (
-      startDate < notoLast && endDate > notoStart
-    ) {
-      color = colors['yellow'];
+    if (startDate < notoLast && endDate > notoStart) {
+      color = colors['orange'];
     } else if (endDate > surviellance) {
       color = colors['green'];
     }
