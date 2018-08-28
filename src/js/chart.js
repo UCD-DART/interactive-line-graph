@@ -28,8 +28,9 @@ export const Chart = function(divId, riskObj, divWidth, initDate) {
     document.getElementById('svg').remove();
   }
 
-  console.log('initial data is ');
+  console.log('chart is receiving following risk array:');
   console.log(riskObj);
+
   initDate = new Date(initDate);
 
   // let test = new DinitDate.replace(/\s/, 'T')+'Z')
@@ -65,8 +66,6 @@ export const Chart = function(divId, riskObj, divWidth, initDate) {
     d.risk = +d.risk.toFixed(3);
   });
 
-  console.log(riskObj);
-
   x.domain(
     extent(riskObj, function(d) {
       return d.date;
@@ -75,6 +74,9 @@ export const Chart = function(divId, riskObj, divWidth, initDate) {
   y.domain([0.1, 2.5]); // explicitly set the y axis scale to start at .1 and go up to 2.5
   x2.domain(x.domain());
   y2.domain(y.domain());
+
+  console.log('domain is');
+  console.log(x.domain());
 
   let dots, graph, tooltip;
 
