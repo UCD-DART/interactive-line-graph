@@ -5,6 +5,8 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 let geoJson;
 
+const formatDate = d3.timeFormat('%Y-%m-%d');
+
 const service = {
   getFeatures: () => axios({ url: 'http://maps.calsurv.org/zika/layer' }),
   getData: city =>
@@ -30,7 +32,7 @@ async function getMyData() {
     const layer = await service.getFeatures(); // get an initial list of all cities in the gateway
     let features = layer.data.features;
 
-    for (let i = 0; i < features.length; i++) {
+    for (let i = 0; i < 200; i++) {
       let feature = features[i];
       const id = feature.id;
       let cityData = await service.getDataById(id);
@@ -38,7 +40,7 @@ async function getMyData() {
       if (cityData.data.length > 1 && cityData.status === 200) {
         let riskObj = cityData.data.map(datum => {
           return {
-            date: new Date(datum.date),
+            date: formatDate(new Date(datum.date)),
             risk: datum.risk
           };
         });
