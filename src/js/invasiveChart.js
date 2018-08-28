@@ -26,7 +26,6 @@ export const InvasiveGraph = function(dataObj, species, initDate, finalDate) {
   // if (document.getElementById("svg")) {
   //   document.getElementById("svg").remove();
   // }
-
   let divWidth = document.getElementById('chart--invasive').clientWidth;
 
   let svg = select('#chart--invasive')
@@ -46,19 +45,6 @@ export const InvasiveGraph = function(dataObj, species, initDate, finalDate) {
   let graph;
 
   let data = [];
-  // dataObj.forEach(d => {
-  //   let obj = {};
-  //   obj.date = new Date(d.start_date);
-  //   obj.collections = +d["Total collections"] || 0;
-  //   if (species === "aegypti") {
-  //     obj.growth = +d["Ae. aegypti daily population growth"] || 0;
-  //     obj.aegypti = +d["Ae. aegypti"] || 0;
-  //   } else {
-  //     obj.growth = +d["Ae. albopictus daily population growth"] || 0;
-  //     obj.aegypti = +d["Ae. albopictus"] || 0;
-  //   }
-  //   data.push(obj);
-  // });
   dataObj[species].forEach(d => {
     let obj = {};
     obj.date = new Date(d.date) || new Date('01-01-2015');
@@ -316,7 +302,7 @@ export const InvasiveGraph = function(dataObj, species, initDate, finalDate) {
 
     // select('.selection').style('fill', 'red');
     // console.log(`start: ${startDate}, end: ${endDate} `);
-    console.log(startDate, endDate);
+    // console.log(startDate, endDate);
     setBrush();
   }
   // const tooltip = select("#graph")
