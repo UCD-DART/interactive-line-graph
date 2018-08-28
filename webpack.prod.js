@@ -4,7 +4,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: {
-    // zika: './src/js/zika.js',
+    zika: './src/js/zika.js',
     invasive: './src/js/invasive.js'
   },
   output: {
