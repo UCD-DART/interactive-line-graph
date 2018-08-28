@@ -16,6 +16,7 @@ let riskObj = {};
 let cityDetails = [];
 
 console.log('testing new time format function!');
+console.log(data);
 
 const formatDate = timeFormat('%b %d, %Y');
 
