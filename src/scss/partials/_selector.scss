@@ -4,152 +4,73 @@
   margin-bottom: 0px;
 
   .card {
-    display: grid;
-    grid-template-columns: 5fr 4fr;
-    // align-content: space-between;
-    // grid-gap: 0px;
+    //containing card
+    display: flex;
+    justify-content: space-around;
     height: 80px;
-  }
 
-  .selector__mosquitos {
-    font-size: 18px;
-    font-style: italic;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 0px;
-    align-items: center;
-
-    //the mosquito toggle container label
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 100px;
-      height: 34px;
-      margin: 0 auto;
-      // border: 1px solid green;
-
-      input {
-        display: none;
-      }
-    }
-
-    /* The actual toggle element */
-    .mosquito-toggle {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: $red;
-      border-radius: 35px;
-
-      @at-root #{&}:before {
-        border-radius: 50%;
-      }
-      -webkit-transition: 1s;
-      transition: 1s;
-
-      @at-root #{&}:before {
-        position: absolute;
-        content: "";
-        height: 26px;
-        width: 30px;
-        left: 4px;
-        bottom: 4px;
-        background-color: white;
-        -webkit-transition: 1s;
-        transition: 1s;
-      }
-    }
-
-    //mosquito icons on either side of toggle
-    .mosquito {
+    .selector__mosquitos {
+      //first half of the selector card holding the three mosquitos
+      width: 60%;
       display: flex;
+      border: 0px solid blue;
+      justify-content: space-around;
       align-items: center;
-      // border: 1px dashed black;
 
-      svg {
-        height: 40px;
-        width: 40px;
-      }
-    }
-    .mosquito--left {
-      justify-content: flex-end;
-      color: $red;
-      fill: $red;
-    }
-    .mosquito--right {
-      justify-content: flex-start;
-      color: $blue;
-      fill: $blue;
-    }
-
-    input:checked + .mosquito-toggle {
-      background-color: $blue;
-    }
-
-    input:focus + .mosquito-toggle {
-      box-shadow: 0 0 1px $blue;
-    }
-
-    input:checked + .mosquito-toggle:before {
-      -webkit-transform: translateX(59px);
-      -ms-transform: translateX(59px);
-      transform: translateX(60px);
-    }
-  }
-
-  .invasiveChart__legend {
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    font-size: 18px;
-
-    @at-root #{&}--item {
-      display: grid;
-      grid-template-columns: 1fr 3fr;
-      text-align: left;
-      margin-top: 5px;
-      text-align: left;
-    }
-
-    @at-root #{&}-box {
-      height: 25px;
-      width: 25px;
-      margin: 0 auto;
-
-      @at-root #{&}--total-collections {
-        background-color: $purple;
+      @at-root #{&}--mosquito {
+        // each individual mosquito div
+        border: 0px dashed green;
+        align-items: center;
+        padding: 15px;
       }
 
-      @at-root #{&}--growth {
-        background: $light-blue;
-        border-radius: 0;
-        width: 45px;
-        height: 5px;
-        margin-top: 10px;
+      #aegypti {
+        background-color: $red;
+      }
+      #albopictus {
+        background-color: $blue;
+      }
+      #notoscriptus {
+        background-color: $orange;
+      }
+
+      .active {
+        border: 4px solid black;
+        color: white;
       }
     }
-  }
-}
 
-.beta-selector {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 5px;
-  div {
-    height: 25px;
-    margin-left: 5px;
-    padding: 15px;
-    font-weight: bold;
-  }
-  #pickAegypti {
-    background-color: $red;
-  }
-  #pickAlbo {
-    background-color: $blue;
-  }
-  #pickNoto {
-    background-color: $yellow;
+    .invasiveChart__legend {
+      //second half of the selector holidng totals and growth keys
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-evenly;
+      align-items: center;
+      @at-root #{&}--item {
+        //the container around the box and the label
+        display: flex;
+        justify-content: flex-start;
+
+        .invasiveChart__legend-box {
+          margin-right: 10px;
+        }
+        .invasiveChart__legend-box--total-collections {
+          height: 25px;
+          width: 25px;
+          background: $purple;
+          margin-right: 45px;
+        }
+        .invasiveChart__legend-box--growth {
+          background: $light-blue;
+          border-radius: 0;
+          width: 45px;
+          height: 5px;
+          margin-top: 10px;
+        }
+        .invasiveChart__legend-label {
+        }
+      }
+    }
   }
 }

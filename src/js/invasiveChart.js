@@ -15,65 +15,50 @@ import {
   transition,
   event,
   zoomIdentity
-} from "d3";
-import * as d3 from "d3";
-import { colors } from "./helpers";
+} from 'd3';
+import * as d3 from 'd3';
+import { colors } from './helpers';
 
-const formatDate = timeFormat("%b %d, %Y");
+const formatDate = timeFormat('%b %d, %Y');
 
-export const InvasiveGraph = function(dataObj, species) {
-  document.getElementById("chart--invasive").innerHTML = ""; // short term emptying thing for non-existent cities
+export const InvasiveGraph = function(dataObj, species, initDate, finalDate) {
+  document.getElementById('chart--invasive').innerHTML = ''; // short term emptying thing for non-existent cities
   // if (document.getElementById("svg")) {
   //   document.getElementById("svg").remove();
   // }
+  let divWidth = document.getElementById('chart--invasive').clientWidth;
 
-  let divWidth = document.getElementById("chart--invasive").clientWidth;
-
-  let svg = select("#chart--invasive")
-    .append("svg")
-    .attr("height", 400) // height should stay constant or else the axes get difficult to work with
-    .attr("width", divWidth) //chart width depends on
-    .attr("class", "card")
-    .attr("id", "svg");
+  let svg = select('#chart--invasive')
+    .append('svg')
+    .attr('height', 400) // height should stay constant or else the axes get difficult to work with
+    .attr('width', divWidth) //chart width depends on
+    .attr('class', 'card')
+    .attr('id', 'svg');
 
   const margin = { top: 40, right: 0, bottom: 110, left: 70 }, // for main graph
     margin2 = { top: 320, right: 50, bottom: 40, left: 50 }, //for context
-    height = +svg.attr("height") - margin.top - margin.bottom,
-    width = +svg.attr("width") - margin.left - margin.right,
-    height2 = +svg.attr("height") - margin2.top - margin2.bottom,
+    height = +svg.attr('height') - margin.top - margin.bottom,
+    width = +svg.attr('width') - margin.left - margin.right,
+    height2 = +svg.attr('height') - margin2.top - margin2.bottom,
     chartWidth = width - margin.left - margin.right;
 
   let graph;
 
   let data = [];
-  // dataObj.forEach(d => {
-  //   let obj = {};
-  //   obj.date = new Date(d.start_date);
-  //   obj.collections = +d["Total collections"] || 0;
-  //   if (species === "aegypti") {
-  //     obj.growth = +d["Ae. aegypti daily population growth"] || 0;
-  //     obj.aegypti = +d["Ae. aegypti"] || 0;
-  //   } else {
-  //     obj.growth = +d["Ae. albopictus daily population growth"] || 0;
-  //     obj.aegypti = +d["Ae. albopictus"] || 0;
-  //   }
-  //   data.push(obj);
-  // });
   dataObj[species].forEach(d => {
     let obj = {};
-    obj.date = new Date(d.date) || new Date("01-01-2015");
+    obj.date = new Date(d.date) || new Date('01-01-2015');
     obj.collections = +d.total || 0;
     obj.growth = +d.growth || 0;
     obj.aegypti = +d.species || 0;
-    data.push(obj)
-  })
-  console.log(data);
+    data.push(obj);
+  });
 
   //draw the g container
   const g = svg
-    .append("g")
-    .attr("class", "container")
-    .attr("transform", `translate( ${margin.left}, ${margin.top})`);
+    .append('g')
+    .attr('class', 'container')
+    .attr('transform', `translate( ${margin.left}, ${margin.top})`);
 
   //set the scales for the area graphs
   const x = scaleTime().range([0, chartWidth]);
@@ -87,9 +72,14 @@ export const InvasiveGraph = function(dataObj, species) {
     .clamp(true);
 
   x.domain(extent(data, d => d.date));
-  x2.domain(x.domain());
+  x2.domain([new Date('2012-01-01'), new Date()]).clamp(true);
   y.domain([0, d3.max(data, d => d.growth) * 1.1]);
   y2.domain(y.domain());
+
+  const minDate = x.domain()[0];
+  const maxDate = x.domain()[1];
+  let startDate = initDate || minDate;
+  let endDate = finalDate || maxDate;
 
   //SET AXES
   const xAxis = axisBottom(x),
@@ -118,7 +108,7 @@ export const InvasiveGraph = function(dataObj, species) {
   const startingArea = data.map(d => {
     return {
       date: d.date,
-      growth: d.growth
+      growth: 0
     };
   });
 
@@ -127,126 +117,126 @@ export const InvasiveGraph = function(dataObj, species) {
     .scaleExtent([1, Infinity])
     .translateExtent([[0, 0], [chartWidth, height]])
     .extent([[0, 0], [chartWidth, height]])
-    .on("zoom", zoomed);
+    .on('zoom', zoomed);
 
   // INIT BRUSH just on X axis
   let brushStart, brushEnd;
   const brush = brushX()
     .extent([[0, 0], [chartWidth, height2]])
-    .on("brush end", brushed);
+    .on('brush end', brushed);
 
   function brushed() {
-    if (event.sourceEvent && event.sourceEvent.type === "zoom") return; // ignore brush-by-zoom
+    if (event.sourceEvent && event.sourceEvent.type === 'zoom') return; // ignore brush-by-zoom
     const s = event.selection || x2.range();
     // console.log(x.invert(s[0]));
     x.domain(s.map(x2.invert, x2));
-    select(".graph")
+    select('.graph')
       .datum(data)
-      .select(".line")
-      .attr("d", growthLine);
+      .select('.line')
+      .attr('d', growthLine);
     // console.log(area);
 
-    d3.selectAll(".collectionBar").attr("x", d => x(d.data.date)).attr('width', calculateAWeek());
-    selectAll(".miniCollectionBar").attr("x", d => x2(d.data.date));
+    d3
+      .selectAll('.collectionBar')
+      .attr('x', d => x(d.data.date))
+      .attr('width', calculateAWeek());
+    selectAll('.miniCollectionBar').attr('x', d => x2(d.data.date));
 
-    select(".focus")
-      .select(".axis--x")
+    select('.focus')
+      .select('.axis--x')
       .call(xAxis);
     svg
-      .select(".zoom")
-      .call(
-        zoom.transform,
-        zoomIdentity.scale(chartWidth / (s[1] - s[0])).translate(-s[0], 0)
-      );
+      .select('.zoom')
+      .call(zoom.transform, zoomIdentity.scale(chartWidth / (s[1] - s[0])).translate(-s[0], 0));
   }
 
   function zoomed() {
-    if (event.sourceEvent && event.sourceEvent.type === "brush") return; // ignore zoom-by-brush
+    if (event.sourceEvent && event.sourceEvent.type === 'brush') return; // ignore zoom-by-brush
     const t = event.transform;
     x.domain(t.rescaleX(x2).domain());
 
-    select(".graph")
-      .select(".line")
-      .attr("d", growthLine);
+    select('.graph')
+      .select('.line')
+      .attr('d', growthLine);
 
-    select(".focus")
-      .select(".axis--x")
+    select('.focus')
+      .select('.axis--x')
       .call(xAxis);
 
-    selectAll(".collectionBar").attr("x", d => x(d.data.date));
+    selectAll('.collectionBar').attr('x', d => x(d.data.date));
     // This call here was messing up the brush.  Works on Zika map.  IF brush is broken, this might be necessary
-    select(".context")
-      .select(".brush")
+    select('.context')
+      .select('.brush')
       .call(brush.move, x.range().map(t.invertX, t));
   }
 
   const container = svg
-    .append("g")
-    .attr("class", "chartContainer")
-    .attr("id", "chartContainer")
-    .attr("height", +svg.attr("height"))
-    .attr("width", +svg.attr("width"));
+    .append('g')
+    .attr('class', 'chartContainer')
+    .attr('id', 'chartContainer')
+    .attr('height', +svg.attr('height'))
+    .attr('width', +svg.attr('width'));
 
   //make only the needed SVG visible
   //append the top clip path to the svg, give it the clip path attribute linked to the clip element above
   const clip = container
-    .append("defs")
-    .append("svg:clipPath")
-    .attr("id", "clip")
-    .append("svg:rect")
-    .attr("width", chartWidth)
-    .attr("height", height)
-    .attr("x", 0)
-    .attr("y", 0);
+    .append('defs')
+    .append('svg:clipPath')
+    .attr('id', 'clip')
+    .append('svg:rect')
+    .attr('width', chartWidth)
+    .attr('height', height)
+    .attr('x', 0)
+    .attr('y', 0);
 
   graph = container
-    .append("g")
-    .attr("class", "graph")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-    .attr("clip-path", "url(#clip)");
+    .append('g')
+    .attr('class', 'graph')
+    .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+    .attr('clip-path', 'url(#clip)');
 
   // append the top chart
   const focus = container
-    .append("g")
-    .attr("class", "focus")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    .append('g')
+    .attr('class', 'focus')
+    .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
   // append the bottom chart
   const context = container
-    .append("g")
-    .attr("class", "context")
-    .attr("id", "context")
-    .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
+    .append('g')
+    .attr('class', 'context')
+    .attr('id', 'context')
+    .attr('transform', 'translate(' + margin2.left + ',' + margin2.top + ')');
 
   //draw the axes
   focus
-    .append("g")
-    .attr("transform", `translate(0, ${height})`)
-    .attr("class", "axis--x")
+    .append('g')
+    .attr('transform', `translate(0, ${height})`)
+    .attr('class', 'axis--x')
     .call(axisBottom(x).ticks(6));
   focus
-    .append("g")
+    .append('g')
     .call(axisRight(y))
-    .attr("transform", `translate( ${chartWidth}, 0)`)
-    .attr("class", "axis axis--growth")
-    .append("text")
-    .attr("id", "growth-label")
-    .attr("fill", colors["cyan"])
-    .attr("transform", "rotate(-90), translate(-10,35)")
-    .attr("y", 0)
-    .attr("dy", "0.7em")
-    .attr("text-anchor", "end")
-    .text("Daily Population Growth (%)");
+    .attr('transform', `translate( ${chartWidth}, 0)`)
+    .attr('class', 'axis axis--growth')
+    .append('text')
+    .attr('id', 'growth-label')
+    .attr('fill', colors['cyan'])
+    .attr('transform', 'rotate(-90), translate(-10,35)')
+    .attr('y', 0)
+    .attr('dy', '0.7em')
+    .attr('text-anchor', 'end')
+    .text('Daily Population Growth (%)');
 
   let mini = context
-    .append("path")
+    .append('path')
     .datum(startingArea)
-    .attr("class", "area context-area")
-    .attr("fill", colors["cyan"])
-    .attr("d", area2)
+    .attr('class', 'area context-area')
+    .attr('fill', colors['cyan'])
+    .attr('d', area2)
     .transition()
     .duration(2500)
-    .attrTween("d", function() {
+    .attrTween('d', function() {
       const interpolator = d3.interpolateArray(startingArea, data);
       return function(t) {
         return area2(interpolator(t));
@@ -255,34 +245,65 @@ export const InvasiveGraph = function(dataObj, species) {
 
   // bottom chart gets x axis with xAxis2
   context
-    .append("g")
-    .attr("class", "axis axis--x")
-    .attr("transform", "translate(0," + height2 + ")")
+    .append('g')
+    .attr('class', 'axis axis--x')
+    .attr('transform', 'translate(0,' + height2 + ')')
     .call(xAxis2)
-    .selectAll("text")
-    .attr("transform", "rotate(-20)")
-    .style("text-anchor", "end");
+    .selectAll('text')
+    .attr('transform', 'rotate(-20)')
+    .style('text-anchor', 'end');
 
   // big gray brush element is applied to the bottom chart
   context
-    .append("g")
-    .attr("class", "brush")
+    .append('g')
+    .attr('class', 'brush')
     .call(brush)
     .call(brush.move, x.range());
 
   svg
-    .append("rect")
-    .attr("class", "zoom")
-    .attr("width", chartWidth)
-    .attr("height", height)
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+    .append('rect')
+    .attr('class', 'zoom')
+    .attr('width', chartWidth)
+    .attr('height', height)
+    .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
     .call(zoom);
 
-  brushStart = x(new Date("04-15-2017"));
-  brushEnd = x(new Date("11-15-2017"));
+  brushStart = x(new Date('04-15-2017'));
+  brushEnd = x(new Date('11-15-2017'));
 
   function setBrush() {
-    select(".brush").call(brush.move, [brushStart, brushEnd]);
+    select('.brush').call(brush.move, [x2(startDate), x2(endDate)]);
+  }
+
+  function setDates(newStart, newEnd) {
+    newStart = new Date(newStart);
+    newEnd = new Date(newEnd);
+
+    // startDate = newStart < minDate ? minDate : newStart;
+    // endDate = newEnd > maxDate ? maxDate : newEnd;
+    if (newStart < minDate) {
+      startDate = minDate;
+      select('.selection').classed('outOfBounds', true);
+      setTimeout(() => {
+        select('.selection').classed('outOfBounds', false);
+      }, 300);
+    } else startDate = newStart;
+
+    if (newEnd > maxDate) {
+      endDate = maxDate;
+      select('.selection').classed('outOfBounds', true);
+      setTimeout(() => {
+        select('.selection').classed('outOfBounds', false);
+      }, 300);
+    } else if (newEnd < minDate) {
+      endDate = new Date(minDate);
+      endDate.setDate(endDate.getDate() + 10); // add a tiny space for the brush to still exist
+    } else endDate = newEnd;
+
+    // select('.selection').style('fill', 'red');
+    // console.log(`start: ${startDate}, end: ${endDate} `);
+    // console.log(startDate, endDate);
+    setBrush();
   }
   // const tooltip = select("#graph")
   //     .append("div")
@@ -382,7 +403,7 @@ export const InvasiveGraph = function(dataObj, species) {
   // }
 
   //draw the stacked bars
-  const stack = d3.stack().keys(["aegypti", "collections"]);
+  const stack = d3.stack().keys(['aegypti', 'collections']);
   let dataStack = stack(data);
 
   let yMax = d3.max(dataStack, y => d3.max(y, d => d[1]));
@@ -398,54 +419,54 @@ export const InvasiveGraph = function(dataObj, species) {
     .range([height2, 0]);
 
   focus
-    .append("g")
+    .append('g')
     .call(collectionsAxis)
-    .attr("class", "axis")
-    .append("text")
-    .attr("transform", "rotate(-90), translate(0,-45)")
+    .attr('class', 'axis')
+    .append('text')
+    .attr('transform', 'rotate(-90), translate(0,-45)')
     // .attr("class", "collections--label")
-    .attr("id", "collections-label")
-    .text("Collections");
+    .attr('id', 'collections-label')
+    .text('Collections');
 
   function calculateAWeek() {
     // the x scaled version of one week minus one pixel
-    return x(new Date("2018-01-08")) - x(new Date("2018-01-01"));
+    return x(new Date('2018-01-08')) - x(new Date('2018-01-01'));
   }
 
   // console.log("one weeks width is " + oneWeek);
-  var barColors = [colors["dark-red"], colors["purple"]];
-  if (species === "albopictus") {
-    barColors[0] = colors["blue"];
-  } else if (species === "notoscriptus") {
-    barColors[0] = colors["yellow"]
+  var barColors = [colors['dark-red'], colors['purple']];
+  if (species === 'albopictus') {
+    barColors[0] = colors['blue'];
+  } else if (species === 'notoscriptus') {
+    barColors[0] = colors['orange'];
   }
   var series = graph
-    .selectAll(".series")
+    .selectAll('.series')
     .data(dataStack)
     .enter()
-    .append("g")
-    .attr("fill", (d, i) => barColors[i])
-    .attr("id", (d, i) => i);
+    .append('g')
+    .attr('fill', (d, i) => barColors[i])
+    .attr('id', (d, i) => i);
 
   var rect = series
-    .selectAll("rect")
+    .selectAll('rect')
     .data(d => d)
     .enter()
-    .append("rect")
-    .attr("x", d => x(new Date(d.data.date)))
+    .append('rect')
+    .attr('x', d => x(new Date(d.data.date)))
     // .attr("y", d => collectionsScale(d[1]))
-    .attr("y", d => collectionsScale(d[0]))
-    .attr("width", calculateAWeek())
+    .attr('y', d => collectionsScale(d[0]))
+    .attr('width', calculateAWeek())
     // .attr("height", d => height - collectionsScale(d[1] - d[0]))
-    .attr("height", 0)
-    .attr("class", function() {
+    .attr('height', 0)
+    .attr('class', function() {
       if (this.parentElement.id == 0) {
-        return "collectionBar collectionBar__aegypti";
-      } else return "collectionBar collectionBar__total";
+        return 'collectionBar collectionBar__aegypti';
+      } else return 'collectionBar collectionBar__total';
     })
     // .on("mouseover", d => console.log(d));
-    .on("mouseover", d => tipMouseover(d))
-    .on("mouseout", d => tipMouseout(tooltip));
+    .on('mouseover', d => tipMouseover(d))
+    .on('mouseout', d => tipMouseout(tooltip));
 
   // .on('mouseover', d => {
   //   tooltip.transition().duration(200).style("opacity", .9);
@@ -457,36 +478,36 @@ export const InvasiveGraph = function(dataObj, species) {
   // .on('mouseout');
 
   var miniSeries = context
-    .selectAll(".series")
+    .selectAll('.series')
     .data(dataStack)
     .enter()
-    .append("g")
-    .attr("fill", (d, i) => barColors[i])
-    .attr("id", (d, i) => `mini${i}`);
+    .append('g')
+    .attr('fill', (d, i) => barColors[i])
+    .attr('id', (d, i) => `mini${i}`);
 
   var miniRects = miniSeries
-    .selectAll("rect")
+    .selectAll('rect')
     .data(d => d)
     .enter()
-    .append("rect")
-    .attr("x", d => x2(new Date(d.data.date)))
-    .attr("y", d => miniCollectionsScale(d[1]))
-    .attr("width", 1)
-    .attr("height", d => height2 - miniCollectionsScale(d[1] - d[0]))
-    .attr("class", function() {
-      if (this.parentElement.id == "mini1") {
-        return "miniCollectionBar miniCollectionBar__aegypti";
-      } else return "miniCollectionBar miniCollectionBar__total";
+    .append('rect')
+    .attr('x', d => x2(new Date(d.data.date)))
+    .attr('y', d => miniCollectionsScale(d[1]))
+    .attr('width', 1)
+    .attr('height', d => height2 - miniCollectionsScale(d[1] - d[0]))
+    .attr('class', function() {
+      if (this.parentElement.id == 'mini1') {
+        return 'miniCollectionBar miniCollectionBar__aegypti';
+      } else return 'miniCollectionBar miniCollectionBar__total';
     });
 
   let startingLine = [[0, 0], [200, 100]];
 
   let growthLineElement = graph
-    .append("path")
+    .append('path')
     .datum(data)
-    .attr("class", "line")
-    .attr("d", growthLine)
-    .style("stroke", colors["light-blue"]);
+    .attr('class', 'line')
+    .attr('d', growthLine)
+    .style('stroke', colors['light-blue']);
 
   var t = d3
     .transition()
@@ -494,43 +515,31 @@ export const InvasiveGraph = function(dataObj, species) {
     .duration(1000);
 
   d3
-    .selectAll(".collectionBar__aegypti")
+    .selectAll('.collectionBar__aegypti')
     .transition(t)
-    .attr("height", d => height - collectionsScale(d[1] - d[0]))
-    .attr("y", d => collectionsScale(d[1]));
+    .attr('height', d => height - collectionsScale(d[1] - d[0]))
+    .attr('y', d => collectionsScale(d[1]));
   d3
-    .selectAll(".collectionBar__total")
+    .selectAll('.collectionBar__total')
     .transition()
     .delay(1800)
     .duration(800)
-    .attr("height", d => height - collectionsScale(d[1] - d[0]))
-    .attr("y", d => collectionsScale(d[1]));
+    .attr('height', d => height - collectionsScale(d[1] - d[0]))
+    .attr('y', d => collectionsScale(d[1]));
 
-  let tooltip = select("#chart--invasive")
-    .append("div")
-    .attr("class", "toolTip toolTip-invasive")
-    .style("opacity", 0);
-
-  // function redrawTooltip() {
-  //   if (document.querySelector(".toolTip")) {
-  //     select(".toolTip").remove();
-  //   }
-
-  //   tooltip = select("#chart--invasive")
-  //     .append("div")
-  //     .attr("class", "toolTip")
-  //     .style("opacity", 0);
-  // }
+  let tooltip = select('#chart--invasive')
+    .append('div')
+    .attr('class', 'toolTip toolTip-invasive')
+    .style('opacity', 0);
 
   // console.log(window.visualViewport.width);
   function tipMouseover(d) {
-    // const rightEdge = window.visualViewport.width;
-
-    // let leftPos = event.pageX + 300 > rightEdge ? rightEdge - 300 : event.pageX;
-
-    // if (event.pageX + 300 > rightEdge) {
-    //   leftPos = rightEdge - 300;
-    // } else leftPos = event.pageX;
+    //to draw the tool tip, we want the full tooltip to remain visible no matter where you're hovering
+    // so we calculate where the right edge of the browser is, and make sure the left position of hte tooltip
+    // is at least 400px away from that spot
+    const rightEdge = window.visualViewport.width;
+    let leftPos = event.pageX + 300 > rightEdge ? rightEdge - 300 : event.pageX;
+    leftPos += 'px';
 
     const html = `
         <div class="toolTip-invasive__data">
@@ -538,14 +547,12 @@ export const InvasiveGraph = function(dataObj, species) {
             <div class="toolTip-invasive__data--collections--total"> ${
               d.data.collections
             } Other Collections</div>
-            <div class="toolTip-invasive__data--collections--aegypti"> ${
-              d.data.aegypti
-            } Aegypti Collections</div>
+            <div class="toolTip-invasive__data--collections--${species}"> ${
+      d.data.aegypti
+    } ${species} Collections</div>
           </div>
           <div class="toolTip-invasive__data--growth">
-            <div class="toolTip-invasive__data--growth--value">${
-              d.data.growth
-            }%</div>
+            <div class="toolTip-invasive__data--growth--value">${d.data.growth}%</div>
             <div class="toolTip-invasive__data--growth--label">Projected Growth</div>
           </div>
         </div>
@@ -553,20 +560,26 @@ export const InvasiveGraph = function(dataObj, species) {
           ${formatDate(d.data.date)}
         </div>
     `;
+    const y = d3.event.pageY - 200 + 'px';
 
     tooltip
       .html(html)
-      .style("left", "800px")
-      .style("top", "200px")
+      .style('left', leftPos)
+      .style('top', y)
       .transition()
       .duration(500)
-      .style("opacity", 0.9);
+      .style('opacity', 0.9);
   }
 
   function tipMouseout(tooltip) {
     tooltip
       .transition()
       .duration(300)
-      .style("opacity", 0);
+      .style('opacity', 0);
   }
+
+  return {
+    setBrush: setBrush,
+    setDates: setDates
+  };
 };
