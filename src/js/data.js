@@ -32,7 +32,7 @@ async function getMyData() {
     const layer = await service.getFeatures(); // get an initial list of all cities in the gateway
     let features = layer.data.features;
 
-    for (let i = 0; i < 200; i++) {
+    for (let i = 0; i < features.length; i++) {
       let feature = features[i];
       const id = feature.id;
       let cityData = await service.getDataById(id);
