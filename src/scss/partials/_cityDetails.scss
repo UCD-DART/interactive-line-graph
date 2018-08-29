@@ -3,17 +3,23 @@
 }
 
 .row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  justify-content: space-around;
+  // grid-template-columns: 1fr 1fr;
   padding: 10px 0;
 }
 
 .row4 {
-  display: grid;
-  grid-template-columns: repeat(4, 120px);
+  display: flex;
+  flex-wrap: wrap;
+  // grid-template-columns: repeat(4, 120px);
   justify-content: space-around;
   margin: 5px 0;
   padding-bottom: 15px;
+
+  div {
+    min-width: 250px;
+  }
 }
 
 .label {
@@ -35,10 +41,6 @@
 #riskValue {
   font-size: 40px;
   color: $dark-red;
-}
-
-.smallItem {
-  // width: 100px;
 }
 
 .invasive {
