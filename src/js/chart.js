@@ -7,7 +7,6 @@ import {
   select,
   axisBottom,
   axisLeft,
-  axisRight,
   brushX,
   zoom as d3zoom,
   line as d3line,
@@ -18,7 +17,7 @@ import {
   event,
   zoomIdentity
 } from 'd3';
-import * as d3 from 'd3';
+// import * as d3 from 'd3';
 
 import { colors, labelZikaRisk } from './helpers';
 
@@ -27,9 +26,6 @@ export const Chart = function(divId, riskObj, divWidth, initDate) {
   if (document.getElementById('svg')) {
     document.getElementById('svg').remove();
   }
-
-  console.log('chart is receiving following risk array:');
-  console.log(riskObj);
 
   initDate = new Date(initDate);
 
@@ -74,9 +70,6 @@ export const Chart = function(divId, riskObj, divWidth, initDate) {
   y.domain([0.1, 2.5]); // explicitly set the y axis scale to start at .1 and go up to 2.5
   x2.domain(x.domain());
   y2.domain(y.domain());
-
-  console.log('domain is');
-  console.log(x.domain());
 
   let dots, graph, tooltip;
 
@@ -280,7 +273,7 @@ export const Chart = function(divId, riskObj, divWidth, initDate) {
         { offset: '0%', color: colors['dark-blue'] },
         { offset: '90%', color: colors['dark-blue'] },
         { offset: '90%', color: colors['light-blue'] },
-        { offset: '92%', color: colors["light-colors['dark-blue']"] },
+        { offset: '92%', color: colors['light-colors["dark-blue"]'] },
         { offset: '92%', color: colors['dark-red'] },
         { offset: '100%', color: colors['dark-red'] }
       ])
@@ -333,7 +326,7 @@ export const Chart = function(divId, riskObj, divWidth, initDate) {
       .attr('cy', d => y(d.risk))
       .attr('r', 5)
       .on('mouseover', d => tipMouseover(d))
-      .on('mouseout', d => tipMouseout(tooltip))
+      .on('mouseout', () => tipMouseout(tooltip))
       .style('cursor', 'pointer')
       .attr('fill', d => labelZikaRisk(d.risk))
       .attr('stroke', d => labelZikaRisk(d.risk));
