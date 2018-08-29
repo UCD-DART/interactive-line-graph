@@ -6,18 +6,12 @@ import { DualSlider } from './slider';
 import { timeFormat } from 'd3-time-format';
 import axios from 'axios';
 import 'babel-polyfill'; // for async await
-// import * as geojson from '../constants/separatedTest.json';
-// import * as geojson from '../constants/separatedInvasive.json';
-
-// console.log(geojson);
 
 const go = async () => {
   const geojson = await axios
     .get('https://s3-us-west-2.amazonaws.com/zika-map/separatedinvasive.json')
     .then(res => res.data)
     .catch(err => console.error('wtf' + err));
-
-  console.log(geojson);
 
   const formatDate = timeFormat('%b %d, %Y');
 
@@ -154,7 +148,6 @@ const go = async () => {
   // Initialize Sliders
 
   function initSlider() {
-    console.log('slider init');
     const sliderSections = document.getElementsByClassName('range-slider');
     for (var x = 0; x < sliderSections.length; x++) {
       var sliders = sliderSections[x].getElementsByTagName('input');
@@ -191,3 +184,134 @@ const go = async () => {
 };
 
 go();
+
+// axios
+//   .get('https://maps.calsurv.org/invasive/layer')
+//   .then(res => {
+//     // console.log(res.data.features);
+//     const features = res.data.features;
+//     // console.log(features);
+//     let checkedCities = new Set();
+//     let badCharacters = [];
+//     const fetchOptions = {
+//       credentials: 'include',
+//       headers: {},
+//       referrer: 'https://maps.calsurv.org/invasive',
+//       referrerPolicy: 'no-referrer-when-downgrade',
+//       body: null,
+//       method: 'GET',
+//       mode: 'cors'
+//     };
+//     function generateFeatures() {
+//       let finalFeatures = [];
+//       for (let i = 0; i < features.length; i++) {
+//         const feature = features[i]; // {geometry, properties}
+//         const city = feature.properties.city;
+//         const agency = feature.properties.agency;
+//         //if we are not going to make a request due to parameter names, just push empty data
+//         const parameters = city + ' ' + agency;
+//         if (parameters.includes('/') || parameters.includes('(') || parameters.includes('.')) {
+//           // console.log("found a bad character in " + city);
+//           badCharacters.push(city);
+//           // console.log(badCharacters);
+//           feature.properties.data = [];
+//           finalFeatures.push(feature);
+//           continue;
+//         }
+//         //lets get some collections and reproduction data!
+//         const aegyptiURL = `https://maps.calsurv.org/invasive/data/${agency}/${city}/aegypti`;
+//         const albosURL = `https://maps.calsurv.org/invasive/data/${agency}/${city}/albopictus`;
+//         const notoURL = `https://maps.calsurv.org/invasive/data/${agency}/${city}/notoscriptus`;
+//         const rrURL = `https://maps.calsurv.org/invasive/data/${agency}/${city}/rr`;
+//         let aegyptiData, albopictusData, notoscriptusData;
+//         async function getAndMergeData() {
+//           //grab the aegypti and the albos data
+//           aegyptiData = await fetch(aegyptiURL, fetchOptions)
+//             .then(res => res.json())
+//             .catch(err => console.log('aegypti fetch request fucked up'));
+//           albopictusData = await fetch(albosURL, fetchOptions)
+//             .then(res => res.json())
+//             .catch(err => console.log('albos fetch request fucked up'));
+//           // notoscriptusData = await fetch(notoURL, fetchOptions)
+//           //   .then(res => res.json())
+//           //   .catch(err => console.log("noto fetch request fucked up"));
+//           let data = {};
+//           data['aegypti'] = aegyptiData.map(obj => {
+//             let simpler = {
+//               date: obj['end_date'],
+//               growth: obj['Ae. aegypti daily population growth'],
+//               species: obj['Ae. aegypti'],
+//               total: obj['Total collections']
+//             };
+//             return simpler;
+//           });
+//           data['albopictus'] = albopictusData.map(obj => {
+//             let simpler = {
+//               date: obj['end_date'],
+//               growth: obj['Ae. albopictus daily population growth'],
+//               species: obj['Ae. albopictus'],
+//               total: obj['Total collections']
+//             };
+//             return simpler;
+//           });
+//           //now either merge the data or just grab the reprostuff
+//           // let merged = [];
+//           // if (!aegyptiData && !albopictusData) {
+//           //   console.log(city + " only has rr data");
+//           //   merged = fetch(rrURL, fetchOptions)
+//           //     .then(res => (merged = res.json()))
+//           //     .catch(err => console.log("backup fetch fucked up" + err));
+//           // } else if (aegyptiData.length - albopictusData.length === 0){
+//           //   for (let i = 0; i < aegyptiData.length; i++) {
+//           //     let obj = Object.assign(aegyptiData[i], albopictusData[i]);
+//           //     merged.push(obj);
+//           //   }
+//           // } else { //less albopictus data than aegypti, have to push aegypti until the offset, then merge them together
+//           //   let offset = aegyptiData.length - albopictusData.length;
+//           //   for (let i = 0; i<offset; i++) {
+//           //     merged.push(aegyptiData[i]);
+//           //   }
+//           //   for (let j=0; j<albopictusData.length; j++) {
+//           //     let obj = Object.assign(aegyptidata[j+offset], albopictusData[j]);
+//           //     merged.push(obj);
+//           //   }
+//           // }
+//           // console.log("finished " + city + ", " + i);
+//           checkedCities.add(i);
+//           console.log(checkedCities.size);
+//           // console.log(`${city} has ${aegyptiData.length} aegyptis, ${albopictusData.length} albos`)
+//           if (checkedCities.size > 1280) {
+//             // if (checkedCities.size === 88) {
+//             console.log('just hit ' + i);
+//             console.log(finalFeatures);
+//           }
+//           // let simplified = merged.map(obj => {
+//           //   let simple = {
+//           //     "aegypti": obj["Ae. aegypti"] || 0,
+//           //     "aegyptiGrowth": obj["Ae. aegypti daily population growth"] || 0,
+//           //     "albo": obj["Ae. albopictus"] || 0,
+//           //     "alboGrowth": obj["Ae. albopictus daily population growth"] || 0,
+//           //     "Total Collections": obj["Total collections"] || 0,
+//           //     "date": obj["end_date"]
+//           //   };
+//           //   return simple;
+//           // })
+//           // return simplified;
+//           return data;
+//         }
+//         async function assignMergedDataToFeature() {
+//           feature.properties.data = await getAndMergeData();
+//         }
+//         assignMergedDataToFeature();
+//         finalFeatures.push(feature);
+//       }
+//       return finalFeatures;
+//     }
+//     async function generateGeoJson() {
+//       const features = await generateFeatures();
+//       console.log('this is supposedly after waiting for generateFeatures to finish');
+//       console.log(features);
+//     }
+//     generateGeoJson();
+//   })
+//   .catch(err => console.log(err));
