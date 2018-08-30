@@ -15,6 +15,8 @@ const go = async () => {
 
   const formatDate = timeFormat('%b %d, %Y');
 
+  console.log(geojson);
+
   const map = new google.maps.Map(document.getElementById('map'), invasiveMapOptions);
 
   //set up some state variables
@@ -94,6 +96,13 @@ const go = async () => {
       props.albopictus_first_found || 'N/A';
     document.getElementById('albopictus_last_found').innerHTML =
       props.albopictus_last_found || 'N/A';
+    document.getElementById('notoscriptus_first_found').innerHTML =
+      props.notoscriptus_first_found || 'N/A';
+    document.getElementById('notoscriptus_last_found').innerHTML =
+      props.notoscriptus_last_found || 'N/A';
+    document.getElementById('notoscriptus_detections').innerHTML =
+      props.notoscriptus_detections || '0';
+
     document.getElementById('agency').innerHTML = props.agency;
     document.getElementById('website').innerHTML = website;
   }
