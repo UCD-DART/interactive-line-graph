@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <title> Invasive Species Map </title>
-  <script src="https://maps.googleapis.com/maps/api/js?libraries=geometry,places&key=AIzaSyBf9C1QEaoX_bJbPjECtwo7iS82IQxJzX8"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?libraries=geometry,places&key=AIzaSyB6VE0EihX0dkM3EiHtKJ62nXCwuFCSqdc"></script>
   <!-- StyleSheet for production -->
   <link rel="stylesheet" href="styles.css">
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"> -->
@@ -75,13 +75,13 @@
         <div class='card'>
 
           <div class="selector__mosquitos">
-            <div class="beta-selector">
-              <div class="selector__mosquitos--mosquito active" id="aegypti">
-                aegypti
-              </div>
-              <div class="selector__mosquitos--mosquito" id="albopictus"> albopictus </div>
-              <div class="selector__mosquitos--mosquito" id="notoscriptus"> notoscriptus </div>
+            <!-- <div class="beta-selector"> -->
+            <div class="selector__mosquitos--mosquito active" id="aegypti">
+              aegypti
             </div>
+            <div class="selector__mosquitos--mosquito" id="albopictus"> albopictus </div>
+            <div class="selector__mosquitos--mosquito" id="notoscriptus"> notoscriptus </div>
+            <!-- </div> -->
 
           </div>
 
@@ -174,22 +174,26 @@
             <tr>
               <th></th>
               <th class="aegypti">Ae. aegypti</th>
-              <th class="albopictus">Ae. Albopictus</th>
+              <th class="albopictus">Ae. albopictus</th>
+              <th class="notoscriptus">Ae. notoscriptus</th>
             </tr>
             <tr>
               <td>Total Detections</td>
-              <td id="aegypti_detections" class="aegypti">50</td>
-              <td id="albopictus_detections" class="albopictus">3</td>
+              <td id="aegypti_detections" class="aegypti detections">50</td>
+              <td id="albopictus_detections" class="albopictus detections">3</td>
+              <td id="notoscriptus_detections" class="notoscriptus detections">0</td>
             </tr>
             <tr>
               <td>First Found</td>
               <td id="aegypti_first_found" class="aegypti">05/02/1988</td>
               <td id="albopictus_first_found" class="albopictus">12/22/1989</td>
+              <td id="notoscriptus_first_found" class="notoscriptus">12/22/1989</td>
             </tr>
             <tr>
               <td>Last Found</td>
               <td id="aegypti_last_found" class="aegypti">01/02/2018</td>
               <td id="albopictus_last_found" class="albopictus">04/05/2017</td>
+              <td id="notoscriptus_last_found" class="notoscriptus">04/05/2017</td>
             </tr>
           </table>
         </div>

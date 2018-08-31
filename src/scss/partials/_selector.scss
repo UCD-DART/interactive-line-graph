@@ -4,109 +4,73 @@
   margin-bottom: 0px;
 
   .card {
-    display: -ms-grid;
-    display: grid;
-    -ms-grid-columns: 1fr 1fr;
-    grid-template-columns: 1fr 1fr;
+    //containing card
+    display: flex;
+    justify-content: space-around;
     height: 80px;
-  }
 
-  .selector__mosquitos {
-    // border: 1px solid green;
-    -ms-grid-column: 1;
-    font-size: 18px;
-    font-style: italic;
-    display: -ms-grid;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 0px;
-    align-items: center;
-  }
+    .selector__mosquitos {
+      //first half of the selector card holding the three mosquitos
+      width: 60%;
+      display: flex;
+      border: 0px solid blue;
+      justify-content: space-around;
+      align-items: center;
 
-  .invasiveChart__legend {
-    // border: 2px solid red;
-    -ms-grid-column: 2;
-    display: -ms-grid;
-    display: grid;
-    -ms-grid-rows: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    font-size: 18px;
-
-    @at-root #{&}--item {
-      display: grid;
-      grid-template-columns: 1fr 3fr;
-      text-align: left;
-      margin-top: 5px;
-      text-align: left;
-      font-size: 14px;
-    }
-
-    @at-root #{&}-box {
-      height: 25px;
-      width: 25px;
-      margin: 0 auto;
-
-      @at-root #{&}--total-collections {
-        background-color: $purple;
+      @at-root #{&}--mosquito {
+        // each individual mosquito div
+        border: 0px dashed green;
+        align-items: center;
+        padding: 15px;
       }
 
-      @at-root #{&}--growth {
-        background: $light-blue;
-        border-radius: 0;
-        width: 45px;
-        height: 5px;
-        margin-top: 10px;
+      #aegypti {
+        background-color: $red;
+      }
+      #albopictus {
+        background-color: $blue;
+      }
+      #notoscriptus {
+        background-color: $orange;
+      }
+
+      .active {
+        border: 4px solid black;
+        color: white;
       }
     }
-  }
 
-  .invasiveChart__legend--item:nth-child(1) {
-    -ms-grid-row: 1;
-    border: 1px solid purple;
-  }
-  .invasiveChart__legend--item:nth-child(2) {
-    -ms-grid-row: 2;
-    border: 3px dashed green;
-  }
-}
+    .invasiveChart__legend {
+      //second half of the selector holidng totals and growth keys
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-evenly;
+      align-items: center;
+      @at-root #{&}--item {
+        //the container around the box and the label
+        display: flex;
+        justify-content: flex-start;
 
-.beta-selector {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: repeat(3, 1fr);
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 5px;
-  box-sizing: border-box;
-
-  :nth-child(1) {
-    -ms-grid-column: 1;
-  }
-  :nth-child(2) {
-    -ms-grid-column: 2;
-  }
-  :nth-child(3) {
-    -ms-grid-column: 3;
-  }
-
-  div {
-    height: 55px;
-    margin-left: 5px;
-    padding: 15px;
-    font-weight: bold;
-    box-sizing: border-box;
-  }
-
-  .active {
-    border: 5px solid black;
-    // box-sizing: border-box;
-  }
-  #aegypti {
-    background-color: $red;
-  }
-  #albopictus {
-    background-color: $blue;
-  }
-  #notoscriptus {
-    background-color: $yellow;
+        .invasiveChart__legend-box {
+          margin-right: 10px;
+        }
+        .invasiveChart__legend-box--total-collections {
+          height: 25px;
+          width: 25px;
+          background: $light-purple;
+          margin-right: 45px;
+        }
+        .invasiveChart__legend-box--growth {
+          background: $light-blue;
+          border-radius: 0;
+          width: 45px;
+          height: 5px;
+          margin-top: 10px;
+        }
+        .invasiveChart__legend-label {
+        }
+      }
+    }
   }
 }

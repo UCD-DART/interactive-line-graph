@@ -15,8 +15,6 @@ let week = 28;
 let riskObj = {};
 let cityDetails = [];
 
-console.log('testing new time format function!');
-
 const formatDate = timeFormat('%b %d, %Y');
 
 // MAP BEHAVIOR

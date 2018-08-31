@@ -54,7 +54,7 @@ async function getMyData() {
       type: 'FeatureCollection',
       features: finalFeatures
     };
-    fs.writeFile(`./currentRisk2.json`, JSON.stringify(geoJson), function(err) {
+    fs.writeFile(`./currentRisk.json`, JSON.stringify(geoJson), function(err) {
       if (err) console.log('writing to disk did not work', err);
     });
     console.log(

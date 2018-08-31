@@ -1,7 +1,7 @@
 .legend {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  width: inherit;
+  display: flex;
+  // grid-template-columns: repeat(4, 1fr);
+  width: 100%;
   margin: 0px auto 10px auto;
   text-align: center;
   height: 40px;
@@ -9,6 +9,7 @@
 }
 
 .legend__item {
+  flex-grow: 1;
   padding: 4px;
   font-weight: bold;
   font-style: italic;
@@ -48,37 +49,38 @@
 // Invasive Legend //
 .invasive__legend {
   // display: flex;
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: repeat(5, 1fr);
-  grid-template-columns: repeat(5, 1fr);
+  display: flex;
+  justify-content: space-between;
+  // -ms-grid-columns: repeat(5, 1fr);
+  // grid-template-columns: repeat(5, 1fr);
   // justify-content: space-evenly;
   height: 40px;
   align-items: center;
 
-  :nth-child(1) {
-    -ms-grid-column: 1;
-  }
-  :nth-child(2) {
-    -ms-grid-column: 2;
-  }
-  :nth-child(3) {
-    -ms-grid-column: 3;
-  }
-  :nth-child(4) {
-    -ms-grid-column: 4;
-  }
-  :nth-child(5) {
-    -ms-grid-column: 5;
-  }
+  // :nth-child(1) {
+  //   -ms-grid-column: 1;
+  // }
+  // :nth-child(2) {
+  //   -ms-grid-column: 2;
+  // }
+  // :nth-child(3) {
+  //   -ms-grid-column: 3;
+  // }
+  // :nth-child(4) {
+  //   -ms-grid-column: 4;
+  // }
+  // :nth-child(5) {
+  //   -ms-grid-column: 5;
+  // }
 
   @at-root #{&}--item {
     // display: flex;
-    display: -ms-grid;
-    border: 1px dashed green;
-    display: grid;
-    -ms-grid-columns: 1fr 2fr;
-    grid-template-columns: 1fr 2fr;
+    // display: -ms-grid;
+    display: flex;
+    border: 0px solid black;
+    overflow: hidden;
+    // -ms-grid-columns: 1fr 2fr;
+    // grid-template-columns: 1fr 2fr;
     justify-content: space-between;
     font-size: 16px;
     align-items: center;
@@ -106,14 +108,12 @@
         background: $blue;
       }
       @at-root #{&}--notoscriptus {
-        background: $yellow;
+        background: $orange;
       }
     }
 
     .invasive__legend-label {
-      -ms-grid-column: 2;
       font-size: 90%;
-      // font-size: responsive;
     }
   }
 }
