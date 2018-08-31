@@ -1,12 +1,14 @@
-var axios = require("axios");
-var d3 = require("d3");
-var fs = require("fs");
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+var axios = require('axios');
+var d3 = require('d3');
+var fs = require('fs');
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 let geoJson;
 
+const formatDate = d3.timeFormat('%Y-%m-%d');
+
 const service = {
-  getFeatures: () => axios({ url: "http://maps.calsurv.org/zika/layer" }),
+  getFeatures: () => axios({ url: 'http://maps.calsurv.org/zika/layer' }),
   getData: city =>
     axios({
       url: `http://maps.calsurv.org/zika/risk/${city}`,
@@ -38,7 +40,7 @@ async function getMyData() {
       if (cityData.data.length > 1 && cityData.status === 200) {
         let riskObj = cityData.data.map(datum => {
           return {
-            date: datum.date,
+            date: formatDate(new Date(datum.date)),
             risk: datum.risk
           };
         });
@@ -49,21 +51,19 @@ async function getMyData() {
     }
 
     geoJson = {
-      type: "FeatureCollection",
+      type: 'FeatureCollection',
       features: finalFeatures
     };
-    let time = new Date();
-    time = time.toJSON().substring(0, 10);
-    fs.writeFile(`./src/js/currentRisk.json`, JSON.stringify(geoJson), function(err) {
-      if (err) console.log("writing to disk did not work");
+    fs.writeFile(`./currentRisk2.json`, JSON.stringify(geoJson), function(err) {
+      if (err) console.log('writing to disk did not work', err);
     });
     console.log(
-      "Finished 💣💣_ ahh yess!!  it worked.  Geojson data contains " +
+      'Finished 💣💣_ ahh yess!!  it worked.  Geojson data contains ' +
         finalFeatures.length +
-        " cities in the file"
+        ' cities in the file'
     );
   } catch (err) {
-    console.log("getData function error: " + err);
+    console.log('getData function error: ' + err);
   }
 }
 
