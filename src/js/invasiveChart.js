@@ -21,12 +21,11 @@ import { colors } from './helpers';
 
 const formatDate = timeFormat('%b %d, %Y');
 
-export const InvasiveGraph = function(dataObj, species, initDate, finalDate) {
+export const InvasiveGraph = function(dataObj, species, initDate, finalDate, divWidth) {
   document.getElementById('chart--invasive').innerHTML = ''; // short term emptying thing for non-existent cities
   // if (document.getElementById("svg")) {
   //   document.getElementById("svg").remove();
   // }
-  let divWidth = document.getElementById('chart--invasive').clientWidth;
 
   let svg = select('#chart--invasive')
     .append('svg')
