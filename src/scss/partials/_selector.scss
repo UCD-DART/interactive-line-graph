@@ -7,6 +7,7 @@
     //containing card
     display: flex;
     justify-content: space-around;
+    align-content: center;
     height: 80px;
 
     .selector__mosquitos {
@@ -70,6 +71,18 @@
         }
         .invasiveChart__legend-label {
         }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .selector {
+    .card {
+      height: auto !important;
+      display: block !important;
+      .selector__mosquitos {
+        width: 100% !important;
       }
     }
   }
