@@ -46,11 +46,14 @@
 .invasive {
   height: auto;
   display: flex;
+  text-align: center;
+  margin: 0 auto;
   // grid-template-columns: 2fr 3fr;
 
   .city-info {
     // min-width: 40%;
     display: flex;
+    margin: 0 auto;
     flex-direction: column;
     justify-content: space-around;
     // grid-template-rows: 2fr 1fr 1fr;
@@ -79,6 +82,9 @@
     }
   }
   .collection-table {
+    // text-align: center;
+    display: flex;
+
     .aegypti {
       color: $red;
     }
@@ -101,6 +107,8 @@
     }
 
     table {
+      width: 100%;
+      margin: 0 auto;
       th {
         padding-top: 5px;
       }
@@ -112,5 +120,18 @@
         padding-top: 5px;
       }
     }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .card.invasive {
+    display: block;
+  }
+}
+
+@media only screen and (min-height: 900px) {
+  .card.invasive {
+    display: block;
+    margin: 20px auto;
   }
 }
